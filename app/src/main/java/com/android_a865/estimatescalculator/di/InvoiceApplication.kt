@@ -1,4 +1,4 @@
-package com.android_a865.invoice_hub.model.di
+package com.android_a865.estimatescalculator.di
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
