@@ -1,0 +1,16 @@
+package com.android_a865.estimatescalculator.database.entities
+
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "Items")
+data class ItemEntity(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
+    val name: String,
+    val path: String = ".",
+    val value: Double = 0.0,
+    val value2: Double = 0.0,
+    val qty: Double = 0.0,
+    val isFolder: Boolean = false
+)
