@@ -34,26 +34,24 @@ class MainFragmentViewModel @Inject constructor(
 
     private val itemsWindowEventsChannel = Channel<ItemsWindowEvents>()
     val itemsWindowEvents = itemsWindowEventsChannel.receiveAsFlow()
-    val isRoot get() = currentPath.value.isRoot
 
 
     fun onItemClicked(item: Item) = currentPath.update { item.open() }
 
     fun onItemLongClick(item: Item) { }
 
-    fun onBackPressed() = currentPath.update { it.back() }
-
-
-
-
-    private fun navigate(action: NavDirections) = viewModelScope.launch {
-        itemsWindowEventsChannel.send(ItemsWindowEvents.NavigateTo(action))
+    fun onBackPressed() {
+        if (currentPath.value.isRoot) {
+            viewModelScope.launch {
+                itemsWindowEventsChannel.send(ItemsWindowEvents.CloseTheApp)
+            }
+        } else {
+            currentPath.update { it.back() }
+        }
     }
 
-
     sealed class ItemsWindowEvents {
-        data class ConfirmationMessage(val msg: String) : ItemsWindowEvents()
-        data class NavigateTo(val direction: NavDirections) : ItemsWindowEvents()
+        object CloseTheApp: ItemsWindowEvents()
     }
 
 

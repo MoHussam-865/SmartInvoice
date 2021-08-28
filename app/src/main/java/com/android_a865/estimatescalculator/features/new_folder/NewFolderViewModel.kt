@@ -1,4 +1,4 @@
-package com.android_a865.estimatescalculator.features.new_item
+package com.android_a865.estimatescalculator.features.new_folder
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -13,17 +13,17 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class NewItemViewModel @Inject constructor(
+class NewFolderViewModel @Inject constructor(
+
     private val repository: Repository,
     state: SavedStateHandle
 ): ViewModel() {
 
-    val item = state.get<Item>("item")
-    val path = state.get<Path>("path") ?: Path()
+    private val folder = state.get<Item>("folder")
+    private val path = state.get<Path>("path") ?: Path(".")
 
+    var folderName: String = folder?.name ?: ""
 
-    var itemName: String = item?.name ?: ""
-    var itemPrice: String = item?.value.toString()
 
 
     private val addEditItemChannel = Channel<AddEditItemEvent>()
@@ -34,38 +34,38 @@ class NewItemViewModel @Inject constructor(
     }
 
     fun onSaveClicked() {
-        if (itemName.isBlank() || itemPrice.isBlank()) {
+        if (folderName.isBlank()) {
             showInvalidInputMessage("fill the required fields")
         }
 
-        if (item != null) {
-            val updatedItem = item.copy(
-                    name = itemName,
-                    path = path,
-                    value = itemPrice.toDouble()
+        if (folder != null) {
+            val updatedItem = folder.copy(
+                name = folderName,
+                path = path,
+                isFolder = true
             )
-            updateItem(updatedItem)
+            updateFolder(updatedItem)
 
 
         } else {
             val newItem = Item(
-                    name = itemName,
-                    path = path,
-                    value = itemPrice.toDouble()
+                name = folderName,
+                path = path,
+                isFolder = true
             )
-            createItem(newItem)
+            createFolder(newItem)
         }
 
 
     }
 
 
-    private fun updateItem(item: Item) = viewModelScope.launch {
+    private fun updateFolder(item: Item) = viewModelScope.launch {
         repository.updateItem(item)
         addEditItemChannel.send(AddEditItemEvent.NavigateBackWithResult)
     }
 
-    private fun createItem(item: Item) = viewModelScope.launch {
+    private fun createFolder(item: Item) = viewModelScope.launch {
         repository.insertItem(item)
         addEditItemChannel.send(AddEditItemEvent.NavigateBackWithResult)
     }
@@ -75,5 +75,6 @@ class NewItemViewModel @Inject constructor(
         data class ShowInvalidInputMessage(val msg: String): AddEditItemEvent()
         object NavigateBackWithResult: AddEditItemEvent()
     }
+
 
 }

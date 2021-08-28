@@ -13,13 +13,31 @@
         <action
             android:id="@+id/action_mainFragment2_to_newItemFragment"
             app:destination="@id/newItemFragment" />
+        <action
+            android:id="@+id/action_mainFragment2_to_newFolderFragment"
+            app:destination="@id/newFolderFragment" />
     </fragment>
     <fragment
         android:id="@+id/newItemFragment"
         android:name="com.android_a865.estimatescalculator.features.new_item.NewItemFragment"
+        android:label="Item"
         tools:layout="@layout/fragment_new_item">
         <argument
             android:name="item"
+            android:defaultValue="@null"
+            app:argType="com.android_a865.estimatescalculator.database.domain.Item"
+            app:nullable="true" />
+        <argument
+            android:name="path"
+            app:argType="com.android_a865.estimatescalculator.utils.Path" />
+    </fragment>
+    <fragment
+        android:id="@+id/newFolderFragment"
+        android:name="com.android_a865.estimatescalculator.features.new_folder.NewFolderFragment"
+        android:label="Folder"
+        tools:layout="@layout/fragment_new_folder">
+        <argument
+            android:name="folder"
             android:defaultValue="@null"
             app:argType="com.android_a865.estimatescalculator.database.domain.Item"
             app:nullable="true" />

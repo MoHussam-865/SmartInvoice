@@ -5,9 +5,11 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android_a865.estimatescalculator.R
@@ -17,7 +19,10 @@ import com.android_a865.estimatescalculator.utils.setUpActionBarWithNavControlle
 import com.android_a865.estimatescalculator.adapters.ItemsAdapter
 import com.android_a865.estimatescalculator.utils.scrollToEnd
 import com.android_a865.estimatescalculator.adapters.PathIndicatorAdapter
+import com.android_a865.estimatescalculator.utils.exhaustive
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class MainFragment : Fragment(R.layout.fragment_main), ItemsAdapter.OnItemEventListener {
@@ -55,6 +60,24 @@ class MainFragment : Fragment(R.layout.fragment_main), ItemsAdapter.OnItemEventL
             binding.pathList.scrollToEnd()
         }
 
+
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            itemsViewModule.onBackPressed()
+        }
+
+
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            itemsViewModule.itemsWindowEvents.collect { event ->
+                when (event) {
+                    MainFragmentViewModel.ItemsWindowEvents.CloseTheApp -> {
+                        callback.remove()
+                        requireActivity().onBackPressed()
+                    }
+                }.exhaustive
+
+            }
+        }
+
         setHasOptionsMenu(true)
     }
 
@@ -74,6 +97,11 @@ class MainFragment : Fragment(R.layout.fragment_main), ItemsAdapter.OnItemEventL
             }
 
             R.id.newFolder -> {
+                findNavController().navigate(
+                    MainFragmentDirections.actionMainFragment2ToNewFolderFragment(
+                        path = itemsViewModule.currentPath.value
+                    )
+                )
                 true
             }
 
