@@ -19,8 +19,7 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/design_default_color_primary"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:title="@string/app_name" />
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/pathList"

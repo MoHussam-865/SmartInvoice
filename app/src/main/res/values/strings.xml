@@ -6,4 +6,6 @@
     <string name="new_estimate">New Estimate</string>
     <string name="new_item">New Item</string>
     <string name="new_folder">New Folder</string>
+    <string name="item_name">Item Name</string>
+    <string name="item_price">Item Price</string>
 </resources>

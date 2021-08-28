@@ -8,6 +8,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android_a865.estimatescalculator.R
 import com.android_a865.estimatescalculator.database.domain.Item
@@ -64,6 +65,11 @@ class MainFragment : Fragment(R.layout.fragment_main), ItemsAdapter.OnItemEventL
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId){
             R.id.newItem -> {
+                findNavController().navigate(
+                        MainFragmentDirections.actionMainFragment2ToNewItemFragment(
+                                path = itemsViewModule.currentPath.value
+                        )
+                )
                 true
             }
 

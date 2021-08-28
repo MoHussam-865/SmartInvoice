@@ -3,11 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    android:label="Database"
     app:startDestination="@id/mainFragment2">
 
     <fragment
         android:id="@+id/mainFragment2"
         android:name="com.android_a865.estimatescalculator.features.main_page.MainFragment"
-        tools:layout="@layout/fragment_main" />
+        android:label="Database"
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_mainFragment2_to_newItemFragment"
+            app:destination="@id/newItemFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newItemFragment"
+        android:name="com.android_a865.estimatescalculator.features.new_item.NewItemFragment"
+        tools:layout="@layout/fragment_new_item">
+        <argument
+            android:name="item"
+            android:defaultValue="@null"
+            app:argType="com.android_a865.estimatescalculator.database.domain.Item"
+            app:nullable="true" />
+        <argument
+            android:name="path"
+            app:argType="com.android_a865.estimatescalculator.utils.Path" />
+    </fragment>
 </navigation>
