@@ -63,7 +63,7 @@ class ItemsAdapter(
         fun bind(item: Item) {
             binding.apply {
                 selection.isVisible = selecting
-                //selection.isChecked = item.isSelected
+                selection.isChecked = item.isSelected
 
                 if (item.isFolder) folderImage.setImageResource(R.drawable.folder)
                 else folderImage.setImageResource(R.drawable.item)

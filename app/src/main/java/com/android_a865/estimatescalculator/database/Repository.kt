@@ -22,4 +22,10 @@ class Repository @Inject constructor(
 
     suspend fun updateItem(item: Item) = dao.updateItemEntity(mapper.itemToEntity(item))
 
+    suspend fun deleteItems(items: List<Item>) {
+        dao.deleteItems(
+            mapper.itemsToEntities(items)
+        )
+    }
+
 }

@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_mainFragment2_to_newFolderFragment"
             app:destination="@id/newFolderFragment" />
+        <action
+            android:id="@+id/action_mainFragment2_to_selectingFragment"
+            app:destination="@id/selectingFragment" />
     </fragment>
     <fragment
         android:id="@+id/newItemFragment"
@@ -44,5 +47,23 @@
         <argument
             android:name="path"
             app:argType="com.android_a865.estimatescalculator.utils.Path" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectingFragment"
+        android:name="com.android_a865.estimatescalculator.features.selecting.SelectingFragment"
+        android:label="fragment_selecting"
+        tools:layout="@layout/fragment_selecting" >
+        <argument
+            android:name="path"
+            app:argType="com.android_a865.estimatescalculator.utils.Path" />
+        <argument
+            android:name="id"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_selectingFragment_to_newItemFragment"
+            app:destination="@id/newItemFragment" />
+        <action
+            android:id="@+id/action_selectingFragment_to_newFolderFragment"
+            app:destination="@id/newFolderFragment" />
     </fragment>
 </navigation>

@@ -116,8 +116,15 @@ class MainFragment : Fragment(R.layout.fragment_main), ItemsAdapter.OnItemEventL
     override fun onItemClicked(item: Item, position: Int) =
             itemsViewModule.onItemClicked(item)
 
-    override fun onItemLongClick(item: Item) =
-            itemsViewModule.onItemLongClick(item)
+    override fun onItemLongClick(item: Item) {
+        findNavController().navigate(
+            MainFragmentDirections.actionMainFragment2ToSelectingFragment(
+                path = itemsViewModule.currentPath.value,
+                id = item.id
+            )
+        )
+        //itemsViewModule.onItemLongClick(item)
+    }
 
     override fun onSelectionChange(item: Item, position: Int, b: Boolean) { }
 }
