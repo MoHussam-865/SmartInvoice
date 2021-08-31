@@ -29,6 +29,7 @@ class NewFolderFragment : Fragment(R.layout.fragment_new_folder) {
         val binding = FragmentNewFolderBinding.bind(view)
 
         binding.apply {
+            folderNameEt.setText(viewModel.folderName)
             folderNameEt.addTextChangedListener {
                 viewModel.folderName = it.toString()
             }
@@ -43,9 +44,17 @@ class NewFolderFragment : Fragment(R.layout.fragment_new_folder) {
                 when (event) {
                     is NewFolderViewModel.AddEditItemEvent.NavigateBackWithResult -> {
                         findNavController().popBackStack()
+                        true
                     }
                     is NewFolderViewModel.AddEditItemEvent.ShowInvalidInputMessage -> {
                         Snackbar.make(requireView(), event.msg, Snackbar.LENGTH_LONG).show()
+                        true
+                    }
+                    NewFolderViewModel.AddEditItemEvent.NavigateBackWithResult2 -> {
+                        findNavController().navigate(
+                            NewFolderFragmentDirections.actionNewFolderFragmentToMainFragment2()
+                        )
+                        true
                     }
                 }.exhaustive
             }

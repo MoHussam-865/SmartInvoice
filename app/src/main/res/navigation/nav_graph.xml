@@ -33,6 +33,11 @@
         <argument
             android:name="path"
             app:argType="com.android_a865.estimatescalculator.utils.Path" />
+        <action
+            android:id="@+id/action_newItemFragment_to_mainFragment2"
+            app:destination="@id/mainFragment2"
+            app:popUpTo="@id/mainFragment2"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/newFolderFragment"
@@ -47,6 +52,11 @@
         <argument
             android:name="path"
             app:argType="com.android_a865.estimatescalculator.utils.Path" />
+        <action
+            android:id="@+id/action_newFolderFragment_to_mainFragment2"
+            app:destination="@id/mainFragment2"
+            app:popUpTo="@id/mainFragment2"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/selectingFragment"

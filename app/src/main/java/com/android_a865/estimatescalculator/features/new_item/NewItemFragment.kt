@@ -29,7 +29,8 @@ class NewItemFragment : Fragment(R.layout.fragment_new_item) {
         val binding = FragmentNewItemBinding.bind(view)
 
         binding.apply {
-
+            itemNameEt.setText(viewModel.itemName)
+            itemPriceEt.setText(viewModel.itemPrice)
             itemNameEt.addTextChangedListener {
                 viewModel.itemName = it.toString()
             }
@@ -49,9 +50,17 @@ class NewItemFragment : Fragment(R.layout.fragment_new_item) {
                 when (event) {
                     is NewItemViewModel.AddEditItemEvent.NavigateBackWithResult -> {
                         findNavController().popBackStack()
+                        true
                     }
                     is NewItemViewModel.AddEditItemEvent.ShowInvalidInputMessage -> {
                         Snackbar.make(requireView(), event.msg, Snackbar.LENGTH_LONG).show()
+                        true
+                    }
+                    NewItemViewModel.AddEditItemEvent.NavigateBackWithResult2 -> {
+                        findNavController().navigate(
+                            NewItemFragmentDirections.actionNewItemFragmentToMainFragment2()
+                        )
+                        true
                     }
                 }.exhaustive
             }

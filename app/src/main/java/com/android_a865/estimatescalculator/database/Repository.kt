@@ -20,7 +20,7 @@ class Repository @Inject constructor(
 
     suspend fun insertItem(item: Item) = dao.insertItemEntity(mapper.itemToEntity(item))
 
-    suspend fun updateItem(item: Item) = dao.updateItemEntity(mapper.itemToEntity(item))
+    suspend fun updateItem(item: Item) = dao.updateItem(mapper.itemToEntity(item))
 
     suspend fun deleteItems(items: List<Item>) {
         dao.deleteItems(

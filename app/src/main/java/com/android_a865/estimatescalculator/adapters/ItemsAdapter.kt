@@ -68,7 +68,8 @@ class ItemsAdapter(
                 if (item.isFolder) folderImage.setImageResource(R.drawable.folder)
                 else folderImage.setImageResource(R.drawable.item)
                 folderName.text = item.name
-                details.text = if (item.isFolder) "${item.value}\n${item.value2}" else item.value.toString()
+                details.text = if (item.isFolder) "" else item.value.toString()
+                //details.text = if (item.isFolder) "${item.value}\n${item.value2}" else item.value.toString()
             }
         }
     }

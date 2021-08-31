@@ -62,7 +62,7 @@ class NewFolderViewModel @Inject constructor(
 
     private fun updateFolder(item: Item) = viewModelScope.launch {
         repository.updateItem(item)
-        addEditItemChannel.send(AddEditItemEvent.NavigateBackWithResult)
+        addEditItemChannel.send(AddEditItemEvent.NavigateBackWithResult2)
     }
 
     private fun createFolder(item: Item) = viewModelScope.launch {
@@ -74,6 +74,8 @@ class NewFolderViewModel @Inject constructor(
     sealed class AddEditItemEvent {
         data class ShowInvalidInputMessage(val msg: String): AddEditItemEvent()
         object NavigateBackWithResult: AddEditItemEvent()
+        object NavigateBackWithResult2: AddEditItemEvent()
+
     }
 
 
