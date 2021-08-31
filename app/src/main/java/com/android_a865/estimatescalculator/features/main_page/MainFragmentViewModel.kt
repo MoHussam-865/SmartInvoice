@@ -1,6 +1,7 @@
 package com.android_a865.estimatescalculator.features.main_page
 
 import android.content.Context
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
@@ -21,10 +22,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainFragmentViewModel @Inject constructor(
-    private val repository: Repository
+    private val repository: Repository,
+    state: SavedStateHandle
 ): ViewModel() {
 
-    val currentPath = MutableStateFlow(Path())
+    val path = state.get<Path>("path")
+    val currentPath = MutableStateFlow(path ?: Path())
 
     private val itemsFlow = currentPath.flatMapLatest { path ->
         repository.getItems(path.path)

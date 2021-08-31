@@ -58,7 +58,9 @@ class NewItemFragment : Fragment(R.layout.fragment_new_item) {
                     }
                     NewItemViewModel.AddEditItemEvent.NavigateBackWithResult2 -> {
                         findNavController().navigate(
-                            NewItemFragmentDirections.actionNewItemFragmentToMainFragment2()
+                            NewItemFragmentDirections.actionNewItemFragmentToMainFragment2(
+                                    path = viewModel.path
+                            )
                         )
                         true
                     }

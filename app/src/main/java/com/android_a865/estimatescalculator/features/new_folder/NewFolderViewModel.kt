@@ -20,7 +20,7 @@ class NewFolderViewModel @Inject constructor(
 ): ViewModel() {
 
     private val folder = state.get<Item>("folder")
-    private val path = state.get<Path>("path") ?: Path(".")
+    val path = state.get<Path>("path") ?: Path(".")
 
     var folderName: String = folder?.name ?: ""
 

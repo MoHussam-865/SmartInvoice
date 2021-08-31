@@ -52,7 +52,9 @@ class NewFolderFragment : Fragment(R.layout.fragment_new_folder) {
                     }
                     NewFolderViewModel.AddEditItemEvent.NavigateBackWithResult2 -> {
                         findNavController().navigate(
-                            NewFolderFragmentDirections.actionNewFolderFragmentToMainFragment2()
+                            NewFolderFragmentDirections.actionNewFolderFragmentToMainFragment2(
+                                    path = viewModel.path
+                            )
                         )
                         true
                     }
