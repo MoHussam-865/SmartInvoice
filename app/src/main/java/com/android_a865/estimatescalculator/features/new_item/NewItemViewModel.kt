@@ -23,7 +23,7 @@ class NewItemViewModel @Inject constructor(
 
 
     var itemName: String = item?.name ?: ""
-    var itemPrice: String = item?.value?.toString() ?: ""
+    var itemPrice: String = item?.price?.toString() ?: ""
 
 
     private val addEditItemChannel = Channel<AddEditItemEvent>()
@@ -42,7 +42,7 @@ class NewItemViewModel @Inject constructor(
             val updatedItem = item.copy(
                     name = itemName,
                     path = path,
-                    value = itemPrice.toDouble()
+                    price = itemPrice.toDouble()
             )
             updateItem(updatedItem)
 
@@ -51,7 +51,7 @@ class NewItemViewModel @Inject constructor(
             val newItem = Item(
                     name = itemName,
                     path = path,
-                    value = itemPrice.toDouble()
+                    price = itemPrice.toDouble()
             )
             createItem(newItem)
         }

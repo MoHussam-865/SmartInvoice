@@ -1,6 +1,7 @@
 package com.android_a865.estimatescalculator.features.main_page
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -13,15 +14,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android_a865.estimatescalculator.R
+import com.android_a865.estimatescalculator.adapters.ItemsAdapter
+import com.android_a865.estimatescalculator.adapters.PathIndicatorAdapter
 import com.android_a865.estimatescalculator.database.domain.Item
 import com.android_a865.estimatescalculator.databinding.FragmentMainBinding
-import com.android_a865.estimatescalculator.utils.setUpActionBarWithNavController
-import com.android_a865.estimatescalculator.adapters.ItemsAdapter
-import com.android_a865.estimatescalculator.utils.scrollToEnd
-import com.android_a865.estimatescalculator.adapters.PathIndicatorAdapter
 import com.android_a865.estimatescalculator.utils.exhaustive
+import com.android_a865.estimatescalculator.utils.scrollToEnd
+import com.android_a865.estimatescalculator.utils.setUpActionBarWithNavController
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
@@ -72,6 +72,7 @@ class MainFragment : Fragment(R.layout.fragment_main), ItemsAdapter.OnItemEventL
                     MainFragmentViewModel.ItemsWindowEvents.CloseTheApp -> {
                         callback.remove()
                         requireActivity().onBackPressed()
+                        Log.d("MainFragment", "this function was called")
                     }
                 }.exhaustive
 
@@ -106,6 +107,9 @@ class MainFragment : Fragment(R.layout.fragment_main), ItemsAdapter.OnItemEventL
             }
 
             R.id.newEstimate -> {
+                findNavController().navigate(
+                    MainFragmentDirections.actionMainFragment2ToNewEstimateFragment()
+                )
                 true
             }
 

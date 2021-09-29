@@ -1,6 +1,7 @@
 package com.android_a865.estimatescalculator.database.mapper
 
 
+import com.android_a865.estimatescalculator.database.domain.InvoiceItem
 import com.android_a865.estimatescalculator.database.domain.Item
 import com.android_a865.estimatescalculator.database.entities.ItemEntity
 import com.android_a865.estimatescalculator.utils.Path
@@ -17,9 +18,7 @@ class Mapper @Inject constructor() {
             id = id,
             name = name,
             path = path.path,
-            qty = qty,
-            value = value,
-            value2 = value2,
+            price = price,
             isFolder = isFolder
         )
     }
@@ -29,13 +28,21 @@ class Mapper @Inject constructor() {
             id = id,
             name = name,
             path = Path(path),
-            qty = qty,
-            value = value,
-            value2 = value2,
+            price = price,
             isFolder = isFolder
         )
     }
 
+    private fun invoiceItemFromEntity(item: ItemEntity) = item.run {
+        InvoiceItem(
+                id = id,
+                name = name,
+                price = price,
+                isFolder = isFolder
+        )
+    }
+
+    fun invoiceItemsFromEntities(items: List<ItemEntity>) = items.map { invoiceItemFromEntity(it) }
     fun itemsFromEntities(items: List<ItemEntity>) = items.map { itemFromEntity(it) }
     fun itemsToEntities(items: List<Item>) = items.map { itemToEntity(it) }
 }

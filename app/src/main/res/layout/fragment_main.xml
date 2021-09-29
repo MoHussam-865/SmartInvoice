@@ -31,7 +31,7 @@
             android:paddingEnd="5dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="5"
-            tools:listitem="@layout/path_indicator_adapter" />
+            tools:listitem="@layout/adapter_path_indicator" />
 
         <View
             android:id="@+id/divider"
@@ -46,7 +46,7 @@
             android:clipToPadding="false"
             android:paddingBottom="50dp"
 
-            tools:listitem="@layout/items_page_adapter" />
+            tools:listitem="@layout/adapter_items_page" />
 
     </LinearLayout>
 

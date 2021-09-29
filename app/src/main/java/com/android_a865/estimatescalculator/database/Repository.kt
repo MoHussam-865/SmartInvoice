@@ -1,5 +1,7 @@
 package com.android_a865.estimatescalculator.database
 
+import com.android_a865.estimatescalculator.database.dao.ItemsDao
+import com.android_a865.estimatescalculator.database.domain.InvoiceItem
 import com.android_a865.estimatescalculator.database.domain.Item
 import com.android_a865.estimatescalculator.database.mapper.Mapper
 import kotlinx.coroutines.flow.Flow
@@ -9,10 +11,9 @@ import javax.inject.Singleton
 
 @Singleton
 class Repository @Inject constructor(
-        db: MyRoomDatabase,
+        private val dao: ItemsDao,
         private val mapper: Mapper
 ) {
-    private val dao = db.getItemsDao()
 
     fun getItems(path: String): Flow<List<Item>> = dao.getItemsEntity(path).map {
         mapper.itemsFromEntities(it)
@@ -24,8 +25,14 @@ class Repository @Inject constructor(
 
     suspend fun deleteItems(items: List<Item>) {
         dao.deleteItems(
-            mapper.itemsToEntities(items)
+                mapper.itemsToEntities(items)
         )
     }
+
+    fun getInvoiceItems(path: String): Flow<List<InvoiceItem>> = dao.getItemsEntity(path).map {
+        mapper.invoiceItemsFromEntities(it)
+    }
+
+    suspend fun getItemById(id: Int): Item  = mapper.itemFromEntity(dao.getItemByID(id))
 
 }

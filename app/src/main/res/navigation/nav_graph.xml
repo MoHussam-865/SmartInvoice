@@ -24,6 +24,9 @@
             app:argType="com.android_a865.estimatescalculator.utils.Path"
             app:nullable="true"
             android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_mainFragment2_to_newEstimateFragment"
+            app:destination="@id/newEstimateFragment" />
     </fragment>
     <fragment
         android:id="@+id/newItemFragment"
@@ -80,5 +83,27 @@
         <action
             android:id="@+id/action_selectingFragment_to_newFolderFragment"
             app:destination="@id/newFolderFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newEstimateFragment"
+        android:name="com.android_a865.estimatescalculator.features.new_estimate.NewEstimateFragment"
+        tools:layout="@layout/fragment_new_estimate">
+        <action
+            android:id="@+id/action_newEstimateFragment_to_itemsChooseFragment"
+            app:destination="@id/itemsChooseFragment" />
+        <argument
+            android:name="invoice"
+            android:defaultValue="@null"
+            app:argType="com.android_a865.estimatescalculator.database.domain.Invoice"
+            app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/itemsChooseFragment"
+        android:name="com.android_a865.estimatescalculator.features.items_choose.ItemsChooseFragment"
+        android:label="Choose Items"
+        tools:layout="@layout/fragment_items_choose">
+        <argument
+            android:name="items"
+            app:argType="com.android_a865.estimatescalculator.database.domain.InvoiceItem[]" />
     </fragment>
 </navigation>

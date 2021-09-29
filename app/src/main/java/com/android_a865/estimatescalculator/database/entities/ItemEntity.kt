@@ -11,8 +11,6 @@ data class ItemEntity(
     val id: Int = 0,
     val name: String,
     val path: String = ".",
-    val value: Double = 0.0,
-    val value2: Double = 0.0,
-    val qty: Double = 0.0,
+    val price: Double = 0.0,
     val isFolder: Boolean = false
 )

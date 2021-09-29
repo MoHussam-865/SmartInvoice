@@ -11,12 +11,10 @@ data class Item(
         var id: Int = 0,
         override var name: String,
         override var path: Path,
-        var value: Double = 0.0,
-        var value2: Double = 0.0,
-        var qty: Double = 0.0,
-        override var isFolder: Boolean = false,
+        var price: Double = 0.0,
 
+        override var isFolder: Boolean = false,
         override var isSelected: Boolean = false
 ): Parcelable, PathUtil, Selectable<Item> {
-        override fun changeTo(b: Boolean) = copy(isSelected = b)
+        override fun copy(b: Boolean) = copy(isSelected = b)
 }

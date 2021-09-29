@@ -5,14 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.android_a865.estimatescalculator.databinding.PathIndicatorAdapterBinding
+import com.android_a865.estimatescalculator.databinding.AdapterPathIndicatorBinding
 import com.android_a865.estimatescalculator.utils.Path
 
 class PathIndicatorAdapter: ListAdapter<String, PathIndicatorAdapter.ViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
         ViewHolder(
-            PathIndicatorAdapterBinding.inflate(
+            AdapterPathIndicatorBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false))
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(getItem(position))
@@ -28,7 +28,7 @@ class PathIndicatorAdapter: ListAdapter<String, PathIndicatorAdapter.ViewHolder>
             oldItem == newItem
     }
 
-    class ViewHolder(private val binding: PathIndicatorAdapterBinding)
+    class ViewHolder(private val binding: AdapterPathIndicatorBinding)
         : RecyclerView.ViewHolder(binding.root) {
         fun bind(name: String) { binding.folderName.text = name }
     }

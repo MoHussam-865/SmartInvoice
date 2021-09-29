@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.android_a865.estimatescalculator.R
 import com.android_a865.estimatescalculator.database.domain.Item
-import com.android_a865.estimatescalculator.databinding.ItemsPageAdapterBinding
+import com.android_a865.estimatescalculator.databinding.AdapterItemsPageBinding
 
 class ItemsAdapter(
         private val listener: OnItemEventListener,
@@ -19,12 +19,12 @@ class ItemsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
         ViewHolder(
-            ItemsPageAdapterBinding.inflate(
+            AdapterItemsPageBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false))
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(getItem(position))
 
-    inner class ViewHolder(private val binding: ItemsPageAdapterBinding)
+    inner class ViewHolder(private val binding: AdapterItemsPageBinding)
         : RecyclerView.ViewHolder(binding.root) {
 
         init {
@@ -68,7 +68,7 @@ class ItemsAdapter(
                 if (item.isFolder) folderImage.setImageResource(R.drawable.folder)
                 else folderImage.setImageResource(R.drawable.item)
                 folderName.text = item.name
-                details.text = if (item.isFolder) "" else item.value.toString()
+                details.text = if (item.isFolder) "" else item.price.toString()
                 //details.text = if (item.isFolder) "${item.value}\n${item.value2}" else item.value.toString()
             }
         }
