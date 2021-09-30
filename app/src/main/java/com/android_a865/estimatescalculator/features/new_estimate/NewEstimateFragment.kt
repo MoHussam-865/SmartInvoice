@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android_a865.estimatescalculator.R
@@ -34,12 +35,12 @@ InvoiceItemsAdapter.OnItemEventListener {
             addItems.setOnClickListener {
                 findNavController().navigate(
                         NewEstimateFragmentDirections.actionNewEstimateFragmentToItemsChooseFragment(
-                                viewModel.items.value.orEmpty().toTypedArray()
+                                viewModel.itemsFlow.value.toTypedArray()
                         )
                 )
             }
 
-            viewModel.items.observe(viewLifecycleOwner) {
+            viewModel.itemsFlow.asLiveData().observe(viewLifecycleOwner) {
                 itemsAdapter.submitList(it)
             }
 
@@ -55,7 +56,11 @@ InvoiceItemsAdapter.OnItemEventListener {
                     observed
             )?.observe(viewLifecycleOwner) {
                 viewModel.onItemsSelected(it)
-                currentBackStackEntry?.savedStateHandle?.set(observed, null)
+
+                if (it != null) {
+                    currentBackStackEntry?.savedStateHandle?.set(observed, null)
+                }
+
             }
         }
 

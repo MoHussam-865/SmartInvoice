@@ -3,7 +3,6 @@ package com.android_a865.estimatescalculator.features.new_estimate
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import androidx.navigation.NavDirections
 import com.android_a865.estimatescalculator.database.domain.Invoice
 import com.android_a865.estimatescalculator.database.domain.InvoiceItem
 import com.android_a865.estimatescalculator.utils.*
@@ -13,7 +12,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.receiveAsFlow
-import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,15 +19,21 @@ class NewEstimateViewModel @Inject constructor(
         private val state: SavedStateHandle
 ): ViewModel() {
 
+    private val items = state.get<List<InvoiceItem>>("choose_invoice_items")
     private val invoice = state.get<Invoice>("invoice")
 
-    //val date = MutableLiveData(invoice?.date ?: currentDate())
+    private val date = MutableStateFlow(invoice?.date ?: currentDate())
 
-    private val itemsFlow = MutableStateFlow(invoice?.items ?: listOf())
-    val items = itemsFlow.asLiveData()
+    val itemsFlow = MutableStateFlow(invoice?.items ?: listOf())
 
     private val totalFlow = itemsFlow.flatMapLatest { items ->
-        //saveInvoiceInState()
+        state.set(
+                "invoice",
+                Invoice(
+                        date = date.value,
+                        items = items
+                )
+        )
         flowOf(items.sumOf { it.total })
     }
     val total = totalFlow.asLiveData()
@@ -56,11 +60,10 @@ class NewEstimateViewModel @Inject constructor(
         it.setQtyTo(item, qty.toDouble())
     }
 
-    fun onItemsSelected(items: List<InvoiceItem>?) {
-
+    fun onItemsSelected(chosenItems: List<InvoiceItem>?) = chosenItems?.let { items ->
+        itemsFlow.update { items }
     }
 
 
-    sealed class InvoiceWindowEvents {
-    }
+    sealed class InvoiceWindowEvents {}
 }

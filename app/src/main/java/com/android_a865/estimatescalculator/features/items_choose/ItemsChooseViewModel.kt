@@ -3,9 +3,7 @@ package com.android_a865.estimatescalculator.features.items_choose
 import androidx.lifecycle.*
 import com.android_a865.estimatescalculator.database.Repository
 import com.android_a865.estimatescalculator.database.domain.InvoiceItem
-import com.android_a865.estimatescalculator.utils.Path
-import com.android_a865.estimatescalculator.utils.include
-import com.android_a865.estimatescalculator.utils.update
+import com.android_a865.estimatescalculator.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
@@ -17,7 +15,8 @@ class ItemsChooseViewModel @Inject constructor(
         private val repository: Repository,
         state: SavedStateHandle
 ): ViewModel() {
-    val currentPath = MutableStateFlow(Path())
+
+    val currentPath = MutableStateFlow(state.get<Path>("path") ?: Path())
 
     private val itemsFlow = currentPath.flatMapLatest { path ->
         repository.getInvoiceItems(path.path)
@@ -57,21 +56,14 @@ class ItemsChooseViewModel @Inject constructor(
         }
     }
 
-    fun onAddItemClicked(item: InvoiceItem) {
+    fun onAddItemClicked(item: InvoiceItem) = selectedItems.update { it?.addOneOf(item) }
 
-    }
+    fun onMinusItemClicked(item: InvoiceItem) = selectedItems.update { it?.removeOneOf(item) }
 
-    fun onMinusItemClicked(item: InvoiceItem) {
+    fun onItemRemoveClicked(item: InvoiceItem) = selectedItems.update { it?.removeAllOf(item) }
 
-    }
+    fun onQtySet(item: InvoiceItem, myQty: Double) = selectedItems.update { it?.setQtyTo(item, myQty) }
 
-    fun onItemRemoveClicked(item: InvoiceItem) {
-
-    }
-
-    fun onQtySet(item: InvoiceItem, qty: Double) {
-
-    }
 
     sealed class ItemsWindowEvents {
         //data class NavigateTo(val direction: NavDirections) : ItemsWindowEvents()

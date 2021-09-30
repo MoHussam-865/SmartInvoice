@@ -70,6 +70,7 @@ ChosenItemsAdapter.OnItemEventListener {
                 findNavController().previousBackStackEntry?.savedStateHandle?.set(
                         "choose_invoice_items", it
                 )
+                Log.d("ItemsChooseFragment", "the size = "+it.size)
             }
 
             itemsViewModel.itemsData.asLiveData().observe(viewLifecycleOwner) {
