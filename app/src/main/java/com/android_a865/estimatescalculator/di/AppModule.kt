@@ -2,9 +2,9 @@ package com.android_a865.estimatescalculator.di
 
 import android.app.Application
 import androidx.room.Room
-import com.android_a865.estimatescalculator.database.MyRoomDatabase
-import com.android_a865.estimatescalculator.database.MyRoomDatabase.Companion.DATABASE_NAME
-import com.android_a865.estimatescalculator.database.dao.ItemsDao
+import com.android_a865.estimatescalculator.data.MyRoomDatabase
+import com.android_a865.estimatescalculator.data.MyRoomDatabase.Companion.DATABASE_NAME
+import com.android_a865.estimatescalculator.data.dao.ItemsDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
