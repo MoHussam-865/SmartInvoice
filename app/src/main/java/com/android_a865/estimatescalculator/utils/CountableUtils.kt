@@ -1,6 +1,6 @@
 package com.android_a865.estimatescalculator.utils
 
-import com.android_a865.estimatescalculator.domain.InvoiceItem
+import com.android_a865.estimatescalculator.domain.model.InvoiceItem
 
 
 fun List<InvoiceItem>.addOneOf(item: InvoiceItem): List<InvoiceItem> {

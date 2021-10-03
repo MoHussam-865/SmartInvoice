@@ -4,8 +4,8 @@ import android.app.AlertDialog
 import android.content.Context
 import androidx.lifecycle.*
 import androidx.navigation.NavDirections
-import com.android_a865.estimatescalculator.data.Repository
-import com.android_a865.estimatescalculator.domain.Item
+import com.android_a865.estimatescalculator.data.repository.Repository
+import com.android_a865.estimatescalculator.domain.model.Item
 import com.android_a865.estimatescalculator.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -18,8 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ItemsSelectViewModel @Inject constructor(
-    private val repository: Repository,
-    state: SavedStateHandle
+        private val repository: Repository,
+        state: SavedStateHandle
 ) : ViewModel() {
 
     val currentPath = state.get<Path>("path") ?: Path()

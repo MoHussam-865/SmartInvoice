@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.activity.addCallback
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
@@ -14,9 +15,10 @@ import com.android_a865.estimatescalculator.R
 import com.android_a865.estimatescalculator.common.adapters.ChooseInvoiceItemsAdapter
 import com.android_a865.estimatescalculator.common.adapters.ChosenItemsAdapter
 import com.android_a865.estimatescalculator.common.adapters.PathIndicatorAdapter
-import com.android_a865.estimatescalculator.domain.InvoiceItem
+import com.android_a865.estimatescalculator.domain.model.InvoiceItem
 import com.android_a865.estimatescalculator.databinding.FragmentItemsChooseBinding
 import com.android_a865.estimatescalculator.utils.exhaustive
+import com.android_a865.estimatescalculator.utils.scrollToEnd
 import com.android_a865.estimatescalculator.utils.setUpActionBarWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi

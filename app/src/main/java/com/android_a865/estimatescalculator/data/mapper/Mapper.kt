@@ -1,8 +1,8 @@
 package com.android_a865.estimatescalculator.data.mapper
 
 
-import com.android_a865.estimatescalculator.domain.InvoiceItem
-import com.android_a865.estimatescalculator.domain.Item
+import com.android_a865.estimatescalculator.domain.model.InvoiceItem
+import com.android_a865.estimatescalculator.domain.model.Item
 import com.android_a865.estimatescalculator.data.entities.ItemEntity
 import com.android_a865.estimatescalculator.utils.Path
 import javax.inject.Inject

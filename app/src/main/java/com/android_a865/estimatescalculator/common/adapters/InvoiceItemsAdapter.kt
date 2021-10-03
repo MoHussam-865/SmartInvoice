@@ -6,7 +6,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.android_a865.estimatescalculator.domain.InvoiceItem
+import com.android_a865.estimatescalculator.domain.model.InvoiceItem
 import com.android_a865.estimatescalculator.databinding.AdapterNewEstimateBinding
 
 class InvoiceItemsAdapter(

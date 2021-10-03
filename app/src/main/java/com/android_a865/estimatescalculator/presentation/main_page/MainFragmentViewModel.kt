@@ -4,8 +4,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.android_a865.estimatescalculator.data.Repository
-import com.android_a865.estimatescalculator.domain.Item
+import com.android_a865.estimatescalculator.data.repository.Repository
+import com.android_a865.estimatescalculator.domain.model.Item
 import com.android_a865.estimatescalculator.utils.Path
 import com.android_a865.estimatescalculator.utils.update
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,8 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainFragmentViewModel @Inject constructor(
-    private val repository: Repository,
-    state: SavedStateHandle
+        private val repository: Repository,
+        state: SavedStateHandle
 ): ViewModel() {
 
     val path = state.get<Path>("path")

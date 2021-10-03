@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.android_a865.estimatescalculator.R
 import com.android_a865.estimatescalculator.common.adapters.ItemsAdapter
 import com.android_a865.estimatescalculator.common.adapters.PathIndicatorAdapter
-import com.android_a865.estimatescalculator.domain.Item
+import com.android_a865.estimatescalculator.domain.model.Item
 import com.android_a865.estimatescalculator.databinding.FragmentSelectingBinding
 import com.android_a865.estimatescalculator.utils.appCompatActivity
 import com.android_a865.estimatescalculator.utils.exhaustive

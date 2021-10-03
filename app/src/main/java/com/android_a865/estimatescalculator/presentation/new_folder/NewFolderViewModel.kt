@@ -3,8 +3,8 @@ package com.android_a865.estimatescalculator.presentation.new_folder
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.android_a865.estimatescalculator.data.Repository
-import com.android_a865.estimatescalculator.domain.Item
+import com.android_a865.estimatescalculator.data.repository.Repository
+import com.android_a865.estimatescalculator.domain.model.Item
 import com.android_a865.estimatescalculator.utils.Path
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -15,8 +15,8 @@ import javax.inject.Inject
 @HiltViewModel
 class NewFolderViewModel @Inject constructor(
 
-    private val repository: Repository,
-    state: SavedStateHandle
+        private val repository: Repository,
+        state: SavedStateHandle
 ): ViewModel() {
 
     private val folder = state.get<Item>("folder")

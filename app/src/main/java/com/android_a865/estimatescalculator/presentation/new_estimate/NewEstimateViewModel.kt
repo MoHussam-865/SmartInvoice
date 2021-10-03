@@ -3,8 +3,8 @@ package com.android_a865.estimatescalculator.presentation.new_estimate
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.android_a865.estimatescalculator.domain.Invoice
-import com.android_a865.estimatescalculator.domain.InvoiceItem
+import com.android_a865.estimatescalculator.domain.model.Invoice
+import com.android_a865.estimatescalculator.domain.model.InvoiceItem
 import com.android_a865.estimatescalculator.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi

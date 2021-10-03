@@ -1,8 +1,8 @@
-package com.android_a865.estimatescalculator.data
+package com.android_a865.estimatescalculator.data.repository
 
 import com.android_a865.estimatescalculator.data.dao.ItemsDao
-import com.android_a865.estimatescalculator.domain.InvoiceItem
-import com.android_a865.estimatescalculator.domain.Item
+import com.android_a865.estimatescalculator.domain.model.InvoiceItem
+import com.android_a865.estimatescalculator.domain.model.Item
 import com.android_a865.estimatescalculator.data.mapper.Mapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

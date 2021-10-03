@@ -1,4 +1,4 @@
-package com.android_a865.estimatescalculator.domain
+package com.android_a865.estimatescalculator.domain.model
 
 import android.os.Parcelable
 import com.android_a865.estimatescalculator.utils.Path

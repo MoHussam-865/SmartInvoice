@@ -3,6 +3,7 @@ package com.android_a865.estimatescalculator.presentation.new_item
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -27,12 +28,12 @@ class NewItemFragment : Fragment(R.layout.fragment_new_item) {
         binding.apply {
             itemNameEt.setText(viewModel.itemName)
             itemPriceEt.setText(viewModel.itemPrice)
-            itemNameEt.addTextChangedListener {
-                viewModel.itemName = it.toString()
+            itemNameEt.addTextChangedListener { text ->
+                viewModel.itemName = text.toString()
             }
 
-            itemPriceEt.addTextChangedListener {
-                viewModel.itemPrice = it.toString()
+            itemPriceEt.addTextChangedListener { text ->
+                viewModel.itemPrice = text.toString()
             }
 
             fab.setOnClickListener {
