@@ -1,4 +1,4 @@
-package com.android_a865.estimatescalculator.presentation.new_estimate
+package com.android_a865.estimatescalculator.features.new_estimate
 
 import android.os.Bundle
 import android.view.View
@@ -8,11 +8,10 @@ import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android_a865.estimatescalculator.R
-import com.android_a865.estimatescalculator.common.adapters.InvoiceItemsAdapter
-import com.android_a865.estimatescalculator.domain.model.InvoiceItem
+import com.android_a865.estimatescalculator.adapters.InvoiceItemsAdapter
+import com.android_a865.estimatescalculator.database.domain.InvoiceItem
 import com.android_a865.estimatescalculator.databinding.FragmentNewEstimateBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @AndroidEntryPoint
 class NewEstimateFragment : Fragment(R.layout.fragment_new_estimate),
@@ -21,7 +20,6 @@ InvoiceItemsAdapter.OnItemEventListener {
     private val viewModel by viewModels<NewEstimateViewModel>()
     private val itemsAdapter = InvoiceItemsAdapter(this)
 
-    @ExperimentalCoroutinesApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -42,25 +40,25 @@ InvoiceItemsAdapter.OnItemEventListener {
                 )
             }
 
-            viewModel.itemsFlow.asLiveData().observe(viewLifecycleOwner) { items ->
-                itemsAdapter.submitList(items)
+            viewModel.itemsFlow.asLiveData().observe(viewLifecycleOwner) {
+                itemsAdapter.submitList(it)
             }
 
-            viewModel.total.asLiveData().observe(viewLifecycleOwner) { total ->
-                itemsTotal.text = total.toString()
+            viewModel.total.observe(viewLifecycleOwner) {
+                itemsTotal.text = it.toString()
             }
 
         }
 
-
-        viewModel.onItemsSelected(
-            findNavController().currentBackStackEntry?.savedStateHandle?.get(
-                    "choose_invoice_items"
-            )
-        )
-
+        viewModel.onItemsSelected(findNavController()
+            .currentBackStackEntry
+            ?.savedStateHandle
+            ?.get<List<InvoiceItem>>(
+            "choose_invoice_items"
+        ))
 
     }
+
 
 
     override fun onItemRemoveClicked(item: InvoiceItem) = viewModel.onItemRemoveClicked(item)
