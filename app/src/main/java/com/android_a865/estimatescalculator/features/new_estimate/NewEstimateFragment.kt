@@ -12,14 +12,16 @@ import com.android_a865.estimatescalculator.adapters.InvoiceItemsAdapter
 import com.android_a865.estimatescalculator.database.domain.InvoiceItem
 import com.android_a865.estimatescalculator.databinding.FragmentNewEstimateBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @AndroidEntryPoint
 class NewEstimateFragment : Fragment(R.layout.fragment_new_estimate),
-InvoiceItemsAdapter.OnItemEventListener {
+    InvoiceItemsAdapter.OnItemEventListener {
 
     private val viewModel by viewModels<NewEstimateViewModel>()
     private val itemsAdapter = InvoiceItemsAdapter(this)
 
+    @ExperimentalCoroutinesApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -34,9 +36,9 @@ InvoiceItemsAdapter.OnItemEventListener {
 
             addItems.setOnClickListener {
                 findNavController().navigate(
-                        NewEstimateFragmentDirections.actionNewEstimateFragmentToItemsChooseFragment(
-                                viewModel.itemsFlow.value.toTypedArray()
-                        )
+                    NewEstimateFragmentDirections.actionNewEstimateFragmentToItemsChooseFragment(
+                        viewModel.itemsFlow.value.orEmpty().toTypedArray()
+                    )
                 )
             }
 
@@ -44,21 +46,22 @@ InvoiceItemsAdapter.OnItemEventListener {
                 itemsAdapter.submitList(it)
             }
 
-            viewModel.total.observe(viewLifecycleOwner) {
+            viewModel.totalFlow.asLiveData().observe(viewLifecycleOwner) {
                 itemsTotal.text = it.toString()
             }
 
         }
 
-        viewModel.onItemsSelected(findNavController()
-            .currentBackStackEntry
-            ?.savedStateHandle
-            ?.get<List<InvoiceItem>>(
-            "choose_invoice_items"
-        ))
+        viewModel.onItemsSelected(
+            findNavController()
+                .currentBackStackEntry
+                ?.savedStateHandle
+                ?.get<List<InvoiceItem>>(
+                    "choose_invoice_items"
+                )
+        )
 
     }
-
 
 
     override fun onItemRemoveClicked(item: InvoiceItem) = viewModel.onItemRemoveClicked(item)
@@ -67,6 +70,7 @@ InvoiceItemsAdapter.OnItemEventListener {
 
     override fun onMinusClicked(item: InvoiceItem) = viewModel.onOneItemRemoved(item)
 
-    override fun onQtyChanged(item: InvoiceItem, text: String) = viewModel.onItemQtyChanged(item, text)
+    override fun onQtyChanged(item: InvoiceItem, text: String) =
+        viewModel.onItemQtyChanged(item, text)
 
 }
