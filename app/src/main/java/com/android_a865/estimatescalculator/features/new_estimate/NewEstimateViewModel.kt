@@ -1,6 +1,8 @@
 package com.android_a865.estimatescalculator.features.new_estimate
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import com.android_a865.estimatescalculator.database.domain.Invoice
 import com.android_a865.estimatescalculator.database.domain.InvoiceItem
 import com.android_a865.estimatescalculator.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,11 +14,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NewEstimateViewModel @Inject constructor(
-    //private val state: SavedStateHandle
+    state: SavedStateHandle
 ) : ViewModel() {
 
-    //private val invoice = state.get<Invoice>("invoice")
-    val itemsFlow = MutableStateFlow(listOf<InvoiceItem>())
+    private val invoice = state.get<Invoice>("invoice")
+    val itemsFlow = MutableStateFlow( invoice?.items ?: listOf())
 
     @ExperimentalCoroutinesApi
     val totalFlow = itemsFlow.flatMapLatest { items ->

@@ -37,7 +37,7 @@ class NewEstimateFragment : Fragment(R.layout.fragment_new_estimate),
             addItems.setOnClickListener {
                 findNavController().navigate(
                     NewEstimateFragmentDirections.actionNewEstimateFragmentToItemsChooseFragment(
-                        viewModel.itemsFlow.value.orEmpty().toTypedArray()
+                        viewModel.itemsFlow.value.toTypedArray()
                     )
                 )
             }

@@ -8,4 +8,4 @@ import java.util.*
 data class Invoice(
         val date: Date,
         val items: List<InvoiceItem>
-): Parcelable
+) : Parcelable

@@ -11,27 +11,30 @@ import com.android_a865.estimatescalculator.database.domain.InvoiceItem
 import com.android_a865.estimatescalculator.databinding.AdapterChooseItemsListBinding
 
 class ChooseInvoiceItemsAdapter(
-        private val listener: OnItemEventListener,
-):  ListAdapter<InvoiceItem, ChooseInvoiceItemsAdapter.ViewHolder>(InvoiceItemDiffCallback()) {
+    private val listener: OnItemEventListener,
+) : ListAdapter<InvoiceItem, ChooseInvoiceItemsAdapter.ViewHolder>(InvoiceItemDiffCallback()) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
         ViewHolder(
             AdapterChooseItemsListBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false))
+                LayoutInflater.from(parent.context), parent, false
+            )
+        )
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(getItem(position))
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) =
+        holder.bind(getItem(position))
 
-    inner class ViewHolder(private val binding: AdapterChooseItemsListBinding)
-        : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: AdapterChooseItemsListBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         init {
             binding.apply {
                 folderView.setOnClickListener {
                     val position = adapterPosition
-                    if (position != RecyclerView.NO_POSITION){
+                    if (position != RecyclerView.NO_POSITION) {
                         val item = getItem(position)
-                        listener.onItemClicked(item, position)
+                        listener.onItemClicked(item)
                     }
                 }
 
@@ -41,15 +44,15 @@ class ChooseInvoiceItemsAdapter(
 
                 minus.setOnClickListener {
                     val position = adapterPosition
-                    if (position != RecyclerView.NO_POSITION){
+                    if (position != RecyclerView.NO_POSITION) {
                         val item = getItem(position)
-                        listener.onMinusItemClicked(item, position)
+                        listener.onMinusItemClicked(item)
                     }
                 }
 
                 close.setOnClickListener {
                     val position = adapterPosition
-                    if (position != RecyclerView.NO_POSITION){
+                    if (position != RecyclerView.NO_POSITION) {
                         listener.onRemoveItemClicked(getItem(position))
                     }
                 }
@@ -72,9 +75,9 @@ class ChooseInvoiceItemsAdapter(
 
         private fun add() {
             val position = adapterPosition
-            if (position != RecyclerView.NO_POSITION){
+            if (position != RecyclerView.NO_POSITION) {
                 val item = getItem(position)
-                listener.onAddItemClicked(item, position)
+                listener.onAddItemClicked(item)
             }
         }
 
@@ -100,19 +103,20 @@ class ChooseInvoiceItemsAdapter(
         }
     }
 
-    class InvoiceItemDiffCallback: DiffUtil.ItemCallback<InvoiceItem>(){
+    class InvoiceItemDiffCallback : DiffUtil.ItemCallback<InvoiceItem>() {
         override fun areItemsTheSame(oldItem: InvoiceItem, newItem: InvoiceItem) =
-                oldItem.id == newItem.id
+            oldItem.id == newItem.id
+
         override fun areContentsTheSame(oldItem: InvoiceItem, newItem: InvoiceItem) =
-                oldItem == newItem
+            oldItem == newItem
     }
 
-    interface OnItemEventListener{
-        fun onItemClicked(item: InvoiceItem, position: Int)
+    interface OnItemEventListener {
+        fun onItemClicked(item: InvoiceItem)
 
         fun onRemoveItemClicked(item: InvoiceItem)
-        fun onAddItemClicked(item: InvoiceItem, position: Int)
-        fun onMinusItemClicked(item: InvoiceItem, position: Int)
+        fun onAddItemClicked(item: InvoiceItem)
+        fun onMinusItemClicked(item: InvoiceItem)
         fun onQtySet(item: InvoiceItem, qty: Double)
     }
 

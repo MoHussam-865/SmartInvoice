@@ -11,7 +11,7 @@ import com.android_a865.estimatescalculator.databinding.AdapterNewEstimateBindin
 
 class InvoiceItemsAdapter(
     private val listener: OnItemEventListener,
-): ListAdapter<InvoiceItem, InvoiceItemsAdapter.ViewHolder>(ItemDiffCallback()) {
+) : ListAdapter<InvoiceItem, InvoiceItemsAdapter.ViewHolder>(ItemDiffCallback()) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(
@@ -25,14 +25,14 @@ class InvoiceItemsAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) =
         holder.bind(getItem(position))
 
-    inner class ViewHolder(private val binding: AdapterNewEstimateBinding)
-        : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: AdapterNewEstimateBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         init {
             binding.apply {
                 itemRemove.setOnClickListener {
                     val position = adapterPosition
-                    if (position != RecyclerView.NO_POSITION){
+                    if (position != RecyclerView.NO_POSITION) {
                         val item = getItem(position)
                         listener.onItemRemoveClicked(item)
                     }
@@ -40,7 +40,7 @@ class InvoiceItemsAdapter(
 
                 plus.setOnClickListener {
                     val position = adapterPosition
-                    if (position != RecyclerView.NO_POSITION){
+                    if (position != RecyclerView.NO_POSITION) {
                         val item = getItem(position)
                         listener.onPlusClicked(item)
                     }
@@ -48,7 +48,7 @@ class InvoiceItemsAdapter(
 
                 minus.setOnClickListener {
                     val position = adapterPosition
-                    if (position != RecyclerView.NO_POSITION){
+                    if (position != RecyclerView.NO_POSITION) {
                         val item = getItem(position)
                         listener.onMinusClicked(item)
                     }
@@ -56,7 +56,7 @@ class InvoiceItemsAdapter(
 
                 etQty.addTextChangedListener { text ->
                     val position = adapterPosition
-                    if (position != RecyclerView.NO_POSITION){
+                    if (position != RecyclerView.NO_POSITION) {
                         val item = getItem(position)
                         listener.onQtyChanged(item, text.toString())
                     }
@@ -78,16 +78,17 @@ class InvoiceItemsAdapter(
         }
     }
 
-    class ItemDiffCallback: DiffUtil.ItemCallback<InvoiceItem>(){
+    class ItemDiffCallback : DiffUtil.ItemCallback<InvoiceItem>() {
         override fun areItemsTheSame(oldItem: InvoiceItem, newItem: InvoiceItem): Boolean {
             return oldItem.id == newItem.id
         }
+
         override fun areContentsTheSame(oldItem: InvoiceItem, newItem: InvoiceItem): Boolean =
             oldItem == newItem
     }
 
 
-    interface OnItemEventListener{
+    interface OnItemEventListener {
         fun onItemRemoveClicked(item: InvoiceItem)
         fun onPlusClicked(item: InvoiceItem)
         fun onMinusClicked(item: InvoiceItem)

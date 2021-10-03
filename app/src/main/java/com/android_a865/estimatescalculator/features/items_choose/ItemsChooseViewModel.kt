@@ -5,6 +5,7 @@ import com.android_a865.estimatescalculator.database.Repository
 import com.android_a865.estimatescalculator.database.domain.InvoiceItem
 import com.android_a865.estimatescalculator.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -12,19 +13,21 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ItemsChooseViewModel @Inject constructor(
-        private val repository: Repository,
-        state: SavedStateHandle
-): ViewModel() {
+    private val repository: Repository,
+    state: SavedStateHandle
+) : ViewModel() {
 
     val currentPath = MutableStateFlow(state.get<Path>("path") ?: Path())
 
+    @ExperimentalCoroutinesApi
     private val itemsFlow = currentPath.flatMapLatest { path ->
         repository.getInvoiceItems(path.path)
     }
 
     val selectedItems = MutableLiveData(
-            state.get<Array<InvoiceItem>>("items")?.toList() ?: listOf()
+        state.get<Array<InvoiceItem>>("items")?.toList() ?: listOf()
     )
+    @ExperimentalCoroutinesApi
     val itemsData = combine(itemsFlow, selectedItems.asFlow()) { items, selected ->
         Pair(items, selected)
     }.flatMapLatest { (items, selected) ->
@@ -35,7 +38,6 @@ class ItemsChooseViewModel @Inject constructor(
 
     private val itemsWindowEventsChannel = Channel<ItemsWindowEvents>()
     val itemsWindowEvents = itemsWindowEventsChannel.receiveAsFlow()
-
 
 
     fun onBackPress() {
@@ -62,7 +64,8 @@ class ItemsChooseViewModel @Inject constructor(
 
     fun onItemRemoveClicked(item: InvoiceItem) = selectedItems.update { it?.removeAllOf(item) }
 
-    fun onQtySet(item: InvoiceItem, myQty: Double) = selectedItems.update { it?.setQtyTo(item, myQty) }
+    fun onQtySet(item: InvoiceItem, myQty: Double) =
+        selectedItems.update { it?.setQtyTo(item, myQty) }
 
 
     sealed class ItemsWindowEvents {
