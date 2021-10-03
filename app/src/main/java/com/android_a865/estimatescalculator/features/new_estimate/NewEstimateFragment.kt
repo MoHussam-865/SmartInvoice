@@ -50,19 +50,12 @@ InvoiceItemsAdapter.OnItemEventListener {
 
         }
 
-        val observed = "choose_invoice_items"
-        findNavController().apply {
-            currentBackStackEntry?.savedStateHandle?.getLiveData<List<InvoiceItem>>(
-                    observed
-            )?.observe(viewLifecycleOwner) {
-                viewModel.onItemsSelected(it)
-
-                if (it != null) {
-                    currentBackStackEntry?.savedStateHandle?.set(observed, null)
-                }
-
-            }
-        }
+        viewModel.onItemsSelected(findNavController()
+            .currentBackStackEntry
+            ?.savedStateHandle
+            ?.get<List<InvoiceItem>>(
+            "choose_invoice_items"
+        ))
 
     }
 
