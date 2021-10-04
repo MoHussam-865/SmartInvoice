@@ -12,27 +12,30 @@ import com.android_a865.estimatescalculator.domain.model.Item
 import com.android_a865.estimatescalculator.databinding.AdapterItemsPageBinding
 
 class ItemsAdapter(
-        private val listener: OnItemEventListener,
-        private val selecting: Boolean = false
-):  ListAdapter<Item, ItemsAdapter.ViewHolder>(ItemDiffCallback()) {
+    private val listener: OnItemEventListener,
+    private val selecting: Boolean = false
+) : ListAdapter<Item, ItemsAdapter.ViewHolder>(ItemDiffCallback()) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
         ViewHolder(
             AdapterItemsPageBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false))
+                LayoutInflater.from(parent.context), parent, false
+            )
+        )
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(getItem(position))
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) =
+        holder.bind(getItem(position))
 
-    inner class ViewHolder(private val binding: AdapterItemsPageBinding)
-        : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: AdapterItemsPageBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         init {
             binding.apply {
                 root.apply {
                     setOnClickListener {
                         val position = adapterPosition
-                        if (position != RecyclerView.NO_POSITION){
+                        if (position != RecyclerView.NO_POSITION) {
                             val item = getItem(position)
                             listener.onItemClicked(item, position)
                         }
@@ -40,7 +43,7 @@ class ItemsAdapter(
 
                     setOnLongClickListener {
                         val position = adapterPosition
-                        if (position != RecyclerView.NO_POSITION){
+                        if (position != RecyclerView.NO_POSITION) {
                             val item = getItem(position)
 
                             listener.onItemLongClick(item)
@@ -52,7 +55,7 @@ class ItemsAdapter(
                 selection.setOnClickListener {
                     val position = adapterPosition
                     val b = (it as CheckBox).isChecked
-                    if (position != RecyclerView.NO_POSITION){
+                    if (position != RecyclerView.NO_POSITION) {
                         val item = getItem(position)
                         listener.onSelectionChange(item, position, b)
                     }
@@ -74,15 +77,16 @@ class ItemsAdapter(
         }
     }
 
-    class ItemDiffCallback: DiffUtil.ItemCallback<Item>(){
+    class ItemDiffCallback : DiffUtil.ItemCallback<Item>() {
         override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean {
             return oldItem.id == newItem.id
         }
+
         override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean =
-                oldItem == newItem
+            oldItem == newItem
     }
 
-    interface OnItemEventListener{
+    interface OnItemEventListener {
         fun onItemClicked(item: Item, position: Int)
         fun onItemLongClick(item: Item)
         fun onSelectionChange(item: Item, position: Int, b: Boolean)

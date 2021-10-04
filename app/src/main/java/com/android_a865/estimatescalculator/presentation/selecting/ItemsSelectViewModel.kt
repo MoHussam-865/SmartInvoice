@@ -8,11 +8,9 @@ import com.android_a865.estimatescalculator.data.repository.Repository
 import com.android_a865.estimatescalculator.domain.model.Item
 import com.android_a865.estimatescalculator.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,13 +21,14 @@ class ItemsSelectViewModel @Inject constructor(
 ) : ViewModel() {
 
     val currentPath = state.get<Path>("path") ?: Path()
-    val itemId = state.get<Int>("id") ?: 0
+    private val itemId = state.get<Int>("id") ?: 0
 
 
-    val itemsData = MutableLiveData(listOf<Item>())
+    val itemsData = MutableStateFlow(listOf<Item>())
 
-    val all get() = itemsData.value.orEmpty().size
-    var numSelected = itemsData.asFlow().flatMapLatest { flowOf(it.numSelected) }
+    val all get() = itemsData.value.size
+    @ExperimentalCoroutinesApi
+    var numSelected = itemsData.flatMapLatest { flowOf(it.numSelected) }
 
 
     private val itemsWindowEventsChannel = Channel<ItemsWindowEvents>()
@@ -44,7 +43,7 @@ class ItemsSelectViewModel @Inject constructor(
     }
 
 
-    fun onSelectAllChanged(b: Boolean) = itemsData.update { it?.selectAll(b) }
+    fun onSelectAllChanged(b: Boolean) = itemsData.update { it.selectAll(b) }
 
 
     fun onDeleteOptionSelected(context: Context) {
@@ -82,7 +81,7 @@ class ItemsSelectViewModel @Inject constructor(
         }
     }
 
-    fun onEditOptionSelected() = itemsData.value?.filterSelected().orEmpty().apply {
+    fun onEditOptionSelected() = itemsData.value.filterSelected().apply {
 
         if (this.size == 1) {
             val item = this[0]

@@ -11,8 +11,8 @@ import javax.inject.Singleton
 
 @Singleton
 class Repository @Inject constructor(
-        private val dao: ItemsDao,
-        private val mapper: Mapper
+    private val dao: ItemsDao,
+    private val mapper: Mapper
 ) {
 
     fun getItems(path: String): Flow<List<Item>> = dao.getItemsEntity(path).map {
@@ -25,7 +25,7 @@ class Repository @Inject constructor(
 
     suspend fun deleteItems(items: List<Item>) {
         dao.deleteItems(
-                mapper.itemsToEntities(items)
+            mapper.itemsToEntities(items)
         )
     }
 

@@ -51,7 +51,7 @@ ItemsAdapter.OnItemEventListener {
         pathIndicator.submitPath(itemsViewModule.currentPath)
 
 
-        itemsViewModule.itemsData.observe(viewLifecycleOwner) {
+        itemsViewModule.itemsData.asLiveData().observe(viewLifecycleOwner) {
             itemsAdapter.submitList(it)
         }
 

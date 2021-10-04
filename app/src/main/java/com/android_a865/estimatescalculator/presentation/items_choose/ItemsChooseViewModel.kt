@@ -13,9 +13,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ItemsChooseViewModel @Inject constructor(
-        private val repository: Repository,
-        state: SavedStateHandle
-): ViewModel() {
+    private val repository: Repository,
+    state: SavedStateHandle
+) : ViewModel() {
 
     val currentPath = MutableStateFlow(state.get<Path>("path") ?: Path())
 
@@ -24,24 +24,20 @@ class ItemsChooseViewModel @Inject constructor(
         repository.getInvoiceItems(path.path)
     }
 
-    private val initialItems = state.get<Array<InvoiceItem>>("items")?.toList()
-    val selectedItems = MutableStateFlow(initialItems ?: listOf())
-
+    val selectedItems = MutableLiveData(
+        state.get<Array<InvoiceItem>>("items")?.toList() ?: listOf()
+    )
     @ExperimentalCoroutinesApi
-    val itemsData = combine(itemsFlow, selectedItems) { items, selected ->
+    val itemsData = combine(itemsFlow, selectedItems.asFlow()) { items, selected ->
         Pair(items, selected)
     }.flatMapLatest { (items, selected) ->
         flowOf(items.include(selected))
     }
 
-
-
-
     // Handle variables
 
     private val itemsWindowEventsChannel = Channel<ItemsWindowEvents>()
     val itemsWindowEvents = itemsWindowEventsChannel.receiveAsFlow()
-
 
 
     fun onBackPress() {
@@ -62,13 +58,14 @@ class ItemsChooseViewModel @Inject constructor(
         }
     }
 
-    fun onAddItemClicked(item: InvoiceItem) = selectedItems.update { it.addOneOf(item) }
+    fun onAddItemClicked(item: InvoiceItem) = selectedItems.update { it?.addOneOf(item) }
 
-    fun onMinusItemClicked(item: InvoiceItem) = selectedItems.update { it.removeOneOf(item) }
+    fun onMinusItemClicked(item: InvoiceItem) = selectedItems.update { it?.removeOneOf(item) }
 
-    fun onItemRemoveClicked(item: InvoiceItem) = selectedItems.update { it.removeAllOf(item) }
+    fun onItemRemoveClicked(item: InvoiceItem) = selectedItems.update { it?.removeAllOf(item) }
 
-    fun onQtySet(item: InvoiceItem, myQty: Double) = selectedItems.update { it.setQtyTo(item, myQty) }
+    fun onQtySet(item: InvoiceItem, myQty: Double) =
+        selectedItems.update { it?.setQtyTo(item, myQty) }
 
 
     sealed class ItemsWindowEvents {

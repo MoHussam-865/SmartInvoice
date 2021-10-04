@@ -13,11 +13,15 @@ interface ItemsDao {
         return if (search.isBlank()) getItemsEntity(path)
         else getItemsEntity(path, search)
     }
+
     @Query("SELECT * FROM Items WHERE path = :path ORDER BY isFolder DESC")
     fun getItemsEntity(path: String): Flow<List<ItemEntity>>
-    @Query("""SELECT * FROM Items
+
+    @Query(
+        """SELECT * FROM Items
                     WHERE path = :path AND (name LIKE '%'|| :search ||'%')
-                    ORDER BY isFolder DESC""")
+                    ORDER BY isFolder DESC"""
+    )
     fun getItemsEntity(path: String, search: String): Flow<List<ItemEntity>>
 
     @Query("SELECT * FROM Items WHERE path = :path AND name = :name")
@@ -39,6 +43,7 @@ interface ItemsDao {
         }
 
     }
+
     suspend fun moveItem(item: ItemEntity, path: String) {
 
         updateItemEntity(item.copy(path = path))
@@ -54,8 +59,12 @@ interface ItemsDao {
         }
 
     }
-    suspend fun copyItems(items: List<ItemEntity>, path: String) = items.forEach { copyItem(it,path) }
-    suspend fun moveItems(items: List<ItemEntity>, path: String) = items.forEach { moveItem(it,path) }
+
+    suspend fun copyItems(items: List<ItemEntity>, path: String) =
+        items.forEach { copyItem(it, path) }
+
+    suspend fun moveItems(items: List<ItemEntity>, path: String) =
+        items.forEach { moveItem(it, path) }
 
 
     // update Item
@@ -68,10 +77,10 @@ interface ItemsDao {
             updateItemEntity(newItem)
 
             // if the path has changed or the name has changed
-            if (newItem.path != oldItem.path || newItem.name != oldItem.name){
+            if (newItem.path != oldItem.path || newItem.name != oldItem.name) {
 
                 val oldPath = oldItem.run { Path(path).pathOf(name) }
-                val newPath = newItem.run{ Path(path).pathOf(name) }
+                val newPath = newItem.run { Path(path).pathOf(name) }
 
                 // get all the items that has the old path that is no longer exist
                 val items = getFolderContent(oldPath)
@@ -86,6 +95,7 @@ interface ItemsDao {
         // if it's not a folder update it
         else updateItemEntity(newItem)
     }
+
     @Update
     suspend fun updateItemEntity(itemEntity: ItemEntity)
 
@@ -96,8 +106,6 @@ interface ItemsDao {
     suspend fun getItemByID(id: Int): ItemEntity
 
 
-
-
     // delete Item
     suspend fun deleteItems(items: List<ItemEntity>) = items.forEach { deleteItem(it) }
     suspend fun deleteItem(item: ItemEntity) {
@@ -106,8 +114,10 @@ interface ItemsDao {
             deleteFolderContent(item.run { Path(path).pathOf(name) })
         }
     }
+
     @Delete
     suspend fun deleteItemEntity(itemEntity: ItemEntity)
+
     @Query("DELETE FROM Items WHERE path LIKE :path || '%' ")
     suspend fun deleteFolderContent(path: String)
 

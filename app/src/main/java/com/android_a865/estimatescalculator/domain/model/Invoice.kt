@@ -6,6 +6,6 @@ import java.util.*
 
 @Parcelize
 data class Invoice(
-        val date: Date,
+        val date: Long = Calendar.getInstance().timeInMillis,
         val items: List<InvoiceItem>
-): Parcelable
+) : Parcelable

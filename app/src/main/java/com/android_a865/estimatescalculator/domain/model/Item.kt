@@ -15,6 +15,6 @@ data class Item(
 
         override var isFolder: Boolean = false,
         override var isSelected: Boolean = false
-): Parcelable, PathUtil, Selectable<Item> {
-        override fun copy(b: Boolean) = copy(isSelected = b)
+) : Parcelable, PathUtil, Selectable<Item> {
+    override fun copy(b: Boolean) = copy(isSelected = b)
 }

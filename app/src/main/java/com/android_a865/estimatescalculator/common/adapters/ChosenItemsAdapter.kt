@@ -10,26 +10,26 @@ import com.android_a865.estimatescalculator.databinding.AdapterChosenItemsBindin
 
 class ChosenItemsAdapter(
     private val listener: OnItemEventListener
-): ListAdapter<InvoiceItem, ChosenItemsAdapter.ViewHolder>(InvoiceItemDiffCallback()) {
+) : ListAdapter<InvoiceItem, ChosenItemsAdapter.ViewHolder>(InvoiceItemDiffCallback()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(
-        AdapterChosenItemsBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
+        ViewHolder(
+            AdapterChosenItemsBinding.inflate(
+                LayoutInflater.from(parent.context), parent, false
+            )
         )
-    )
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(getItem(position))
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) =
+        holder.bind(getItem(position))
 
 
-    inner class ViewHolder(private val binding: AdapterChosenItemsBinding)
-        : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: AdapterChosenItemsBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         init {
             binding.close.setOnClickListener {
                 val position = adapterPosition
-                if (position != RecyclerView.NO_POSITION){
+                if (position != RecyclerView.NO_POSITION) {
                     listener.onRemoveItemClicked(getItem(position))
                 }
             }
@@ -44,14 +44,15 @@ class ChosenItemsAdapter(
         }
     }
 
-    class InvoiceItemDiffCallback: DiffUtil.ItemCallback<InvoiceItem>(){
+    class InvoiceItemDiffCallback : DiffUtil.ItemCallback<InvoiceItem>() {
         override fun areItemsTheSame(oldItem: InvoiceItem, newItem: InvoiceItem) =
-                oldItem.id == newItem.id
+            oldItem.id == newItem.id
+
         override fun areContentsTheSame(oldItem: InvoiceItem, newItem: InvoiceItem) =
-                oldItem == newItem
+            oldItem == newItem
     }
 
-    interface OnItemEventListener{
+    interface OnItemEventListener {
         fun onRemoveItemClicked(item: InvoiceItem)
     }
 }

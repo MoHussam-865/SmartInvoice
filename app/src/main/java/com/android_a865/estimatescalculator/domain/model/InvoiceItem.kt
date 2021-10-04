@@ -11,4 +11,6 @@ data class InvoiceItem(
     var qty: Double = 0.0,
 
     val isFolder: Boolean = false
-): Parcelable{    val total get() = price * qty   }
+) : Parcelable {
+    val total get() = price * qty
+}

@@ -26,10 +26,10 @@ import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class ItemsChooseFragment : Fragment(R.layout.fragment_items_choose),
-ChooseInvoiceItemsAdapter.OnItemEventListener,
-ChosenItemsAdapter.OnItemEventListener {
+    ChooseInvoiceItemsAdapter.OnItemEventListener,
+    ChosenItemsAdapter.OnItemEventListener {
 
-    private val itemsViewModel by viewModels<ItemsChooseViewModel>()
+    private val viewModel by viewModels<ItemsChooseViewModel>()
     private val itemsAdapter = ChooseInvoiceItemsAdapter(this)
     private val chosenItemsAdapter = ChosenItemsAdapter(this)
     private val pathIndicator = PathIndicatorAdapter()
@@ -59,37 +59,38 @@ ChosenItemsAdapter.OnItemEventListener {
                 setHasFixedSize(true)
             }
 
-            itemsViewModel.currentPath.asLiveData().observe(viewLifecycleOwner) {
+            viewModel.currentPath.asLiveData().observe(viewLifecycleOwner) {
                 pathIndicator.submitPath(it)
                 pathList.scrollToEnd()
             }
 
-            itemsViewModel.selectedItems.asLiveData().observe(viewLifecycleOwner) {
+            viewModel.selectedItems.observe(viewLifecycleOwner) {
                 binding.chosenItemsList.isVisible = it.isNotEmpty()
                 chosenItemsAdapter.submitList(it)
                 chosenItemsList.scrollToEnd()
 
                 findNavController().previousBackStackEntry?.savedStateHandle?.set(
-                        "choose_invoice_items", it
+                    "choose_invoice_items", it
                 )
-                Log.d("ItemsChooseFragment", "the size = "+it.size)
+                Log.d("ItemsChooseFragment", "the size = " + it.size)
             }
 
-            itemsViewModel.itemsData.asLiveData().observe(viewLifecycleOwner) {
+            viewModel.itemsData.asLiveData().observe(viewLifecycleOwner) {
                 itemsAdapter.submitList(it)
             }
         }
 
         val callback = requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            itemsViewModel.onBackPress()
+            viewModel.onBackPress()
         }
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            itemsViewModel.itemsWindowEvents.collect { event ->
+            viewModel.itemsWindowEvents.collect { event ->
                 when (event) {
                     ItemsChooseViewModel.ItemsWindowEvents.GoBack -> {
                         callback.remove()
                         findNavController().popBackStack()
+                        Log.d("ItemsChooseFragment", "this fragment is popped")
                     }
                 }.exhaustive
             }
@@ -98,19 +99,13 @@ ChosenItemsAdapter.OnItemEventListener {
     }
 
 
+    override fun onItemClicked(item: InvoiceItem) = viewModel.onItemClicked(item)
 
-    override fun onItemClicked(item: InvoiceItem, position: Int) =
-            itemsViewModel.onItemClicked(item)
+    override fun onAddItemClicked(item: InvoiceItem) = viewModel.onAddItemClicked(item)
 
-    override fun onAddItemClicked(item: InvoiceItem, position: Int) =
-            itemsViewModel.onAddItemClicked(item)
+    override fun onMinusItemClicked(item: InvoiceItem) = viewModel.onMinusItemClicked(item)
 
-    override fun onMinusItemClicked(item: InvoiceItem, position: Int) =
-            itemsViewModel.onMinusItemClicked(item)
+    override fun onRemoveItemClicked(item: InvoiceItem) = viewModel.onItemRemoveClicked(item)
 
-    override fun onRemoveItemClicked(item: InvoiceItem) =
-            itemsViewModel.onItemRemoveClicked(item)
-
-    override fun onQtySet(item: InvoiceItem, qty: Double) =
-            itemsViewModel.onQtySet(item, qty)
+    override fun onQtySet(item: InvoiceItem, qty: Double) = viewModel.onQtySet(item, qty)
 }
