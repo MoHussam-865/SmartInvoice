@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.android_a865.estimatescalculator.R
-import com.android_a865.estimatescalculator.database.domain.Item
+import com.android_a865.estimatescalculator.domain.model.Item
 import com.android_a865.estimatescalculator.databinding.AdapterItemsPageBinding
 
 class ItemsAdapter(
