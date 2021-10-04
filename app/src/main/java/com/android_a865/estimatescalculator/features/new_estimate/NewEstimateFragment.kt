@@ -8,7 +8,7 @@ import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android_a865.estimatescalculator.R
-import com.android_a865.estimatescalculator.adapters.InvoiceItemsAdapter
+import com.android_a865.estimatescalculator.common.adapters.InvoiceItemsAdapter
 import com.android_a865.estimatescalculator.database.domain.InvoiceItem
 import com.android_a865.estimatescalculator.databinding.FragmentNewEstimateBinding
 import dagger.hilt.android.AndroidEntryPoint

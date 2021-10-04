@@ -14,8 +14,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android_a865.estimatescalculator.R
-import com.android_a865.estimatescalculator.adapters.ItemsAdapter
-import com.android_a865.estimatescalculator.adapters.PathIndicatorAdapter
+import com.android_a865.estimatescalculator.common.adapters.ItemsAdapter
+import com.android_a865.estimatescalculator.common.adapters.PathIndicatorAdapter
 import com.android_a865.estimatescalculator.database.domain.Item
 import com.android_a865.estimatescalculator.databinding.FragmentMainBinding
 import com.android_a865.estimatescalculator.utils.exhaustive

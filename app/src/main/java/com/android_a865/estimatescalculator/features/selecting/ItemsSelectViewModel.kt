@@ -4,7 +4,7 @@ import android.app.AlertDialog
 import android.content.Context
 import androidx.lifecycle.*
 import androidx.navigation.NavDirections
-import com.android_a865.estimatescalculator.database.Repository
+import com.android_a865.estimatescalculator.database.repository.Repository
 import com.android_a865.estimatescalculator.database.domain.Item
 import com.android_a865.estimatescalculator.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel

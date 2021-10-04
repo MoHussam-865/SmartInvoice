@@ -1,15 +1,19 @@
 package com.android_a865.estimatescalculator.features.new_estimate
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.android_a865.estimatescalculator.database.domain.Invoice
 import com.android_a865.estimatescalculator.database.domain.InvoiceItem
 import com.android_a865.estimatescalculator.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,6 +26,12 @@ class NewEstimateViewModel @Inject constructor(
 
     @ExperimentalCoroutinesApi
     val totalFlow = itemsFlow.flatMapLatest { items ->
+
+        items.forEach {
+            Log.d("NewEstimateViewModel", "${it.name} ${it.qty}")
+        }
+        Log.d("NewEstimateViewModel", "the size = ${items.size}")
+
         flowOf(items.sumOf { it.total })
     }
 
@@ -43,8 +53,12 @@ class NewEstimateViewModel @Inject constructor(
         it.setQtyTo(item, qty.toDouble())
     }
 
-    fun onItemsSelected(chosenItems: List<InvoiceItem>?) = chosenItems?.let { items ->
-        itemsFlow.update { items }
+    fun onItemsSelected(chosenItems: List<InvoiceItem>?) = viewModelScope.launch {
+        chosenItems?.let { items ->
+            // this delay is to solve an unexpected bug
+            delay(100)
+            itemsFlow.update { items }
+        }
     }
 
 

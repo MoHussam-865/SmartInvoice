@@ -12,9 +12,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android_a865.estimatescalculator.R
-import com.android_a865.estimatescalculator.adapters.ChooseInvoiceItemsAdapter
-import com.android_a865.estimatescalculator.adapters.ChosenItemsAdapter
-import com.android_a865.estimatescalculator.adapters.PathIndicatorAdapter
+import com.android_a865.estimatescalculator.common.adapters.ChooseInvoiceItemsAdapter
+import com.android_a865.estimatescalculator.common.adapters.ChosenItemsAdapter
+import com.android_a865.estimatescalculator.common.adapters.PathIndicatorAdapter
 import com.android_a865.estimatescalculator.database.domain.InvoiceItem
 import com.android_a865.estimatescalculator.databinding.FragmentItemsChooseBinding
 import com.android_a865.estimatescalculator.utils.exhaustive

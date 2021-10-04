@@ -1,4 +1,4 @@
-package com.android_a865.estimatescalculator.adapters
+package com.android_a865.estimatescalculator.common.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -3,7 +3,7 @@ package com.android_a865.estimatescalculator.features.new_folder
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.android_a865.estimatescalculator.database.Repository
+import com.android_a865.estimatescalculator.database.repository.Repository
 import com.android_a865.estimatescalculator.database.domain.Item
 import com.android_a865.estimatescalculator.utils.Path
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -1,7 +1,7 @@
 package com.android_a865.estimatescalculator.features.items_choose
 
 import androidx.lifecycle.*
-import com.android_a865.estimatescalculator.database.Repository
+import com.android_a865.estimatescalculator.database.repository.Repository
 import com.android_a865.estimatescalculator.database.domain.InvoiceItem
 import com.android_a865.estimatescalculator.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -4,7 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.android_a865.estimatescalculator.database.Repository
+import com.android_a865.estimatescalculator.database.repository.Repository
 import com.android_a865.estimatescalculator.database.domain.Item
 import com.android_a865.estimatescalculator.utils.Path
 import com.android_a865.estimatescalculator.utils.update

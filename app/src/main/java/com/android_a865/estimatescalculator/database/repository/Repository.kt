@@ -1,4 +1,4 @@
-package com.android_a865.estimatescalculator.database
+package com.android_a865.estimatescalculator.database.repository
 
 import com.android_a865.estimatescalculator.database.dao.ItemsDao
 import com.android_a865.estimatescalculator.database.domain.InvoiceItem
@@ -11,8 +11,8 @@ import javax.inject.Singleton
 
 @Singleton
 class Repository @Inject constructor(
-        private val dao: ItemsDao,
-        private val mapper: Mapper
+    private val dao: ItemsDao,
+    private val mapper: Mapper
 ) {
 
     fun getItems(path: String): Flow<List<Item>> = dao.getItemsEntity(path).map {
@@ -25,7 +25,7 @@ class Repository @Inject constructor(
 
     suspend fun deleteItems(items: List<Item>) {
         dao.deleteItems(
-                mapper.itemsToEntities(items)
+            mapper.itemsToEntities(items)
         )
     }
 
@@ -33,6 +33,6 @@ class Repository @Inject constructor(
         mapper.invoiceItemsFromEntities(it)
     }
 
-    suspend fun getItemById(id: Int): Item  = mapper.itemFromEntity(dao.getItemByID(id))
+    suspend fun getItemById(id: Int): Item = mapper.itemFromEntity(dao.getItemByID(id))
 
 }
