@@ -3,8 +3,9 @@ package com.android_a865.estimatescalculator.presentation.new_item
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.android_a865.estimatescalculator.data.repository.Repository
+import com.android_a865.estimatescalculator.data.repository.ItemsRepositoryImpl
 import com.android_a865.estimatescalculator.domain.model.Item
+import com.android_a865.estimatescalculator.domain.use_cases.ItemsUseCases
 import com.android_a865.estimatescalculator.utils.Path
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -14,8 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NewItemViewModel @Inject constructor(
-        private val repository: Repository,
-        state: SavedStateHandle
+    private val itemsUseCases: ItemsUseCases,
+    state: SavedStateHandle
 ): ViewModel() {
 
     val item = state.get<Item>("item")
@@ -36,6 +37,7 @@ class NewItemViewModel @Inject constructor(
     fun onSaveClicked() {
         if (itemName.isBlank() || itemPrice.isBlank()) {
             showInvalidInputMessage("fill the required fields")
+            return
         }
 
         if (item != null) {
@@ -66,7 +68,7 @@ class NewItemViewModel @Inject constructor(
     }
 
     private fun createItem(item: Item) = viewModelScope.launch {
-        repository.insertItem(item)
+        itemsUseCases.addItem(item)
         addEditItemChannel.send(AddEditItemEvent.NavigateBackWithResult)
     }
 

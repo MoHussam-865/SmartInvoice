@@ -5,6 +5,9 @@ import androidx.room.Room
 import com.android_a865.estimatescalculator.data.MyRoomDatabase
 import com.android_a865.estimatescalculator.data.MyRoomDatabase.Companion.DATABASE_NAME
 import com.android_a865.estimatescalculator.data.dao.ItemsDao
+import com.android_a865.estimatescalculator.data.repository.ItemsRepositoryImpl
+import com.android_a865.estimatescalculator.domain.repository.ItemsRepository
+import com.android_a865.estimatescalculator.domain.use_cases.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,7 +24,22 @@ object AppModule {
             .fallbackToDestructiveMigration().build()
     
     @Provides @Singleton
-    fun provideItemsDao(db: MyRoomDatabase): ItemsDao = db.getItemsDao()
+    fun provideItemsRepository(db: MyRoomDatabase): ItemsRepository {
+        return ItemsRepositoryImpl(db.getItemsDao())
+    }
+
+    @Provides @Singleton
+    fun provideItemsUseCases(repository: ItemsRepository): ItemsUseCases {
+        return ItemsUseCases(
+            getItems = GetItemsUseCase(repository),
+            getInvoiceItems = GetInvoiceItemsUseCase(repository),
+            getItemByID = GetItemByIDUseCase(repository),
+            deleteItems = DeleteItemsUseCase(repository),
+            addItem = AddItemUseCase(repository),
+
+        )
+    }
+
 
 
 }

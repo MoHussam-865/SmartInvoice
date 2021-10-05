@@ -1,8 +1,10 @@
 package com.android_a865.estimatescalculator.presentation.items_choose
 
 import androidx.lifecycle.*
-import com.android_a865.estimatescalculator.data.repository.Repository
+import com.android_a865.estimatescalculator.data.repository.ItemsRepositoryImpl
 import com.android_a865.estimatescalculator.domain.model.InvoiceItem
+import com.android_a865.estimatescalculator.domain.model.Item
+import com.android_a865.estimatescalculator.domain.use_cases.ItemsUseCases
 import com.android_a865.estimatescalculator.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -13,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ItemsChooseViewModel @Inject constructor(
-    private val repository: Repository,
+    private val itemsUseCases: ItemsUseCases,
     state: SavedStateHandle
 ) : ViewModel() {
 
@@ -21,7 +23,7 @@ class ItemsChooseViewModel @Inject constructor(
 
     @ExperimentalCoroutinesApi
     private val itemsFlow = currentPath.flatMapLatest { path ->
-        repository.getInvoiceItems(path.path)
+        itemsUseCases.getInvoiceItems(path.path)
     }
 
     val selectedItems = MutableLiveData(
@@ -52,7 +54,7 @@ class ItemsChooseViewModel @Inject constructor(
     fun onItemClicked(item: InvoiceItem) {
         if (item.isFolder) {
             viewModelScope.launch {
-                val myItem = repository.getItemById(item.id)
+                val myItem: Item = itemsUseCases.getItemByID(item.id)
                 currentPath.update { myItem.open() }
             }
         }

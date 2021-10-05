@@ -4,8 +4,9 @@ import android.app.AlertDialog
 import android.content.Context
 import androidx.lifecycle.*
 import androidx.navigation.NavDirections
-import com.android_a865.estimatescalculator.data.repository.Repository
+import com.android_a865.estimatescalculator.data.repository.ItemsRepositoryImpl
 import com.android_a865.estimatescalculator.domain.model.Item
+import com.android_a865.estimatescalculator.domain.use_cases.ItemsUseCases
 import com.android_a865.estimatescalculator.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -16,8 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ItemsSelectViewModel @Inject constructor(
-        private val repository: Repository,
-        state: SavedStateHandle
+    private val itemsUseCases: ItemsUseCases,
+    state: SavedStateHandle
 ) : ViewModel() {
 
     val currentPath = state.get<Path>("path") ?: Path()
@@ -36,7 +37,7 @@ class ItemsSelectViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            repository.getItems(currentPath.path ).collect { items ->
+            itemsUseCases.getItems(currentPath.path ).collect { items ->
                 itemsData.value = items.selectOnlyWhere { itemId == it.id }
             }
         }
@@ -62,7 +63,7 @@ class ItemsSelectViewModel @Inject constructor(
 
 
     private fun deleteSelected(items: List<Item>) = viewModelScope.launch {
-        repository.deleteItems(items)
+        itemsUseCases.deleteItems(items)
         itemsWindowEventsChannel.send(ItemsWindowEvents.NavigateBack)
 
     }

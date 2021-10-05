@@ -14,7 +14,9 @@ interface PathUtil {
 
 
 @Parcelize
-data class Path(val path:String = ROOT): Parcelable{
+data class Path(
+    val path:String = ROOT
+): Parcelable{
     /** a new abstraction layer to deal with paths (navigation) */
 
     fun open(name: String) = Path(path + Separation + name)

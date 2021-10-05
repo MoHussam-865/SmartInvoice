@@ -1,0 +1,17 @@
+package com.android_a865.estimatescalculator.domain.use_cases
+
+import com.android_a865.estimatescalculator.data.mapper.toInvoiceItems
+import com.android_a865.estimatescalculator.domain.model.InvoiceItem
+import com.android_a865.estimatescalculator.domain.repository.ItemsRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+
+class GetInvoiceItemsUseCase(
+    val repository: ItemsRepository
+) {
+    operator fun invoke(path: String): Flow<List<InvoiceItem>> {
+        return repository.getItems(path).map {
+            it.toInvoiceItems()
+        }
+    }
+}
