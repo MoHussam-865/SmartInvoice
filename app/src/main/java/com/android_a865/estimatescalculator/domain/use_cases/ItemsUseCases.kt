@@ -6,5 +6,6 @@ data class ItemsUseCases(
     val getItemByID: GetItemByIDUseCase,
     val deleteItems: DeleteItemsUseCase,
     val addItem: AddItemUseCase,
+    val updateItem: UpdateItemUseCase,
 
 )

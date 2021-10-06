@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android_a865.estimatescalculator.data.repository.ItemsRepositoryImpl
 import com.android_a865.estimatescalculator.domain.model.Item
+import com.android_a865.estimatescalculator.domain.use_cases.ItemsUseCases
 import com.android_a865.estimatescalculator.utils.Path
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -15,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class NewFolderViewModel @Inject constructor(
 
-    private val repository: ItemsRepositoryImpl,
+    private val itemsUseCases: ItemsUseCases,
     state: SavedStateHandle
 ): ViewModel() {
 
@@ -62,12 +63,12 @@ class NewFolderViewModel @Inject constructor(
 
 
     private fun updateFolder(item: Item) = viewModelScope.launch {
-        repository.updateItem(item)
+        itemsUseCases.updateItem(item)
         addEditItemChannel.send(AddEditItemEvent.NavigateBackWithResult2)
     }
 
     private fun createFolder(item: Item) = viewModelScope.launch {
-        repository.insertItem(item)
+        itemsUseCases.addItem(item)
         addEditItemChannel.send(AddEditItemEvent.NavigateBackWithResult)
     }
 

@@ -18,17 +18,20 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-    @Provides @Singleton
-    fun provideRoomDatabase(app: Application):MyRoomDatabase =
+    @Provides
+    @Singleton
+    fun provideRoomDatabase(app: Application): MyRoomDatabase =
         Room.databaseBuilder(app, MyRoomDatabase::class.java, DATABASE_NAME)
-            .fallbackToDestructiveMigration().build()
-    
-    @Provides @Singleton
+            .build()
+
+    @Provides
+    @Singleton
     fun provideItemsRepository(db: MyRoomDatabase): ItemsRepository {
         return ItemsRepositoryImpl(db.getItemsDao())
     }
 
-    @Provides @Singleton
+    @Provides
+    @Singleton
     fun provideItemsUseCases(repository: ItemsRepository): ItemsUseCases {
         return ItemsUseCases(
             getItems = GetItemsUseCase(repository),
@@ -36,10 +39,10 @@ object AppModule {
             getItemByID = GetItemByIDUseCase(repository),
             deleteItems = DeleteItemsUseCase(repository),
             addItem = AddItemUseCase(repository),
+            updateItem = UpdateItemUseCase(repository),
 
-        )
+            )
     }
-
 
 
 }

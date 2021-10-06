@@ -63,7 +63,7 @@ class NewItemViewModel @Inject constructor(
 
 
     private fun updateItem(item: Item) = viewModelScope.launch {
-        repository.updateItem(item)
+        itemsUseCases.updateItem(item)
         addEditItemChannel.send(AddEditItemEvent.NavigateBackWithResult2)
     }
 

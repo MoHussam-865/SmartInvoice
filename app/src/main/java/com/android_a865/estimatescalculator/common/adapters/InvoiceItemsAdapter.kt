@@ -72,7 +72,10 @@ class InvoiceItemsAdapter(
                 itemName.text = item.name
                 itemUnitPrice.text = item.price.toString()
                 itemTotal.text = item.total.toString()
-                etQty.setText(item.qty.toString())
+
+                if (!etQty.isFocused) {
+                    etQty.setText(item.qty.toString())
+                }
 
             }
         }
