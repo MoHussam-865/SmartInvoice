@@ -9,7 +9,8 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface InvoicesDao {
 
-    @Transaction @Query("SELECT * FROM Invoices")
+    @Transaction
+    @Query("SELECT * FROM Invoices")
     fun getInvoices(): Flow<List<FullInvoice>>
 
     // Insert
@@ -18,9 +19,7 @@ interface InvoicesDao {
             val invoiceId = insertInvoice(invoice).toInt()
 
             items.forEach {
-                insertInvoiceItem(
-                    it.copy(invoiceId = invoiceId)
-                )
+                insertInvoiceItem(it.copy(invoiceId = invoiceId))
             }
         }
     }
@@ -39,8 +38,10 @@ interface InvoicesDao {
             items.forEach { updateInvoiceItem(it) }
         }
     }
+
     @Update
     suspend fun updateInvoice(invoiceEntity: InvoiceEntity)
+
     @Update
     suspend fun updateInvoiceItem(invoiceItemEntity: InvoiceItemEntity)
 

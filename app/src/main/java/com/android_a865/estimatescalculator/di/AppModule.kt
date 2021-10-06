@@ -5,7 +5,9 @@ import androidx.room.Room
 import com.android_a865.estimatescalculator.data.MyRoomDatabase
 import com.android_a865.estimatescalculator.data.MyRoomDatabase.Companion.DATABASE_NAME
 import com.android_a865.estimatescalculator.data.dao.ItemsDao
+import com.android_a865.estimatescalculator.data.repository.InvoiceRepositoryImpl
 import com.android_a865.estimatescalculator.data.repository.ItemsRepositoryImpl
+import com.android_a865.estimatescalculator.domain.repository.InvoiceRepository
 import com.android_a865.estimatescalculator.domain.repository.ItemsRepository
 import com.android_a865.estimatescalculator.domain.use_cases.*
 import dagger.Module
@@ -28,6 +30,12 @@ object AppModule {
     @Singleton
     fun provideItemsRepository(db: MyRoomDatabase): ItemsRepository {
         return ItemsRepositoryImpl(db.getItemsDao())
+    }
+
+    @Provides
+    @Singleton
+    fun provideInvoicesRepository(db: MyRoomDatabase): InvoiceRepository {
+        return InvoiceRepositoryImpl(db.getInvoicesDao())
     }
 
     @Provides
