@@ -14,7 +14,7 @@ import androidx.room.PrimaryKey
 
 @Entity(
     tableName = "InvoiceItems",
-    primaryKeys = ["clientId", "invoiceId", "itemId"]
+    primaryKeys = ["invoiceId", "itemId"]
 )
 data class InvoiceItemEntity(
     val invoiceId: Int,
