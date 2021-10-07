@@ -4,9 +4,8 @@ import android.app.AlertDialog
 import android.content.Context
 import androidx.lifecycle.*
 import androidx.navigation.NavDirections
-import com.android_a865.estimatescalculator.data.repository.ItemsRepositoryImpl
 import com.android_a865.estimatescalculator.domain.model.Item
-import com.android_a865.estimatescalculator.domain.use_cases.ItemsUseCases
+import com.android_a865.estimatescalculator.domain.use_cases.items_use_cases.ItemsUseCases
 import com.android_a865.estimatescalculator.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi

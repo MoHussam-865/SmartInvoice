@@ -3,7 +3,6 @@ package com.android_a865.estimatescalculator.common
 import android.content.Context
 import android.util.Log
 import com.android_a865.estimatescalculator.domain.model.Invoice
-import com.android_a865.estimatescalculator.domain.model.total
 import com.itextpdf.text.*
 import com.itextpdf.text.pdf.BaseFont
 import com.itextpdf.text.pdf.PdfPCell
@@ -120,7 +119,7 @@ class PdfMaker {
             document.close()
             return fileName
         } catch (e: Exception) {
-            Log.d("Making Pdf Error:", e.message!!)
+            Log.d("pdf_error:", e.message.toString())
         }
         return null
     }

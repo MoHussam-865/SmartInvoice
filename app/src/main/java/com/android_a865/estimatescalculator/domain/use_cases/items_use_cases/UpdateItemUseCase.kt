@@ -1,15 +1,13 @@
-package com.android_a865.estimatescalculator.domain.use_cases
+package com.android_a865.estimatescalculator.domain.use_cases.items_use_cases
 
 import com.android_a865.estimatescalculator.data.mapper.toEntity
 import com.android_a865.estimatescalculator.domain.model.Item
 import com.android_a865.estimatescalculator.domain.repository.ItemsRepository
 
-class AddItemUseCase(
+class UpdateItemUseCase(
     val repository: ItemsRepository
 ) {
     suspend operator fun invoke(item: Item) {
-
-
-        repository.insertItem(item.toEntity())
+        repository.updateItem(item.toEntity())
     }
 }

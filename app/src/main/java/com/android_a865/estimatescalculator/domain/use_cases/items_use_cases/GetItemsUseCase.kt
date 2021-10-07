@@ -1,4 +1,4 @@
-package com.android_a865.estimatescalculator.domain.use_cases
+package com.android_a865.estimatescalculator.domain.use_cases.items_use_cases
 
 import android.content.ClipData
 import com.android_a865.estimatescalculator.data.mapper.toItems

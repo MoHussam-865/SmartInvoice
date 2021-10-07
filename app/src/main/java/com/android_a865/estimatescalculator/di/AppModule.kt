@@ -4,12 +4,14 @@ import android.app.Application
 import androidx.room.Room
 import com.android_a865.estimatescalculator.data.MyRoomDatabase
 import com.android_a865.estimatescalculator.data.MyRoomDatabase.Companion.DATABASE_NAME
-import com.android_a865.estimatescalculator.data.dao.ItemsDao
 import com.android_a865.estimatescalculator.data.repository.InvoiceRepositoryImpl
 import com.android_a865.estimatescalculator.data.repository.ItemsRepositoryImpl
 import com.android_a865.estimatescalculator.domain.repository.InvoiceRepository
 import com.android_a865.estimatescalculator.domain.repository.ItemsRepository
-import com.android_a865.estimatescalculator.domain.use_cases.*
+import com.android_a865.estimatescalculator.domain.use_cases.invoice_use_cases.AddInvoiceUseCase
+import com.android_a865.estimatescalculator.domain.use_cases.invoice_use_cases.GetInvoicesUseCase
+import com.android_a865.estimatescalculator.domain.use_cases.invoice_use_cases.InvoiceUseCases
+import com.android_a865.estimatescalculator.domain.use_cases.items_use_cases.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -47,10 +49,18 @@ object AppModule {
             getItemByID = GetItemByIDUseCase(repository),
             deleteItems = DeleteItemsUseCase(repository),
             addItem = AddItemUseCase(repository),
-            updateItem = UpdateItemUseCase(repository),
+            updateItem = UpdateItemUseCase(repository)
 
-            )
+        )
     }
 
+    @Provides
+    @Singleton
+    fun provideInvoicesUseCases(repository: InvoiceRepository): InvoiceUseCases {
+        return InvoiceUseCases(
+            getInvoices = GetInvoicesUseCase(repository),
+            addInvoice = AddInvoiceUseCase(repository)
+        )
+    }
 
 }

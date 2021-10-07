@@ -3,9 +3,8 @@ package com.android_a865.estimatescalculator.presentation.new_folder
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.android_a865.estimatescalculator.data.repository.ItemsRepositoryImpl
 import com.android_a865.estimatescalculator.domain.model.Item
-import com.android_a865.estimatescalculator.domain.use_cases.ItemsUseCases
+import com.android_a865.estimatescalculator.domain.use_cases.items_use_cases.ItemsUseCases
 import com.android_a865.estimatescalculator.utils.Path
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel

@@ -1,10 +1,9 @@
 package com.android_a865.estimatescalculator.presentation.items_choose
 
 import androidx.lifecycle.*
-import com.android_a865.estimatescalculator.data.repository.ItemsRepositoryImpl
 import com.android_a865.estimatescalculator.domain.model.InvoiceItem
 import com.android_a865.estimatescalculator.domain.model.Item
-import com.android_a865.estimatescalculator.domain.use_cases.ItemsUseCases
+import com.android_a865.estimatescalculator.domain.use_cases.items_use_cases.ItemsUseCases
 import com.android_a865.estimatescalculator.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi

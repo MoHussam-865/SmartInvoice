@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.android_a865.estimatescalculator.domain.model.Item
-import com.android_a865.estimatescalculator.domain.use_cases.ItemsUseCases
+import com.android_a865.estimatescalculator.domain.use_cases.items_use_cases.ItemsUseCases
 import com.android_a865.estimatescalculator.utils.Path
 import com.android_a865.estimatescalculator.utils.update
 import dagger.hilt.android.lifecycle.HiltViewModel

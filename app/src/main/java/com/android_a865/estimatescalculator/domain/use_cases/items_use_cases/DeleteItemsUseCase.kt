@@ -1,4 +1,4 @@
-package com.android_a865.estimatescalculator.domain.use_cases
+package com.android_a865.estimatescalculator.domain.use_cases.items_use_cases
 
 import com.android_a865.estimatescalculator.data.mapper.toEntities
 import com.android_a865.estimatescalculator.domain.model.Item

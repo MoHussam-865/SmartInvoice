@@ -1,4 +1,4 @@
-package com.android_a865.estimatescalculator.domain.use_cases
+package com.android_a865.estimatescalculator.domain.use_cases.items_use_cases
 
 data class ItemsUseCases(
     val getItems: GetItemsUseCase,
@@ -6,6 +6,6 @@ data class ItemsUseCases(
     val getItemByID: GetItemByIDUseCase,
     val deleteItems: DeleteItemsUseCase,
     val addItem: AddItemUseCase,
-    val updateItem: UpdateItemUseCase,
+    val updateItem: UpdateItemUseCase
 
 )
