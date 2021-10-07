@@ -65,14 +65,13 @@ class ItemsChooseFragment : Fragment(R.layout.fragment_items_choose),
             }
 
             viewModel.selectedItems.observe(viewLifecycleOwner) {
-                binding.chosenItemsList.isVisible = it.isNotEmpty()
+                chosenItemsList.isVisible = it.isNotEmpty()
                 chosenItemsAdapter.submitList(it)
                 chosenItemsList.scrollToEnd()
 
                 findNavController().previousBackStackEntry?.savedStateHandle?.set(
                     "choose_invoice_items", it
                 )
-                Log.d("ItemsChooseFragment", "the size = " + it.size)
             }
 
             viewModel.itemsData.asLiveData().observe(viewLifecycleOwner) {

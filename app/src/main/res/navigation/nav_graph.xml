@@ -87,6 +87,7 @@
     <fragment
         android:id="@+id/newEstimateFragment"
         android:name="com.android_a865.estimatescalculator.presentation.new_estimate.NewEstimateFragment"
+        android:label="@string/new_estimate"
         tools:layout="@layout/fragment_new_estimate">
         <action
             android:id="@+id/action_newEstimateFragment_to_itemsChooseFragment"

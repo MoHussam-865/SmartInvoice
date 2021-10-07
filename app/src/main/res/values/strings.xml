@@ -17,4 +17,6 @@
     <string name="total">Total</string>
     <string name="qty">Qty</string>
     <string name="add_items">Add Items</string>
+    <string name="send">Send</string>
+    <string name="open_pdf">Open Pdf</string>
 </resources>

@@ -1,6 +1,9 @@
 package com.android_a865.estimatescalculator.presentation.new_estimate
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -11,6 +14,8 @@ import com.android_a865.estimatescalculator.R
 import com.android_a865.estimatescalculator.common.adapters.InvoiceItemsAdapter
 import com.android_a865.estimatescalculator.domain.model.InvoiceItem
 import com.android_a865.estimatescalculator.databinding.FragmentNewEstimateBinding
+import com.android_a865.estimatescalculator.presentation.main_page.MainFragmentDirections
+import com.android_a865.estimatescalculator.utils.setUpActionBarWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -24,6 +29,7 @@ class NewEstimateFragment : Fragment(R.layout.fragment_new_estimate),
     @ExperimentalCoroutinesApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setUpActionBarWithNavController()
 
         val binding = FragmentNewEstimateBinding.bind(view)
         binding.apply {
@@ -60,7 +66,27 @@ class NewEstimateFragment : Fragment(R.layout.fragment_new_estimate),
                     "choose_invoice_items"
                 )
         )
+        setHasOptionsMenu(true)
+    }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.estimate_options, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId){
+            R.id.open_pdf -> {
+
+                true
+            }
+
+            R.id.send_pdf -> {
+
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
 
