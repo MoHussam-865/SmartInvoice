@@ -3,6 +3,8 @@ package com.android_a865.estimatescalculator.common
 import android.content.Context
 import android.util.Log
 import com.android_a865.estimatescalculator.domain.model.Invoice
+import com.android_a865.estimatescalculator.utils.DATE_FORMATS
+import com.android_a865.estimatescalculator.utils.date
 import com.itextpdf.text.*
 import com.itextpdf.text.pdf.BaseFont
 import com.itextpdf.text.pdf.PdfPCell
@@ -47,11 +49,11 @@ class PdfMaker {
             val table1 = PdfPTable(2)
             table1.widthPercentage = 100f
 
-
+            table1.addCell(emptyCell())
 
             //
             val dateInfo = Paragraph().apply {
-                add(Paragraph(invoice.date.toString(), font4))
+                add(Paragraph(invoice.date.date(), font4))
             }
 
             c1 = PdfPCell(dateInfo).apply {
@@ -83,19 +85,23 @@ class PdfMaker {
 
             table2.headerRows = 1
             invoice.items.forEach { item ->
-                c1 = PdfPCell(Paragraph(item.name, font2))
-                c1.border = Rectangle.NO_BORDER
-                c1.runDirection = PdfWriter.RUN_DIRECTION_RTL
-                c1.horizontalAlignment = Element.ALIGN_RIGHT
+                c1 = PdfPCell(Paragraph(item.name, font2)).apply {
+                    border = Rectangle.NO_BORDER
+                    runDirection = PdfWriter.RUN_DIRECTION_LTR
+                    horizontalAlignment = Element.ALIGN_LEFT
+                }
                 table2.addCell(c1)
+
                 c1 = PdfPCell(Paragraph(item.price.toString(), font2))
                 c1.border = Rectangle.NO_BORDER
                 c1.horizontalAlignment = Element.ALIGN_CENTER
                 table2.addCell(c1)
+
                 c1 = PdfPCell(Paragraph(item.qty.toString(), font2))
                 c1.border = Rectangle.NO_BORDER
                 c1.horizontalAlignment = Element.ALIGN_CENTER
                 table2.addCell(c1)
+
                 c1 = PdfPCell(Paragraph(item.total.toString(), font2))
                 c1.border = Rectangle.NO_BORDER
                 c1.horizontalAlignment = Element.ALIGN_RIGHT

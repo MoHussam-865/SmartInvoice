@@ -97,6 +97,9 @@
             android:defaultValue="@null"
             app:argType="com.android_a865.estimatescalculator.domain.model.Invoice"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_newEstimateFragment_to_viewPdfFragment"
+            app:destination="@id/viewPdfFragment" />
     </fragment>
     <fragment
         android:id="@+id/itemsChooseFragment"
@@ -106,5 +109,13 @@
         <argument
             android:name="items"
             app:argType="com.android_a865.estimatescalculator.domain.model.InvoiceItem[]" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewPdfFragment"
+        android:name="com.android_a865.estimatescalculator.ViewPdfFragment"
+        tools:layout="@layout/fragment_view_pdf" >
+        <argument
+            android:name="fileName"
+            app:argType="string" />
     </fragment>
 </navigation>

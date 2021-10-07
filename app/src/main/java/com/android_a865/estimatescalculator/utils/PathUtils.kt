@@ -9,14 +9,14 @@ interface PathUtil {
     val path: Path
     val isFolder: Boolean
 
-    fun open():Path = if (isFolder) path.open(name) else path
+    fun open(): Path = if (isFolder) path.open(name) else path
 }
 
 
 @Parcelize
 data class Path(
-    val path:String = ROOT
-): Parcelable{
+    val path: String = ROOT
+) : Parcelable {
     /** a new abstraction layer to deal with paths (navigation) */
 
     fun open(name: String) = Path(path + Separation + name)
@@ -35,7 +35,7 @@ data class Path(
 
     private val _folders get() = path.split(Separation)
 
-    companion object{
+    companion object {
         private const val Separation = "/"
         private const val ROOT = "."
         const val NO_PATH = ""
