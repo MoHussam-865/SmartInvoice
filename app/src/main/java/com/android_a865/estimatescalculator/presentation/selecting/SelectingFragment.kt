@@ -14,19 +14,20 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.android_a865.estimatescalculator.R
 import com.android_a865.estimatescalculator.common.adapters.ItemsAdapter
 import com.android_a865.estimatescalculator.common.adapters.PathIndicatorAdapter
-import com.android_a865.estimatescalculator.domain.model.Item
 import com.android_a865.estimatescalculator.databinding.FragmentSelectingBinding
+import com.android_a865.estimatescalculator.domain.model.Item
 import com.android_a865.estimatescalculator.utils.appCompatActivity
 import com.android_a865.estimatescalculator.utils.exhaustive
 import com.android_a865.estimatescalculator.utils.setUpActionBarWithNavController
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class SelectingFragment : Fragment(R.layout.fragment_selecting),
 ItemsAdapter.OnItemEventListener {
 
-    private val itemsViewModule by viewModels<ItemsSelectViewModel>()
+    private val viewModule by viewModels<ItemsSelectViewModel>()
     private val itemsAdapter = ItemsAdapter(this,true)
     private val pathIndicator = PathIndicatorAdapter()
 
@@ -48,24 +49,27 @@ ItemsAdapter.OnItemEventListener {
             }
         }
 
-        pathIndicator.submitPath(itemsViewModule.currentPath)
+        pathIndicator.submitPath(viewModule.currentPath)
 
 
-        itemsViewModule.itemsData.asLiveData().observe(viewLifecycleOwner) {
+        viewModule.itemsData.observe(viewLifecycleOwner) {
             itemsAdapter.submitList(it)
         }
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            itemsViewModule.itemsWindowEvents.collect { event ->
+            viewModule.itemsWindowEvents.collect { event ->
                 when (event) {
                     is ItemsSelectViewModel.ItemsWindowEvents.Navigate -> {
                         findNavController().navigate(event.directions)
+                        true
                     }
                     is ItemsSelectViewModel.ItemsWindowEvents.NotifyAdapter -> {
                         itemsAdapter.notifyItemChanged(event.position)
+                        true
                     }
                     ItemsSelectViewModel.ItemsWindowEvents.NavigateBack -> {
-                        val x = findNavController().popBackStack()
+                        findNavController().popBackStack()
+                        true
                     }
                 }.exhaustive
             }
@@ -74,15 +78,16 @@ ItemsAdapter.OnItemEventListener {
         setHasOptionsMenu(true)
     }
 
+    @ExperimentalCoroutinesApi
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.select_items_options, menu)
 
-        itemsViewModule.numSelected.asLiveData().observe(viewLifecycleOwner){
+        viewModule.numSelected.asLiveData().observe(viewLifecycleOwner){
             appCompatActivity.supportActionBar?.title = it.toString()
             menu.findItem(R.id.edit).isVisible = it == 1
             menu.findItem(R.id.delete).isVisible = it != 0
-            menu.findItem(R.id.selectAll).isVisible = it < itemsViewModule.all
-            menu.findItem(R.id.deselectAll).isVisible = it == itemsViewModule.all
+            menu.findItem(R.id.selectAll).isVisible = it < viewModule.all
+            menu.findItem(R.id.deselectAll).isVisible = it == viewModule.all
         }
 
     }
@@ -90,22 +95,22 @@ ItemsAdapter.OnItemEventListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId){
             R.id.edit -> {
-                itemsViewModule.onEditOptionSelected()
+                viewModule.onEditOptionSelected()
                 true
             }
 
             R.id.delete -> {
-                itemsViewModule.onDeleteOptionSelected(requireContext())
+                viewModule.onDeleteOptionSelected(requireContext())
                 true
             }
 
             R.id.selectAll -> {
-                itemsViewModule.onSelectAllChanged(true)
+                viewModule.onSelectAllChanged(true)
                 true
             }
 
             R.id.deselectAll -> {
-                itemsViewModule.onSelectAllChanged(false)
+                viewModule.onSelectAllChanged(false)
                 true
             }
 
@@ -115,9 +120,9 @@ ItemsAdapter.OnItemEventListener {
 
 
     override fun onItemClicked(item: Item, position: Int) =
-        itemsViewModule.onItemClicked(item, position)
+        viewModule.onItemClicked(item, position)
     override fun onSelectionChange(item: Item, position: Int, b:Boolean) =
-        itemsViewModule.onSelectChanged(item, position, b)
+        viewModule.onSelectChanged(item, position, b)
     override fun onItemLongClick(item: Item) { }
 
 }

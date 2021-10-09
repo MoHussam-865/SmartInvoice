@@ -24,11 +24,13 @@ class ItemsSelectViewModel @Inject constructor(
     private val itemId = state.get<Int>("id") ?: 0
 
 
-    val itemsData = MutableStateFlow(listOf<Item>())
+    val itemsData = MutableLiveData(listOf<Item>())
 
-    val all get() = itemsData.value.size
+    val all get() = itemsData.value.orEmpty().size
     @ExperimentalCoroutinesApi
-    var numSelected = itemsData.flatMapLatest { flowOf(it.numSelected) }
+    var numSelected = itemsData.asFlow().flatMapLatest {
+        flowOf(it.numSelected)
+    }
 
 
     private val itemsWindowEventsChannel = Channel<ItemsWindowEvents>()

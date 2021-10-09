@@ -4,29 +4,18 @@ import android.util.Log
 import java.text.SimpleDateFormat
 import java.util.*
 
-fun execute() {
 
-    System.currentTimeMillis().apply {
-
-        DATE_FORMATS.forEach {
-            Log.d("Test Some Utils", this.date(it))
-        }
-
-    }
-
-}
-
-val String.double get(): Double {
+fun String.double(default: Double = 0.0): Double {
 
     return try {
         this.toDouble()
     } catch (e: Exception) {
-        0.0
+        default
     }
 
 }
 
 
 fun Long.date(format: String = DATE_FORMATS[0]) : String {
-    return SimpleDateFormat(format, Locale.getDefault()).format(System.currentTimeMillis())
+    return SimpleDateFormat(format, Locale.getDefault()).format(this)
 }

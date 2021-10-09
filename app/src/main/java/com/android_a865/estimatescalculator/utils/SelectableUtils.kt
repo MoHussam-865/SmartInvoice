@@ -12,7 +12,7 @@ interface Selectable<T> {
 
 val <T> List<Selectable<T>>.numSelected get() = this.filterSelected().size
 
-fun <T> List<Selectable<T>>.selectAll(b: Boolean): List<T> = this.map { it.copy(b) }
+fun <T> List<Selectable<T>>?.selectAll(b: Boolean): List<T> = this.orEmpty().map { it.copy(b) }
 
 fun <T> List<Selectable<T>>?.filterSelected(): List<T> =
     this.orEmpty().filter { it.isSelected }.map {

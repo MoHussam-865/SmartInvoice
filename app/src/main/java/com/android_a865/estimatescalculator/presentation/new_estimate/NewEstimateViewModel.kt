@@ -53,7 +53,7 @@ class NewEstimateViewModel @Inject constructor(
 
 
     fun onItemQtyChanged(item: InvoiceItem, qty: String) = itemsFlow.update {
-        it.setQtyTo(item, qty.toDouble())
+        it.setQtyTo(item, qty.double(1.0))
     }
 
     fun onItemsSelected(chosenItems: List<InvoiceItem>?) = viewModelScope.launch {
