@@ -9,8 +9,9 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/send_pdf"
-        android:title="@string/send"
-        app:showAsAction="never" />
+        android:id="@+id/save_invoice"
+        android:title="@string/save_invoice"
+        android:icon="@drawable/save"
+        app:showAsAction="ifRoom" />
 
 </menu>

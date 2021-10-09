@@ -69,21 +69,13 @@ class NewEstimateViewModel @Inject constructor(
             val fileName: String? = PdfMaker().make(context, Invoice(items = itemsFlow.value))
 
             fileName?.let {
-                eventsChannel.send(InvoiceWindowEvents.OpenPdfExternally(it))
+                eventsChannel.send(InvoiceWindowEvents.OpenPdf(it))
             }
         }
 
     }
 
-    fun onSendPdfClicked(context: Context?) = viewModelScope.launch {
-        context?.let {
-            val fileName: String? = PdfMaker().make(context, Invoice(items = itemsFlow.value))
 
-            fileName?.let {
-                eventsChannel.send(InvoiceWindowEvents.SendPdf(it))
-            }
-        }
-    }
 
     fun onSaveClicked() {
         if (itemsFlow.value.isEmpty()) {
@@ -104,8 +96,7 @@ class NewEstimateViewModel @Inject constructor(
 
 
     sealed class InvoiceWindowEvents {
-        data class OpenPdfExternally(val fileName: String): InvoiceWindowEvents()
-        data class SendPdf(val fileName: String): InvoiceWindowEvents()
+        data class OpenPdf(val fileName: String): InvoiceWindowEvents()
         data class ShowMessage(val message: String): InvoiceWindowEvents()
         object NavigateBack: InvoiceWindowEvents()
     }

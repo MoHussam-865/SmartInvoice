@@ -112,8 +112,9 @@
     </fragment>
     <fragment
         android:id="@+id/viewPdfFragment"
-        android:name="com.android_a865.estimatescalculator.ViewPdfFragment"
-        tools:layout="@layout/fragment_view_pdf" >
+        android:name="com.android_a865.estimatescalculator.presentation.pdf_preview.ViewPdfFragment"
+        android:label="Pdf Preview"
+        tools:layout="@layout/fragment_view_pdf">
         <argument
             android:name="fileName"
             app:argType="string" />
