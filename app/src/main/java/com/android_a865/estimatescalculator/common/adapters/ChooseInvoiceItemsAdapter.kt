@@ -1,5 +1,6 @@
 package com.android_a865.estimatescalculator.common.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.android_a865.estimatescalculator.databinding.AdapterChooseItemsListBinding
 import com.android_a865.estimatescalculator.domain.model.InvoiceItem
+import com.android_a865.estimatescalculator.utils.setTextWithCursor
 
 class ChooseInvoiceItemsAdapter(
     private val listener: OnItemEventListener,
@@ -91,9 +93,7 @@ class ChooseInvoiceItemsAdapter(
                     itemName.text = name
                     itemUP.text = price.toString()
 
-                    if (!userInput.isFocused) {
-                        userInput.setText(qty.toString())
-                    }
+                    userInput.setTextWithCursor(qty.toString())
 
                     addFirst.isVisible = item.qty == 0.0
                     console.isVisible = item.qty != 0.0

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.android_a865.estimatescalculator.databinding.AdapterNewEstimateBinding
 import com.android_a865.estimatescalculator.domain.model.InvoiceItem
+import com.android_a865.estimatescalculator.utils.setTextWithCursor
 
 class InvoiceItemsAdapter(
     private val listener: OnItemEventListener,
@@ -73,9 +74,7 @@ class InvoiceItemsAdapter(
                 itemUnitPrice.text = item.price.toString()
                 itemTotal.text = item.total.toString()
 
-                if (!etQty.isFocused) {
-                    etQty.setText(item.qty.toString())
-                }
+                etQty.setTextWithCursor(item.qty.toString())
 
             }
         }

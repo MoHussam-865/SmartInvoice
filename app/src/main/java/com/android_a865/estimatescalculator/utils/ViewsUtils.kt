@@ -1,5 +1,6 @@
 package com.android_a865.estimatescalculator.utils
 
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -18,3 +19,19 @@ fun Fragment.setUpActionBarWithNavController() {
 fun RecyclerView.scrollToEnd() = smoothScrollToPosition(adapter?.itemCount ?: 0)
 
 val Fragment.appCompatActivity get() = (activity as AppCompatActivity)
+
+
+fun EditText.setTextWithCursor(str: String) {
+
+    val newTextLength = str.length
+    val oldTextLength = text.toString().length
+    val diff = if (newTextLength > oldTextLength) 1 else -1
+    val newSelection = selectionStart + diff
+
+    setText(str)
+
+    if (newSelection >= 0) {
+        setSelection(newSelection)
+    }
+    //Log.d("view util", "new = $str, old = $text, $diff, selection = $newSelection")
+}
