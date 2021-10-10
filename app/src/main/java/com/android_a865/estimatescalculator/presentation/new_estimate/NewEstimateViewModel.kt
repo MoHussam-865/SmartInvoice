@@ -71,8 +71,11 @@ class NewEstimateViewModel @Inject constructor(
         } else {
             viewModelScope.launch {
                 context?.let {
-                    val fileName: String? =
-                        PdfMaker().make(context, Invoice(items = itemsFlow.value))
+
+                    val invoice = invoice?.copy(items = itemsFlow.value)
+                        ?: Invoice(items = itemsFlow.value)
+
+                    val fileName = PdfMaker().make(context, invoice)
 
                     fileName?.let {
                         eventsChannel.send(InvoiceWindowEvents.OpenPdf(it))
