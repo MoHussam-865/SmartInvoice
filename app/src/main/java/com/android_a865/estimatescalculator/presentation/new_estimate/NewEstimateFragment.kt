@@ -63,14 +63,12 @@ class NewEstimateFragment : Fragment(R.layout.fragment_new_estimate),
 
         }
 
-        viewModel.onItemsSelected(
-            findNavController()
-                .currentBackStackEntry
-                ?.savedStateHandle
-                ?.get<List<InvoiceItem>>(
-                    "choose_invoice_items"
-                )
-        )
+        val observed = "choose_invoice_items"
+        findNavController().currentBackStackEntry?.savedStateHandle?.apply {
+            viewModel.onItemsSelected(get(observed))
+            set(observed, null)
+        }
+
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.invoiceWindowEvents.collect { event ->

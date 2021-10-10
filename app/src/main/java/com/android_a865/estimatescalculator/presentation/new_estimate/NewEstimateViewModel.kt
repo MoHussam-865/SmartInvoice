@@ -27,7 +27,7 @@ class NewEstimateViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val invoice = state.get<Invoice>("invoice")
-    val itemsFlow = MutableStateFlow( invoice?.items ?: listOf())
+    val itemsFlow = MutableStateFlow(invoice?.items ?: listOf())
 
     @ExperimentalCoroutinesApi
     val totalFlow = itemsFlow.flatMapLatest { items ->
@@ -64,23 +64,29 @@ class NewEstimateViewModel @Inject constructor(
         }
     }
 
-    fun onOpenPdfClicked(context: Context?) = viewModelScope.launch {
-        context?.let {
-            val fileName: String? = PdfMaker().make(context, Invoice(items = itemsFlow.value))
+    fun onOpenPdfClicked(context: Context?) {
 
-            fileName?.let {
-                eventsChannel.send(InvoiceWindowEvents.OpenPdf(it))
+        if (itemsFlow.value.isEmpty()) {
+            showInvalidMessage("Add Items first to your invoice")
+        } else {
+            viewModelScope.launch {
+                context?.let {
+                    val fileName: String? =
+                        PdfMaker().make(context, Invoice(items = itemsFlow.value))
+
+                    fileName?.let {
+                        eventsChannel.send(InvoiceWindowEvents.OpenPdf(it))
+                    }
+                }
+
             }
         }
-
     }
-
-
 
     fun onSaveClicked() {
         if (itemsFlow.value.isEmpty()) {
             showInvalidMessage("Add Items first")
-        }else {
+        } else {
             viewModelScope.launch {
                 invoiceUseCases.addInvoice(Invoice(items = itemsFlow.value))
                 eventsChannel.send(InvoiceWindowEvents.NavigateBack)
@@ -93,13 +99,9 @@ class NewEstimateViewModel @Inject constructor(
     }
 
 
-
-
     sealed class InvoiceWindowEvents {
-        data class OpenPdf(val fileName: String): InvoiceWindowEvents()
-        data class ShowMessage(val message: String): InvoiceWindowEvents()
-        object NavigateBack: InvoiceWindowEvents()
+        data class OpenPdf(val fileName: String) : InvoiceWindowEvents()
+        data class ShowMessage(val message: String) : InvoiceWindowEvents()
+        object NavigateBack : InvoiceWindowEvents()
     }
-
-
 }
