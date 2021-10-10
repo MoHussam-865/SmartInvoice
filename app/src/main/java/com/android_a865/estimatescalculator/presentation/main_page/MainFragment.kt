@@ -92,9 +92,9 @@ class MainFragment : Fragment(R.layout.fragment_main), ItemsAdapter.OnItemEventL
         return when (item.itemId){
             R.id.newItem -> {
                 findNavController().navigate(
-                        MainFragmentDirections.actionMainFragment2ToNewItemFragment(
-                                path = itemsViewModule.currentPath.value
-                        )
+                    MainFragmentDirections.actionMainFragment2ToNewItemFragment(
+                            path = itemsViewModule.currentPath.value
+                    )
                 )
                 true
             }
@@ -111,6 +111,13 @@ class MainFragment : Fragment(R.layout.fragment_main), ItemsAdapter.OnItemEventL
             R.id.newEstimate -> {
                 findNavController().navigate(
                     MainFragmentDirections.actionMainFragment2ToNewEstimateFragment()
+                )
+                true
+            }
+
+            R.id.myEstimate -> {
+                findNavController().navigate(
+                    MainFragmentDirections.actionMainFragment2ToInvoicesViewFragment()
                 )
                 true
             }

@@ -88,7 +88,13 @@ class NewEstimateViewModel @Inject constructor(
             showInvalidMessage("Add Items first")
         } else {
             viewModelScope.launch {
-                invoiceUseCases.addInvoice(Invoice(items = itemsFlow.value))
+
+                if (invoice != null) {
+                    invoiceUseCases.updateInvoice(invoice.copy(items = itemsFlow.value))
+                } else {
+                    invoiceUseCases.addInvoice(Invoice(items = itemsFlow.value))
+                }
+
                 eventsChannel.send(InvoiceWindowEvents.NavigateBack)
             }
         }

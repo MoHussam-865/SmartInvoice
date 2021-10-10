@@ -18,4 +18,9 @@
         android:title="@string/new_estimate"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/myEstimate"
+        android:title="@string/my_estimates"
+        app:showAsAction="never" />
+
 </menu>

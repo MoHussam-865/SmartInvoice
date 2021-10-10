@@ -27,6 +27,9 @@
         <action
             android:id="@+id/action_mainFragment2_to_newEstimateFragment"
             app:destination="@id/newEstimateFragment" />
+        <action
+            android:id="@+id/action_mainFragment2_to_invoicesViewFragment"
+            app:destination="@id/invoicesViewFragment" />
     </fragment>
     <fragment
         android:id="@+id/newItemFragment"
@@ -118,5 +121,14 @@
         <argument
             android:name="fileName"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/invoicesViewFragment"
+        android:name="com.android_a865.estimatescalculator.presentation.invoices_view.InvoicesViewFragment"
+        android:label="@string/my_estimates"
+        tools:layout="@layout/fragment_invoices_view" >
+        <action
+            android:id="@+id/action_invoicesViewFragment_to_newEstimateFragment"
+            app:destination="@id/newEstimateFragment" />
     </fragment>
 </navigation>

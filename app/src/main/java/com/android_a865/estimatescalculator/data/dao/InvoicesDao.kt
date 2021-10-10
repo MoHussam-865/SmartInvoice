@@ -1,5 +1,7 @@
 package com.android_a865.estimatescalculator.data.dao
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.room.*
 import com.android_a865.estimatescalculator.data.entities.InvoiceEntity
 import com.android_a865.estimatescalculator.data.entities.InvoiceItemEntity
@@ -12,6 +14,10 @@ interface InvoicesDao {
     @Transaction
     @Query("SELECT * FROM Invoices")
     fun getInvoices(): Flow<List<FullInvoice>>
+
+    @Transaction
+    @Query("SELECT * FROM Invoices WHERE id = :invoiceId")
+    suspend fun getInvoiceById(invoiceId: Int): FullInvoice
 
     // Insert
     suspend fun insertInvoice(fullInvoice: FullInvoice) {
@@ -32,18 +38,34 @@ interface InvoicesDao {
 
 
     // Update Invoice
-    suspend fun updateInvoice(fullInvoice: FullInvoice) {
-        fullInvoice.apply {
-            updateInvoice(invoice)
-            items.forEach { updateInvoiceItem(it) }
+    @RequiresApi(Build.VERSION_CODES.N)
+    suspend fun updateInvoice(newInvoice: FullInvoice) {
+
+        val oldInvoice = getInvoiceById(newInvoice.invoice.id)
+        updateInvoice(newInvoice.invoice)
+
+        val newItems = newInvoice.items.toMutableList()
+        val oldItems = oldInvoice.items.toMutableList()
+
+        newItems.forEach { newItem ->
+
+            //
+            insertInvoiceItem(newItem)
+            oldItems.removeIf {
+                it.itemId == newItem.itemId
+            }
+
         }
+
+        // the remaining items are removed from the newInvoice
+        oldItems.forEach { oldItem ->
+            deleteInvoiceItem(oldItem)
+        }
+
     }
 
     @Update
     suspend fun updateInvoice(invoiceEntity: InvoiceEntity)
-
-    @Update
-    suspend fun updateInvoiceItem(invoiceItemEntity: InvoiceItemEntity)
 
     // Delete
     suspend fun deleteInvoices(invoices: List<FullInvoice>) = invoices.forEach { deleteInvoice(it) }
@@ -61,5 +83,7 @@ interface InvoicesDao {
     @Query("DELETE FROM InvoiceItems WHERE invoiceId = :invoiceId")
     suspend fun deleteInvoiceItems(invoiceId: Int)
 
+    @Delete
+    suspend fun deleteInvoiceItem(invoiceItemEntity: InvoiceItemEntity)
 
 }

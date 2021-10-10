@@ -90,12 +90,8 @@ class ViewPdfFragment : Fragment(R.layout.fragment_view_pdf) {
                 .enableSwipe(true)
                 .swipeHorizontal(false)
                 .enableDoubletap(true) // double tap to zoom
-                .onDraw { canvas, pageWidth, pageHeight, displayedPage -> }
-                .onDrawAll { canvas, pageWidth, pageHeight, displayedPage -> }
-                .onPageError { page, t -> }
-                .onPageChange { page, pageCount -> }
                 .onTap { true }
-                .onRender { nbPages, pageWidth, pageHeight -> pdfView.fitToWidth() }
+                .onRender { _, _, _ -> pdfView.fitToWidth() }
                 .enableAnnotationRendering(true)
                 .invalidPageColor(Color.GRAY)
                 .load()

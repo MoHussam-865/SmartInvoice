@@ -11,6 +11,7 @@ import com.android_a865.estimatescalculator.domain.repository.ItemsRepository
 import com.android_a865.estimatescalculator.domain.use_cases.invoice_use_cases.AddInvoiceUseCase
 import com.android_a865.estimatescalculator.domain.use_cases.invoice_use_cases.GetInvoicesUseCase
 import com.android_a865.estimatescalculator.domain.use_cases.invoice_use_cases.InvoiceUseCases
+import com.android_a865.estimatescalculator.domain.use_cases.invoice_use_cases.UpdateInvoiceUseCase
 import com.android_a865.estimatescalculator.domain.use_cases.items_use_cases.*
 import dagger.Module
 import dagger.Provides
@@ -59,7 +60,8 @@ object AppModule {
     fun provideInvoicesUseCases(repository: InvoiceRepository): InvoiceUseCases {
         return InvoiceUseCases(
             getInvoices = GetInvoicesUseCase(repository),
-            addInvoice = AddInvoiceUseCase(repository)
+            addInvoice = AddInvoiceUseCase(repository),
+            updateInvoice = UpdateInvoiceUseCase(repository)
         )
     }
 
