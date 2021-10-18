@@ -2,8 +2,7 @@ package com.android_a865.estimatescalculator.common
 
 import android.content.Context
 import android.util.Log
-import com.android_a865.estimatescalculator.domain.model.Invoice
-import com.android_a865.estimatescalculator.utils.DATE_FORMATS
+import com.android_a865.estimatescalculator.feature_main.domain.model.Invoice
 import com.android_a865.estimatescalculator.utils.date
 import com.itextpdf.text.*
 import com.itextpdf.text.pdf.BaseFont

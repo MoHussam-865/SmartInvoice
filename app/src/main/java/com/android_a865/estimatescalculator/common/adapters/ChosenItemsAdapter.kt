@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.android_a865.estimatescalculator.domain.model.InvoiceItem
 import com.android_a865.estimatescalculator.databinding.AdapterChosenItemsBinding
+import com.android_a865.estimatescalculator.feature_main.domain.model.InvoiceItem
 
 class ChosenItemsAdapter(
     private val listener: OnItemEventListener

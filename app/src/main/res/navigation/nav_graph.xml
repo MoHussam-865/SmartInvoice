@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainFragment2"
-        android:name="com.android_a865.estimatescalculator.presentation.main_page.MainFragment"
+        android:name="com.android_a865.estimatescalculator.feature_main.presentation.main_page.MainFragment"
         android:label="Database"
         tools:layout="@layout/fragment_main">
         <action
@@ -33,13 +33,13 @@
     </fragment>
     <fragment
         android:id="@+id/newItemFragment"
-        android:name="com.android_a865.estimatescalculator.presentation.new_item.NewItemFragment"
+        android:name="com.android_a865.estimatescalculator.feature_main.presentation.new_item.NewItemFragment"
         android:label="Item"
         tools:layout="@layout/fragment_new_item">
         <argument
             android:name="item"
             android:defaultValue="@null"
-            app:argType="com.android_a865.estimatescalculator.domain.model.Item"
+            app:argType="com.android_a865.estimatescalculator.feature_main.domain.model.Item"
             app:nullable="true" />
         <argument
             android:name="path"
@@ -52,13 +52,13 @@
     </fragment>
     <fragment
         android:id="@+id/newFolderFragment"
-        android:name="com.android_a865.estimatescalculator.presentation.new_folder.NewFolderFragment"
+        android:name="com.android_a865.estimatescalculator.feature_main.presentation.new_folder.NewFolderFragment"
         android:label="Folder"
         tools:layout="@layout/fragment_new_folder">
         <argument
             android:name="folder"
             android:defaultValue="@null"
-            app:argType="com.android_a865.estimatescalculator.domain.model.Item"
+            app:argType="com.android_a865.estimatescalculator.feature_main.domain.model.Item"
             app:nullable="true" />
         <argument
             android:name="path"
@@ -71,7 +71,7 @@
     </fragment>
     <fragment
         android:id="@+id/selectingFragment"
-        android:name="com.android_a865.estimatescalculator.presentation.selecting.SelectingFragment"
+        android:name="com.android_a865.estimatescalculator.feature_main.presentation.selecting.SelectingFragment"
         android:label="fragment_selecting"
         tools:layout="@layout/fragment_selecting" >
         <argument
@@ -89,7 +89,7 @@
     </fragment>
     <fragment
         android:id="@+id/newEstimateFragment"
-        android:name="com.android_a865.estimatescalculator.presentation.new_estimate.NewEstimateFragment"
+        android:name="com.android_a865.estimatescalculator.feature_main.presentation.new_estimate.NewEstimateFragment"
         android:label="@string/new_estimate"
         tools:layout="@layout/fragment_new_estimate">
         <action
@@ -98,7 +98,7 @@
         <argument
             android:name="invoice"
             android:defaultValue="@null"
-            app:argType="com.android_a865.estimatescalculator.domain.model.Invoice"
+            app:argType="com.android_a865.estimatescalculator.feature_main.domain.model.Invoice"
             app:nullable="true" />
         <action
             android:id="@+id/action_newEstimateFragment_to_viewPdfFragment"
@@ -106,25 +106,25 @@
     </fragment>
     <fragment
         android:id="@+id/itemsChooseFragment"
-        android:name="com.android_a865.estimatescalculator.presentation.items_choose.ItemsChooseFragment"
+        android:name="com.android_a865.estimatescalculator.feature_main.presentation.items_choose.ItemsChooseFragment"
         android:label="Choose Items"
         tools:layout="@layout/fragment_items_choose">
         <argument
             android:name="items"
-            app:argType="com.android_a865.estimatescalculator.domain.model.InvoiceItem[]" />
+            app:argType="com.android_a865.estimatescalculator.feature_main.domain.model.InvoiceItem[]" />
     </fragment>
     <fragment
         android:id="@+id/viewPdfFragment"
-        android:name="com.android_a865.estimatescalculator.presentation.pdf_preview.ViewPdfFragment"
+        android:name="com.android_a865.estimatescalculator.feature_main.presentation.pdf_preview.ViewPdfFragment"
         android:label="Pdf Preview"
         tools:layout="@layout/fragment_view_pdf">
         <argument
-            android:name="fileName"
-            app:argType="string" />
+            android:name="invoice"
+            app:argType="com.android_a865.estimatescalculator.feature_main.domain.model.Invoice" />
     </fragment>
     <fragment
         android:id="@+id/invoicesViewFragment"
-        android:name="com.android_a865.estimatescalculator.presentation.invoices_view.InvoicesViewFragment"
+        android:name="com.android_a865.estimatescalculator.feature_main.presentation.invoices_view.InvoicesViewFragment"
         android:label="@string/my_estimates"
         tools:layout="@layout/fragment_invoices_view" >
         <action

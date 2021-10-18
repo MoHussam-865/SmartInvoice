@@ -1,6 +1,5 @@
 package com.android_a865.estimatescalculator.utils
 
-import android.util.Log
 import java.text.SimpleDateFormat
 import java.util.*
 

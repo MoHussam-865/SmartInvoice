@@ -3,18 +3,12 @@ package com.android_a865.estimatescalculator.common.adapters
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.CheckBox
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.android_a865.estimatescalculator.R
 import com.android_a865.estimatescalculator.databinding.AdapterInvoiceViewBinding
-import com.android_a865.estimatescalculator.domain.model.Item
-import com.android_a865.estimatescalculator.databinding.AdapterItemsPageBinding
-import com.android_a865.estimatescalculator.domain.model.Invoice
+import com.android_a865.estimatescalculator.feature_main.domain.model.Invoice
 import com.android_a865.estimatescalculator.utils.date
 
 class InvoicesAdapter(

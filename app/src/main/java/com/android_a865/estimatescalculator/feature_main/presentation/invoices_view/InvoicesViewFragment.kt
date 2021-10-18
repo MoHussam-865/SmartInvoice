@@ -1,0 +1,71 @@
+package com.android_a865.estimatescalculator.feature_main.presentation.invoices_view
+
+import android.os.Bundle
+import android.view.View
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.android_a865.estimatescalculator.R
+import com.android_a865.estimatescalculator.common.adapters.InvoicesAdapter
+import com.android_a865.estimatescalculator.databinding.FragmentInvoicesViewBinding
+import com.android_a865.estimatescalculator.feature_main.domain.model.Invoice
+import com.android_a865.estimatescalculator.utils.exhaustive
+import com.android_a865.estimatescalculator.utils.setUpActionBarWithNavController
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+
+@AndroidEntryPoint
+class InvoicesViewFragment : Fragment(R.layout.fragment_invoices_view),
+    InvoicesAdapter.OnItemEventListener {
+
+    private val viewModel by viewModels<InvoicesViewViewModel>()
+    private val invoicesAdapter = InvoicesAdapter(this)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setUpActionBarWithNavController()
+        val binding = FragmentInvoicesViewBinding.bind(view)
+
+        binding.apply {
+            invoicesList.apply {
+                adapter = invoicesAdapter
+                layoutManager = LinearLayoutManager(requireContext())
+                setHasFixedSize(true)
+            }
+
+            fab.setOnClickListener {
+                viewModel.onNewInvoiceClicked()
+            }
+        }
+
+
+        viewModel.invoices.asLiveData().observe(viewLifecycleOwner) {
+            invoicesAdapter.submitList(it)
+        }
+
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.windowEvents.collect { event ->
+                when (event) {
+                    is InvoicesViewViewModel.WindowEvents.OpenInvoice -> {
+                        findNavController().navigate(
+                            InvoicesViewFragmentDirections.actionInvoicesViewFragmentToNewEstimateFragment(
+                                invoice = event.invoice
+                            )
+                        )
+                    }
+                }.exhaustive
+
+            }
+        }
+
+
+        setHasOptionsMenu(false)
+    }
+
+    override fun onItemClicked(invoice: Invoice) {
+        viewModel.onInvoiceClicked(invoice)
+    }
+}
