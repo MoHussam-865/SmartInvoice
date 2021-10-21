@@ -1,11 +1,11 @@
 package com.android_a865.estimatescalculator.feature_main.presentation.new_estimate
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
@@ -74,6 +74,11 @@ class NewEstimateFragment : Fragment(R.layout.fragment_new_estimate),
             viewModel.invoiceWindowEvents.collect { event ->
                 when (event) {
                     is NewEstimateViewModel.InvoiceWindowEvents.NavigateBack -> {
+                        Toast.makeText(
+                            requireContext(),
+                            event.message,
+                            Toast.LENGTH_SHORT
+                        ).show()
                         findNavController().popBackStack()
                         true
                     }
@@ -83,7 +88,6 @@ class NewEstimateFragment : Fragment(R.layout.fragment_new_estimate),
                                 invoice = event.invoice
                             )
                         )
-                        Log.d("NewEstimateFragment", "pdf file was created")
                         true
                     }
                     is NewEstimateViewModel.InvoiceWindowEvents.ShowMessage -> {
@@ -105,7 +109,7 @@ class NewEstimateFragment : Fragment(R.layout.fragment_new_estimate),
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.open_pdf -> {
-                viewModel.onOpenPdfClicked(context)
+                viewModel.onOpenPdfClicked()
                 true
             }
 

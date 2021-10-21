@@ -30,6 +30,9 @@
         <action
             android:id="@+id/action_mainFragment2_to_invoicesViewFragment"
             app:destination="@id/invoicesViewFragment" />
+        <action
+            android:id="@+id/action_mainFragment2_to_clientsFragment"
+            app:destination="@id/clientsFragment" />
     </fragment>
     <fragment
         android:id="@+id/newItemFragment"
@@ -130,5 +133,44 @@
         <action
             android:id="@+id/action_invoicesViewFragment_to_newEstimateFragment"
             app:destination="@id/newEstimateFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/clientsFragment"
+        android:name="com.android_a865.estimatescalculator.feature_client.presentation.clients_view.ClientsFragment"
+        android:label="@string/my_clients"
+        tools:layout="@layout/fragment_clients" >
+        <action
+            android:id="@+id/action_clientsFragment_to_addEditClientFragment"
+            app:destination="@id/addEditClientFragment" />
+        <action
+            android:id="@+id/action_clientsFragment_to_clientViewFragment"
+            app:destination="@id/clientViewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addEditClientFragment"
+        android:name="com.android_a865.estimatescalculator.feature_client.presentation.add_edit_client.AddEditClientFragment"
+        tools:layout="@layout/fragment_add_edit_client">
+        <argument
+            android:name="client"
+            android:defaultValue="@null"
+            app:argType="com.android_a865.estimatescalculator.feature_client.domain.model.Client"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_addEditClientFragment_to_clientViewFragment"
+            app:destination="@id/clientViewFragment"
+            app:popUpTo="@id/clientViewFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/clientViewFragment"
+        android:name="com.android_a865.estimatescalculator.feature_client.presentation.client_view.ClientViewFragment"
+        android:label="Client View"
+        tools:layout="@layout/fragment_client_view">
+        <action
+            android:id="@+id/action_clientViewFragment_to_addEditClientFragment"
+            app:destination="@id/addEditClientFragment" />
+        <argument
+            android:name="client"
+            app:argType="com.android_a865.estimatescalculator.feature_client.domain.model.Client" />
     </fragment>
 </navigation>

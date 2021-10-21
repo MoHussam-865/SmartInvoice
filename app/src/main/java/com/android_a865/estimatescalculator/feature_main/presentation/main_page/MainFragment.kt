@@ -1,7 +1,6 @@
 package com.android_a865.estimatescalculator.feature_main.presentation.main_page
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -28,7 +27,7 @@ import kotlinx.coroutines.flow.collect
 @AndroidEntryPoint
 class MainFragment : Fragment(R.layout.fragment_main), ItemsAdapter.OnItemEventListener {
 
-    private val itemsViewModule by viewModels<MainFragmentViewModel>()
+    private val viewModule by viewModels<MainFragmentViewModel>()
 
     private val itemsAdapter = ItemsAdapter(this)
     private val pathIndicator = PathIndicatorAdapter()
@@ -53,28 +52,32 @@ class MainFragment : Fragment(R.layout.fragment_main), ItemsAdapter.OnItemEventL
             }
         }
 
-        itemsViewModule.itemsData.observe(viewLifecycleOwner) {
+        viewModule.itemsData.observe(viewLifecycleOwner) {
             itemsAdapter.submitList(it)
         }
 
-        itemsViewModule.currentPath.asLiveData().observe(viewLifecycleOwner){
+        viewModule.currentPath.asLiveData().observe(viewLifecycleOwner){
             pathIndicator.submitPath(it)
             binding.pathList.scrollToEnd()
         }
 
 
         val callback = requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            itemsViewModule.onBackPressed()
+            viewModule.onBackPressed()
         }
 
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            itemsViewModule.itemsWindowEvents.collect { event ->
+            viewModule.windowEvents.collect { event ->
                 when (event) {
-                    MainFragmentViewModel.ItemsWindowEvents.CloseTheApp -> {
+                    is MainFragmentViewModel.WindowEvents.CloseTheApp -> {
                         callback.remove()
                         requireActivity().onBackPressed()
-                        Log.d("MainFragment", "this function was called")
+                        true
+                    }
+                    is MainFragmentViewModel.WindowEvents.Navigate -> {
+                        findNavController().navigate(event.direction)
+                        true
                     }
                 }.exhaustive
 
@@ -91,34 +94,27 @@ class MainFragment : Fragment(R.layout.fragment_main), ItemsAdapter.OnItemEventL
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId){
             R.id.newItem -> {
-                findNavController().navigate(
-                    MainFragmentDirections.actionMainFragment2ToNewItemFragment(
-                            path = itemsViewModule.currentPath.value
-                    )
-                )
+                viewModule.onNewItemSelected()
                 true
             }
 
             R.id.newFolder -> {
-                findNavController().navigate(
-                    MainFragmentDirections.actionMainFragment2ToNewFolderFragment(
-                        path = itemsViewModule.currentPath.value
-                    )
-                )
+                viewModule.onNewFolderSelected()
                 true
             }
 
             R.id.newEstimate -> {
-                findNavController().navigate(
-                    MainFragmentDirections.actionMainFragment2ToNewEstimateFragment()
-                )
+                viewModule.onNewEstimateSelected()
                 true
             }
 
             R.id.myEstimate -> {
-                findNavController().navigate(
-                    MainFragmentDirections.actionMainFragment2ToInvoicesViewFragment()
-                )
+                viewModule.onMyEstimateSelected()
+                true
+            }
+
+            R.id.myClients -> {
+                viewModule.onMyClientsSelected()
                 true
             }
 
@@ -127,12 +123,12 @@ class MainFragment : Fragment(R.layout.fragment_main), ItemsAdapter.OnItemEventL
     }
 
     override fun onItemClicked(item: Item, position: Int) =
-            itemsViewModule.onItemClicked(item)
+            viewModule.onItemClicked(item)
 
     override fun onItemLongClick(item: Item) {
         findNavController().navigate(
             MainFragmentDirections.actionMainFragment2ToSelectingFragment(
-                path = itemsViewModule.currentPath.value,
+                path = viewModule.currentPath.value,
                 id = item.id
             )
         )

@@ -7,6 +7,7 @@ import java.util.*
 @Parcelize
 data class Invoice(
     val id: Int = 0,
+    val type: InvoiceTypes,
     val date: Long = Calendar.getInstance().timeInMillis,
     val items: List<InvoiceItem>,
 ) : Parcelable {

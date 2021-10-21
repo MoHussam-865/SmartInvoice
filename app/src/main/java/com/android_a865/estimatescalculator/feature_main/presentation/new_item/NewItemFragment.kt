@@ -3,6 +3,7 @@ package com.android_a865.estimatescalculator.feature_main.presentation.new_item
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -26,13 +27,13 @@ class NewItemFragment : Fragment(R.layout.fragment_new_item) {
         val binding = FragmentNewItemBinding.bind(view)
 
         binding.apply {
-            itemNameEt.setText(viewModel.itemName)
-            itemPriceEt.setText(viewModel.itemPrice)
-            itemNameEt.addTextChangedListener { text ->
+            itemNameEt.editText?.setText(viewModel.itemName)
+            itemPriceEt.editText?.setText(viewModel.itemPrice)
+            itemNameEt.editText?.addTextChangedListener { text ->
                 viewModel.itemName = text.toString()
             }
 
-            itemPriceEt.addTextChangedListener { text ->
+            itemPriceEt.editText?.addTextChangedListener { text ->
                 viewModel.itemPrice = text.toString()
             }
 
@@ -46,6 +47,11 @@ class NewItemFragment : Fragment(R.layout.fragment_new_item) {
             viewModel.addEditItemEvent.collect { event ->
                 when (event) {
                     is NewItemViewModel.AddEditItemEvent.NavigateBackWithResult -> {
+                        Toast.makeText(
+                            requireContext(),
+                            "Item Saved",
+                            Toast.LENGTH_SHORT
+                        ).show()
                         findNavController().popBackStack()
                         true
                     }

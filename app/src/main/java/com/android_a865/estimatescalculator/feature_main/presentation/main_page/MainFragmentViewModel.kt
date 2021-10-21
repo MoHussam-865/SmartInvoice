@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavDirections
 import com.android_a865.estimatescalculator.feature_main.domain.model.Item
 import com.android_a865.estimatescalculator.feature_main.domain.use_cases.items_use_cases.ItemsUseCases
 import com.android_a865.estimatescalculator.utils.Path
@@ -35,8 +36,8 @@ class MainFragmentViewModel @Inject constructor(
     @ExperimentalCoroutinesApi
     val itemsData = itemsFlow.asLiveData()
 
-    private val itemsWindowEventsChannel = Channel<ItemsWindowEvents>()
-    val itemsWindowEvents = itemsWindowEventsChannel.receiveAsFlow()
+    private val eventsChannel = Channel<WindowEvents>()
+    val windowEvents = eventsChannel.receiveAsFlow()
 
 
     fun onItemClicked(item: Item) = currentPath.update { item.open() }
@@ -45,15 +46,50 @@ class MainFragmentViewModel @Inject constructor(
     fun onBackPressed() {
         if (currentPath.value.isRoot) {
             viewModelScope.launch {
-                itemsWindowEventsChannel.send(ItemsWindowEvents.CloseTheApp)
+                eventsChannel.send(WindowEvents.CloseTheApp)
             }
         } else {
             currentPath.update { it.back() }
         }
     }
 
-    sealed class ItemsWindowEvents {
-        object CloseTheApp: ItemsWindowEvents()
+    fun onNewItemSelected() = viewModelScope.launch {
+        eventsChannel.send(WindowEvents.Navigate(
+            MainFragmentDirections.actionMainFragment2ToNewItemFragment(
+                path = currentPath.value
+            )
+        ))
+    }
+
+    fun onNewFolderSelected() = viewModelScope.launch {
+        eventsChannel.send(WindowEvents.Navigate(
+            MainFragmentDirections.actionMainFragment2ToNewFolderFragment(
+                path = currentPath.value
+            )
+        ))
+    }
+
+    fun onNewEstimateSelected() = viewModelScope.launch {
+        eventsChannel.send(WindowEvents.Navigate(
+            MainFragmentDirections.actionMainFragment2ToNewEstimateFragment()
+        ))
+    }
+
+    fun onMyEstimateSelected() = viewModelScope.launch {
+        eventsChannel.send(WindowEvents.Navigate(
+            MainFragmentDirections.actionMainFragment2ToInvoicesViewFragment()
+        ))
+    }
+
+    fun onMyClientsSelected() = viewModelScope.launch {
+        eventsChannel.send(WindowEvents.Navigate(
+            MainFragmentDirections.actionMainFragment2ToClientsFragment()
+        ))
+    }
+
+    sealed class WindowEvents {
+        object CloseTheApp: WindowEvents()
+        data class Navigate(val direction: NavDirections): WindowEvents()
     }
 
 

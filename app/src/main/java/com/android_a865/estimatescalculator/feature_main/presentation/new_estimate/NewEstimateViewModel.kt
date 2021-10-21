@@ -1,11 +1,11 @@
 package com.android_a865.estimatescalculator.feature_main.presentation.new_estimate
 
-import android.content.Context
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android_a865.estimatescalculator.feature_main.domain.model.Invoice
 import com.android_a865.estimatescalculator.feature_main.domain.model.InvoiceItem
+import com.android_a865.estimatescalculator.feature_main.domain.model.InvoiceTypes
 import com.android_a865.estimatescalculator.feature_main.domain.use_cases.invoice_use_cases.InvoiceUseCases
 import com.android_a865.estimatescalculator.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,6 +26,8 @@ class NewEstimateViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val invoice = state.get<Invoice>("invoice")
+
+    var invoiceType = invoice?.type ?: InvoiceTypes.Estimate
     val itemsFlow = MutableStateFlow(invoice?.items ?: listOf())
 
     @ExperimentalCoroutinesApi
@@ -63,21 +65,22 @@ class NewEstimateViewModel @Inject constructor(
         }
     }
 
-    fun onOpenPdfClicked(context: Context?) {
+    fun onOpenPdfClicked() {
 
         if (itemsFlow.value.isEmpty()) {
             showInvalidMessage("Add Items first to your invoice")
         } else {
             viewModelScope.launch {
-                context?.let {
 
-                    val invoice = invoice?.copy(items = itemsFlow.value)
-                        ?: Invoice(items = itemsFlow.value)
+                val invoice = invoice?.copy(
+                    type = invoiceType,
+                    items = itemsFlow.value
+                ) ?: Invoice(
+                    type = invoiceType,
+                    items = itemsFlow.value
+                )
 
-                    eventsChannel.send(InvoiceWindowEvents.OpenPdf(invoice))
-
-                }
-
+                eventsChannel.send(InvoiceWindowEvents.OpenPdf(invoice))
             }
         }
     }
@@ -89,12 +92,22 @@ class NewEstimateViewModel @Inject constructor(
             viewModelScope.launch {
 
                 if (invoice != null) {
-                    invoiceUseCases.updateInvoice(invoice.copy(items = itemsFlow.value))
+                    invoiceUseCases.updateInvoice(invoice.copy(
+                        type = invoiceType,
+                        items = itemsFlow.value
+                    ))
                 } else {
-                    invoiceUseCases.addInvoice(Invoice(items = itemsFlow.value))
+                    invoiceUseCases.addInvoice(
+                        Invoice(
+                            type = invoiceType,
+                            items = itemsFlow.value
+                        )
+                    )
                 }
 
-                eventsChannel.send(InvoiceWindowEvents.NavigateBack)
+                eventsChannel.send(InvoiceWindowEvents.NavigateBack(
+                    "${invoiceType.name} Saved"
+                ))
             }
         }
     }
@@ -107,6 +120,6 @@ class NewEstimateViewModel @Inject constructor(
     sealed class InvoiceWindowEvents {
         data class OpenPdf(val invoice: Invoice) : InvoiceWindowEvents()
         data class ShowMessage(val message: String) : InvoiceWindowEvents()
-        object NavigateBack : InvoiceWindowEvents()
+        data class NavigateBack(val message: String) : InvoiceWindowEvents()
     }
 }

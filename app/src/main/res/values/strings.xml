@@ -22,4 +22,18 @@
     <string name="save_invoice">Save Invoice</string>
     <string name="open_externally">Open Externally</string>
     <string name="my_estimates">My Estimates</string>
+    <string name="my_clients">My Clients</string>
+    <string name="client_name">Client Name</string>
+    <string name="company_name">Company Name</string>
+    <string name="organization">Organization</string>
+    <string name="title">Title</string>
+    <string name="phone_number_1">Phone Number 1</string>
+    <string name="phone_number_2">Phone Number 2</string>
+    <string name="e_mail">E-mail</string>
+    <string name="address">Address</string>
+    <string-array name="InvoiceTypes">
+        <item>Estimate</item>
+        <item>Invoice</item>
+        <!--item>Incoming</item-->
+    </string-array>
 </resources>

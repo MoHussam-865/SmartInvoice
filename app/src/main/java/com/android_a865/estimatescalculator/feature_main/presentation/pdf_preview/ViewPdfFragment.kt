@@ -116,7 +116,7 @@ class ViewPdfFragment : Fragment(R.layout.fragment_view_pdf) {
                     flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 }
-                startActivity(Intent.createChooser(intent, "Send with"))
+                startActivity(intent)
             }
 
         } catch (e: Exception) {
@@ -151,7 +151,7 @@ class ViewPdfFragment : Fragment(R.layout.fragment_view_pdf) {
                 intent.putExtra(Intent.EXTRA_SUBJECT, file.name)
                 intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
                 intent.putExtra(Intent.EXTRA_STREAM, uri)
-                startActivity(Intent.createChooser(intent, "Send With"))
+                startActivity(intent)
             }
 
         } catch (e: Exception) {

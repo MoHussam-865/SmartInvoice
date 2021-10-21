@@ -2,6 +2,8 @@ package com.android_a865.estimatescalculator.feature_main.data
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import com.android_a865.estimatescalculator.feature_client.data.dao.ClientsDao
+import com.android_a865.estimatescalculator.feature_client.data.entities.ClientEntity
 import com.android_a865.estimatescalculator.feature_main.data.MyRoomDatabase.Companion.DATABASE_VERSION
 import com.android_a865.estimatescalculator.feature_main.data.dao.InvoicesDao
 import com.android_a865.estimatescalculator.feature_main.data.dao.ItemsDao
@@ -13,7 +15,8 @@ import com.android_a865.estimatescalculator.feature_main.data.entities.ItemEntit
     entities = [
         ItemEntity::class,
         InvoiceEntity::class,
-        InvoiceItemEntity::class
+        InvoiceItemEntity::class,
+        ClientEntity::class,
                ],
 
     version = DATABASE_VERSION,
@@ -26,9 +29,11 @@ abstract class MyRoomDatabase: RoomDatabase() {
 
     abstract fun getInvoicesDao(): InvoicesDao
 
+    abstract fun getClientsDao(): ClientsDao
+
     companion object {
         // Room Database
         const val DATABASE_NAME = "InvoiceMaster.db"
-        const val DATABASE_VERSION = 2
+        const val DATABASE_VERSION = 3
     }
 }

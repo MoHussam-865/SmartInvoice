@@ -3,6 +3,7 @@ package com.android_a865.estimatescalculator.feature_main.presentation.new_folde
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -26,8 +27,8 @@ class NewFolderFragment : Fragment(R.layout.fragment_new_folder) {
         val binding = FragmentNewFolderBinding.bind(view)
 
         binding.apply {
-            folderNameEt.setText(viewModel.folderName)
-            folderNameEt.addTextChangedListener {
+            folderNameEt.editText?.setText(viewModel.folderName)
+            folderNameEt.editText?.addTextChangedListener {
                 viewModel.folderName = it.toString()
             }
 
@@ -40,6 +41,11 @@ class NewFolderFragment : Fragment(R.layout.fragment_new_folder) {
             viewModel.addEditItemEvent.collect { event ->
                 when (event) {
                     is NewFolderViewModel.AddEditItemEvent.NavigateBackWithResult -> {
+                        Toast.makeText(
+                            requireContext(),
+                            "Folder Saved",
+                            Toast.LENGTH_SHORT
+                        ).show()
                         findNavController().popBackStack()
                         true
                     }

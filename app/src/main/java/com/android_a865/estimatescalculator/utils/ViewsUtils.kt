@@ -1,6 +1,9 @@
 package com.android_a865.estimatescalculator.utils
 
+import android.view.View
+import android.widget.AdapterView
 import android.widget.EditText
+import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -34,4 +37,19 @@ fun EditText.setTextWithCursor(str: String) {
         setSelection(newSelection)
     }
     //Log.d("view util", "new = $str, old = $text, $diff, selection = $newSelection")
+}
+
+inline fun Spinner.onItemSelectedListener(crossinline listener: (String) -> Unit) {
+    object : AdapterView.OnItemSelectedListener {
+        override fun onItemSelected(
+            adapterView: AdapterView<*>?,
+            p1: View?,
+            position: Int,
+            id: Long
+        ) {
+            listener(adapterView?.getItemAtPosition(position).toString())
+        }
+
+        override fun onNothingSelected(p0: AdapterView<*>?) {}
+    }
 }

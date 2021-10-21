@@ -23,4 +23,9 @@
         android:title="@string/my_estimates"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/myClients"
+        android:title="@string/my_clients"
+        app:showAsAction="never" />
+
 </menu>

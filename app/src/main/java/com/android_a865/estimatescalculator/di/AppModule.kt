@@ -2,6 +2,12 @@ package com.android_a865.estimatescalculator.di
 
 import android.app.Application
 import androidx.room.Room
+import com.android_a865.estimatescalculator.feature_client.data.repository.ClientsRepositoryImpl
+import com.android_a865.estimatescalculator.feature_client.domain.repository.ClientsRepository
+import com.android_a865.estimatescalculator.feature_client.domain.use_cases.AddEditClientUseCase
+import com.android_a865.estimatescalculator.feature_client.domain.use_cases.ClientsUseCases
+import com.android_a865.estimatescalculator.feature_client.domain.use_cases.DeleteClientUseCase
+import com.android_a865.estimatescalculator.feature_client.domain.use_cases.GetClientsUseCase
 import com.android_a865.estimatescalculator.feature_main.data.MyRoomDatabase
 import com.android_a865.estimatescalculator.feature_main.data.MyRoomDatabase.Companion.DATABASE_NAME
 import com.android_a865.estimatescalculator.feature_main.data.repository.InvoiceRepositoryImpl
@@ -43,6 +49,12 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun provideClientsRepository(db: MyRoomDatabase): ClientsRepository {
+        return ClientsRepositoryImpl(db.getClientsDao())
+    }
+
+    @Provides
+    @Singleton
     fun provideItemsUseCases(repository: ItemsRepository): ItemsUseCases {
         return ItemsUseCases(
             getItems = GetItemsUseCase(repository),
@@ -62,6 +74,16 @@ object AppModule {
             getInvoices = GetInvoicesUseCase(repository),
             addInvoice = AddInvoiceUseCase(repository),
             updateInvoice = UpdateInvoiceUseCase(repository)
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideClientsUseCases(repository: ClientsRepository): ClientsUseCases {
+        return ClientsUseCases(
+            getClients = GetClientsUseCase(repository),
+            addEditClient = AddEditClientUseCase(repository),
+            deleteClient = DeleteClientUseCase(repository)
         )
     }
 
