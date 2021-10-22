@@ -10,6 +10,8 @@ import com.android_a865.estimatescalculator.feature_main.domain.model.InvoiceIte
 import com.android_a865.estimatescalculator.feature_main.domain.model.InvoiceTypes
 import com.android_a865.estimatescalculator.feature_main.domain.model.Item
 import com.android_a865.estimatescalculator.utils.Path
+import com.android_a865.estimatescalculator.utils.toJson
+import com.android_a865.estimatescalculator.utils.toObject
 
 
 // database entity
@@ -62,6 +64,7 @@ fun InvoiceItem.toEntity(invoiceId: Int) = InvoiceItemEntity(
 fun FullInvoice.toInvoice() = Invoice(
     id = invoice.id,
     date = invoice.date,
+    client = invoice.client?.toObject(),
     type = InvoiceTypes.valueOf(invoice.type),
     items = items.map { it.toInvoiceItem() }
 )
@@ -69,6 +72,8 @@ fun FullInvoice.toInvoice() = Invoice(
 fun Invoice.toEntity() = FullInvoice(
     invoice = InvoiceEntity(
         id = id,
+        clientId = client?.id,
+        client = client?.toJson(),
         type = type.name,
         date = date,
         total = items.sumOf { it.total }
@@ -78,8 +83,6 @@ fun Invoice.toEntity() = FullInvoice(
 )
 
 fun List<FullInvoice>.toInvoices() = map { it.toInvoice() }
-fun List<Invoice>.toEntity() = map { it.toEntity() }
-
 
 
 

@@ -53,6 +53,14 @@ class NewEstimateFragment : Fragment(R.layout.fragment_new_estimate),
             }
 
 
+            tvInvoiceTypes.setOnClickListener {
+                viewModel.onInvoiceTypeSelected(requireContext())
+            }
+
+            viewModel.invoiceType.asLiveData().observe(viewLifecycleOwner) {
+                tvInvoiceTypes.text = it.name
+            }
+
             viewModel.itemsFlow.asLiveData().observe(viewLifecycleOwner) {
                 itemsAdapter.submitList(it)
             }

@@ -1,5 +1,9 @@
 package com.android_a865.estimatescalculator.feature_main.presentation.new_estimate
 
+import android.content.Context
+import android.content.DialogInterface
+import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -27,7 +31,8 @@ class NewEstimateViewModel @Inject constructor(
 
     private val invoice = state.get<Invoice>("invoice")
 
-    var invoiceType = invoice?.type ?: InvoiceTypes.Estimate
+    var invoiceType = MutableStateFlow(invoice?.type ?: InvoiceTypes.Estimate)
+    var invoiceClient = invoice?.client
     val itemsFlow = MutableStateFlow(invoice?.items ?: listOf())
 
     @ExperimentalCoroutinesApi
@@ -72,14 +77,7 @@ class NewEstimateViewModel @Inject constructor(
         } else {
             viewModelScope.launch {
 
-                val invoice = invoice?.copy(
-                    type = invoiceType,
-                    items = itemsFlow.value
-                ) ?: Invoice(
-                    type = invoiceType,
-                    items = itemsFlow.value
-                )
-
+                val invoice = getInvoice()
                 eventsChannel.send(InvoiceWindowEvents.OpenPdf(invoice))
             }
         }
@@ -91,29 +89,50 @@ class NewEstimateViewModel @Inject constructor(
         } else {
             viewModelScope.launch {
 
+                val myInvoice = getInvoice()
                 if (invoice != null) {
-                    invoiceUseCases.updateInvoice(invoice.copy(
-                        type = invoiceType,
-                        items = itemsFlow.value
-                    ))
+                    invoiceUseCases.updateInvoice(myInvoice)
                 } else {
-                    invoiceUseCases.addInvoice(
-                        Invoice(
-                            type = invoiceType,
-                            items = itemsFlow.value
-                        )
-                    )
+                    invoiceUseCases.addInvoice(myInvoice)
                 }
 
-                eventsChannel.send(InvoiceWindowEvents.NavigateBack(
-                    "${invoiceType.name} Saved"
-                ))
+                eventsChannel.send(
+                    InvoiceWindowEvents.NavigateBack(
+                        "${invoiceType.value.name} Saved"
+                    )
+                )
             }
         }
     }
 
+    private fun getInvoice(): Invoice {
+        return invoice?.copy(
+            type = invoiceType.value,
+            client = invoiceClient,
+            items = itemsFlow.value
+        ) ?: Invoice(
+            type = invoiceType.value,
+            client = invoiceClient,
+            items = itemsFlow.value
+        )
+    }
+
     private fun showInvalidMessage(message: String) = viewModelScope.launch {
         eventsChannel.send(InvoiceWindowEvents.ShowMessage(message))
+    }
+
+    fun onInvoiceTypeSelected(context: Context) {
+
+        val types = InvoiceTypes.values().map { it.name }.toTypedArray()
+
+        AlertDialog.Builder(context)
+            .setTitle("Choose Type")
+            .setSingleChoiceItems(types, invoiceType.value.ordinal,
+                DialogInterface.OnClickListener { dialog, i ->
+                    invoiceType.value = InvoiceTypes.valueOf(types[i])
+                    dialog.dismiss()
+                }
+            ).show()
     }
 
 

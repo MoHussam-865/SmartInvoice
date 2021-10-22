@@ -97,6 +97,10 @@ dependencies {
     // for PDF Viewer
     implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
 
+    // Json
+    implementation 'com.google.code.gson:gson:2.8.6'
+
+
 }
 
 kapt { correctErrorTypes true }

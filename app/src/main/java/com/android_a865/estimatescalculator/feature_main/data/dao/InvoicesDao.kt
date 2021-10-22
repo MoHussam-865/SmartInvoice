@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 interface InvoicesDao {
 
     @Transaction
-    @Query("SELECT * FROM Invoices")
+    @Query("SELECT * FROM Invoices ORDER BY date DESC")
     fun getInvoices(): Flow<List<FullInvoice>>
 
     @Transaction

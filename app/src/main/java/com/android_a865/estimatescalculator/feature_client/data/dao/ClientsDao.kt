@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 interface ClientsDao {
 
     @Transaction
-    @Query("SELECT * FROM Clients")
+    @Query("SELECT * FROM Clients ORDER BY id DESC")
     fun getClientsEntity(): Flow<List<ClientEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
