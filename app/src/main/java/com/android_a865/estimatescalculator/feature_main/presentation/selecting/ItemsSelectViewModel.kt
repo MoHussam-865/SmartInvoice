@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.Context
 import androidx.lifecycle.*
 import androidx.navigation.NavDirections
+import com.android_a865.estimatescalculator.R
 import com.android_a865.estimatescalculator.feature_main.domain.model.Item
 import com.android_a865.estimatescalculator.feature_main.domain.use_cases.items_use_cases.ItemsUseCases
 import com.android_a865.estimatescalculator.utils.*
@@ -55,13 +56,13 @@ class ItemsSelectViewModel @Inject constructor(
         val items = itemsData.value.filterSelected()
         // TODO get the total number affected by this
         AlertDialog.Builder(context)
-            .setTitle("Delete Items")
-            .setMessage("Are you sure you want to delete ${items.size} item\n you can't undo this")
-            .setPositiveButton("Delete") { dialog, _ ->
+            .setTitle(context.resources.getString(R.string.delete_items))
+            .setMessage(String.format(context.resources.getString(R.string.delete_items_dialog),items.size))
+            .setPositiveButton(context.resources.getString(R.string.delete)) { dialog, _ ->
                 deleteSelected(items)
                 dialog.dismiss()
             }
-            .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
+            .setNegativeButton(context.resources.getString(R.string.cancel)) { dialog, _ -> dialog.dismiss() }
             .show()
     }
 

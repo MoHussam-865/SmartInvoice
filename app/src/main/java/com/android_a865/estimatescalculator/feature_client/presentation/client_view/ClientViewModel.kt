@@ -5,9 +5,9 @@ import android.content.Context
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.android_a865.estimatescalculator.R
 import com.android_a865.estimatescalculator.feature_client.domain.model.Client
 import com.android_a865.estimatescalculator.feature_client.domain.use_cases.ClientsUseCases
-import com.android_a865.estimatescalculator.feature_client.presentation.add_edit_client.AddEditClientViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -46,13 +46,13 @@ class ClientViewModel @Inject constructor(
 
     fun onDeleteClientSelected(context: Context){
         AlertDialog.Builder(context)
-            .setTitle("Delete Client")
-            .setMessage("Are you sure you want to delete this Client\n you can't undo this")
-            .setPositiveButton("Delete") { dialog, _ ->
+            .setTitle(context.resources.getString(R.string.delete_client))
+            .setMessage(context.resources.getString(R.string.delete_client_dialog))
+            .setPositiveButton(context.resources.getString(R.string.delete)) { dialog, _ ->
                 deleteClient()
                 dialog.dismiss()
             }
-            .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
+            .setNegativeButton(context.resources.getString(R.string.cancel)) { dialog, _ -> dialog.dismiss() }
             .show()
     }
 

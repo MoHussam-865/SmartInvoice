@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Estimates Calculator</string>
+    <string name="add">إضافة</string>
+    <string name="new_estimate">تسعيرة جديدة</string>
+    <string name="new_item">صنف جديد</string>
+    <string name="new_folder">مجلد جديد</string>
+    <string name="item_name">اسم الصنف</string>
+    <string name="item_price">سعر الصنف</string>
+    <string name="folder_name">إسم المجلد</string>
+    <string name="edit">تعديل</string>
+    <string name="delete">حذف</string>
+    <string name="select_all">تحديد الكل</string>
+    <string name="deselect_all">إلغاء تحديد الكل</string>
+    <string name="items">الأصناف</string>
+    <string name="total">الإجمالى</string>
+    <string name="qty">الكمية</string>
+    <string name="add_items">إضافة صنف</string>
+    <string name="send">إرسال</string>
+    <string name="open_pdf">فتح Pdf</string>
+    <string name="save_invoice">حفظ الفاتورة</string>
+    <string name="open_externally">فتح خارج التطبيق</string>
+    <string name="my_estimates">التسعيرات</string>
+    <string name="my_clients">العملاء</string>
+    <string name="client_name">إسم العميل</string>
+    <string name="organization">الشركة</string>
+    <string name="title">الوظيفة</string>
+    <string name="phone_number_1">رقم الهاتف 1</string>
+    <string name="phone_number_2">رقم الهاتف 2</string>
+    <string name="e_mail">البريد الإلكترونى</string>
+    <string name="address">العنوان</string>
+    <string name="view">عرض</string>
+    <string name="client">"العميل : "</string>
+    <string name="save">حفظ</string>
+    <string name="delete_items">حذف أصناف</string>
+    <string name="delete_client">حذف العميل</string>
+    <string name="cancel">إلغاء</string>
+    <string name="delete_client_dialog">هل انت متأكد انك تريد حذف هذا العميل\nتنبية : لا يمكنك التراجع فى هذه العملية</string>
+    <string name="delete_items_dialog">هل انت متأكد انك تريد حذف %s صنف\nتنبية : لا يمكنك التراجع فى هذه العملية</string>
+</resources>
