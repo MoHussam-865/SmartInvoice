@@ -24,6 +24,7 @@
             android:id="@+id/folder_name_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_margin="16dp">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -44,7 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="20dp"
-        android:contentDescription="Save"
+        android:contentDescription="@string/save"
         android:src="@drawable/ok" />
 
 

@@ -33,6 +33,7 @@
     <string name="address">Address</string>
     <string name="view">VIEW</string>
     <string name="client">Client :</string>
+    <string name="save">Save</string>
     <string-array name="InvoiceTypes">
         <item>Estimate</item>
         <item>Invoice</item>
