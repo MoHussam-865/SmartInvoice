@@ -1,6 +1,8 @@
 package com.android_a865.estimatescalculator.feature_main.data.mapper
 
 
+import com.android_a865.estimatescalculator.feature_client.data.mapper.toClient
+import com.android_a865.estimatescalculator.feature_client.data.mapper.toEntity
 import com.android_a865.estimatescalculator.feature_main.data.entities.InvoiceEntity
 import com.android_a865.estimatescalculator.feature_main.data.entities.InvoiceItemEntity
 import com.android_a865.estimatescalculator.feature_main.data.entities.ItemEntity
@@ -64,7 +66,7 @@ fun InvoiceItem.toEntity(invoiceId: Int) = InvoiceItemEntity(
 fun FullInvoice.toInvoice() = Invoice(
     id = invoice.id,
     date = invoice.date,
-    client = invoice.client?.toObject(),
+    client = client?.toClient() ?: invoice.client?.toObject(),
     type = InvoiceTypes.valueOf(invoice.type),
     items = items.map { it.toInvoiceItem() }
 )
@@ -78,6 +80,8 @@ fun Invoice.toEntity() = FullInvoice(
         date = date,
         total = items.sumOf { it.total }
     ),
+
+    client = client?.toEntity(),
 
     items = items.map { it.toEntity(id) }
 )

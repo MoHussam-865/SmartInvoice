@@ -3,10 +3,13 @@ package com.android_a865.estimatescalculator.feature_main.presentation.new_estim
 import android.content.Context
 import android.content.DialogInterface
 import androidx.appcompat.app.AlertDialog
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavDirections
+import com.android_a865.estimatescalculator.feature_client.domain.model.Client
+import com.android_a865.estimatescalculator.feature_client.domain.use_cases.ClientsUseCases
 import com.android_a865.estimatescalculator.feature_main.domain.model.Invoice
 import com.android_a865.estimatescalculator.feature_main.domain.model.InvoiceItem
 import com.android_a865.estimatescalculator.feature_main.domain.model.InvoiceTypes
@@ -16,23 +19,35 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class NewEstimateViewModel @Inject constructor(
     private val invoiceUseCases: InvoiceUseCases,
+    private val clientsUseCases: ClientsUseCases,
     state: SavedStateHandle
 ) : ViewModel() {
 
     private val invoice = state.get<Invoice>("invoice")
 
-    var invoiceType = MutableStateFlow(invoice?.type ?: InvoiceTypes.Estimate)
-    var invoiceClient = invoice?.client
+    val invoiceType = MutableStateFlow(invoice?.type ?: InvoiceTypes.Estimate)
+    private val clientId = MutableStateFlow(invoice?.client?.id ?: 0)
+    @ExperimentalCoroutinesApi
+    private val invoiceClient = clientId.flatMapLatest {
+        if (it != 0) {
+            clientsUseCases.getClient(it).map { thisClient ->
+                thisClient ?: invoice?.client
+            }
+        } else {
+            emptyFlow()
+        }
+    }
+
+    @ExperimentalCoroutinesApi
+    val client = invoiceClient.asLiveData()
+
     val itemsFlow = MutableStateFlow(invoice?.items ?: listOf())
 
     @ExperimentalCoroutinesApi
@@ -41,7 +56,7 @@ class NewEstimateViewModel @Inject constructor(
     }
 
 
-    private val eventsChannel = Channel<InvoiceWindowEvents>()
+    private val eventsChannel = Channel<WindowEvents>()
     val invoiceWindowEvents = eventsChannel.receiveAsFlow()
 
 
@@ -70,6 +85,7 @@ class NewEstimateViewModel @Inject constructor(
         }
     }
 
+    @ExperimentalCoroutinesApi
     fun onOpenPdfClicked() {
 
         if (itemsFlow.value.isEmpty()) {
@@ -78,11 +94,12 @@ class NewEstimateViewModel @Inject constructor(
             viewModelScope.launch {
 
                 val invoice = getInvoice()
-                eventsChannel.send(InvoiceWindowEvents.OpenPdf(invoice))
+                eventsChannel.send(WindowEvents.OpenPdf(invoice))
             }
         }
     }
 
+    @ExperimentalCoroutinesApi
     fun onSaveClicked() {
         if (itemsFlow.value.isEmpty()) {
             showInvalidMessage("Add Items first")
@@ -97,7 +114,7 @@ class NewEstimateViewModel @Inject constructor(
                 }
 
                 eventsChannel.send(
-                    InvoiceWindowEvents.NavigateBack(
+                    WindowEvents.NavigateBack(
                         "${invoiceType.value.name} Saved"
                     )
                 )
@@ -105,20 +122,21 @@ class NewEstimateViewModel @Inject constructor(
         }
     }
 
+    @ExperimentalCoroutinesApi
     private fun getInvoice(): Invoice {
         return invoice?.copy(
             type = invoiceType.value,
-            client = invoiceClient,
+            client = client.value,
             items = itemsFlow.value
         ) ?: Invoice(
             type = invoiceType.value,
-            client = invoiceClient,
+            client = client.value,
             items = itemsFlow.value
         )
     }
 
     private fun showInvalidMessage(message: String) = viewModelScope.launch {
-        eventsChannel.send(InvoiceWindowEvents.ShowMessage(message))
+        eventsChannel.send(WindowEvents.ShowMessage(message))
     }
 
     fun onInvoiceTypeSelected(context: Context) {
@@ -127,18 +145,38 @@ class NewEstimateViewModel @Inject constructor(
 
         AlertDialog.Builder(context)
             .setTitle("Choose Type")
-            .setSingleChoiceItems(types, invoiceType.value.ordinal,
-                DialogInterface.OnClickListener { dialog, i ->
-                    invoiceType.value = InvoiceTypes.valueOf(types[i])
-                    dialog.dismiss()
-                }
-            ).show()
+            .setSingleChoiceItems(types, invoiceType.value.ordinal) { dialog, i ->
+                invoiceType.value = InvoiceTypes.valueOf(types[i])
+                dialog.dismiss()
+            }.show()
+    }
+
+    fun onClientChosen(client: Client?) {
+        client?.let {
+            clientId.value = it.id
+        }
+    }
+
+    @ExperimentalCoroutinesApi
+    fun onViewClientClicked() = viewModelScope.launch {
+        eventsChannel.send(WindowEvents.Navigate(
+            NewEstimateFragmentDirections.actionNewEstimateFragmentToClientViewFragment(
+                client.value!!
+            )
+        ))
+    }
+
+    fun onChooseClientSelected() = viewModelScope.launch {
+        eventsChannel.send(WindowEvents.Navigate(
+            NewEstimateFragmentDirections.actionNewEstimateFragmentToChooseClientFragment()
+        ))
     }
 
 
-    sealed class InvoiceWindowEvents {
-        data class OpenPdf(val invoice: Invoice) : InvoiceWindowEvents()
-        data class ShowMessage(val message: String) : InvoiceWindowEvents()
-        data class NavigateBack(val message: String) : InvoiceWindowEvents()
+    sealed class WindowEvents {
+        data class OpenPdf(val invoice: Invoice) : WindowEvents()
+        data class ShowMessage(val message: String) : WindowEvents()
+        data class NavigateBack(val message: String) : WindowEvents()
+        data class Navigate(val direction: NavDirections): WindowEvents()
     }
 }

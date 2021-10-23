@@ -13,6 +13,10 @@ class ClientsRepositoryImpl(
         return dao.getClientsEntity()
     }
 
+    override fun getClientById(id: Int): Flow<ClientEntity?> {
+        return dao.getClientById(id)
+    }
+
     override suspend fun insertClient(client: ClientEntity) {
         dao.insertClient(client)
     }

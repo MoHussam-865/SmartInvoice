@@ -34,7 +34,7 @@ class InvoicesAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         init {
-            binding.root.setOnClickListener {
+            binding.btnEdit.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     val item = getItem(position)
@@ -46,7 +46,8 @@ class InvoicesAdapter(
 
         fun bind(invoice: Invoice) {
             binding.apply {
-                invoiceDate.text = invoice.date.date()
+                tvInvoiceDate.text = invoice.date.date()
+                tvClientName.text = invoice.client?.name
                 invoiceTotal.text = invoice.total.toString()
 
                 val itemsAdapter = InvoiceItemsViewAdapter().apply {

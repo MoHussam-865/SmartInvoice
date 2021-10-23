@@ -8,9 +8,11 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ClientsDao {
 
-    @Transaction
     @Query("SELECT * FROM Clients ORDER BY id DESC")
     fun getClientsEntity(): Flow<List<ClientEntity>>
+
+    @Query("SELECT * FROM Clients WHERE id = :id")
+    fun getClientById(id: Int): Flow<ClientEntity?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertClient(clientEntity: ClientEntity)

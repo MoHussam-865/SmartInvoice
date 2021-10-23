@@ -6,7 +6,9 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
@@ -57,6 +59,19 @@ class NewEstimateFragment : Fragment(R.layout.fragment_new_estimate),
                 viewModel.onInvoiceTypeSelected(requireContext())
             }
 
+            tvViewClient.setOnClickListener {
+                viewModel.onViewClientClicked()
+            }
+
+            tvClientName.setOnClickListener {
+                viewModel.onChooseClientSelected()
+            }
+
+            viewModel.client.observe(viewLifecycleOwner) {
+                tvClientName.text = it?.name
+                tvViewClient.isVisible = it != null
+            }
+
             viewModel.invoiceType.asLiveData().observe(viewLifecycleOwner) {
                 tvInvoiceTypes.text = it.name
             }
@@ -81,7 +96,7 @@ class NewEstimateFragment : Fragment(R.layout.fragment_new_estimate),
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.invoiceWindowEvents.collect { event ->
                 when (event) {
-                    is NewEstimateViewModel.InvoiceWindowEvents.NavigateBack -> {
+                    is NewEstimateViewModel.WindowEvents.NavigateBack -> {
                         Toast.makeText(
                             requireContext(),
                             event.message,
@@ -90,7 +105,7 @@ class NewEstimateFragment : Fragment(R.layout.fragment_new_estimate),
                         findNavController().popBackStack()
                         true
                     }
-                    is NewEstimateViewModel.InvoiceWindowEvents.OpenPdf -> {
+                    is NewEstimateViewModel.WindowEvents.OpenPdf -> {
                         findNavController().navigate(
                             NewEstimateFragmentDirections.actionNewEstimateFragmentToViewPdfFragment(
                                 invoice = event.invoice
@@ -98,13 +113,23 @@ class NewEstimateFragment : Fragment(R.layout.fragment_new_estimate),
                         )
                         true
                     }
-                    is NewEstimateViewModel.InvoiceWindowEvents.ShowMessage -> {
+                    is NewEstimateViewModel.WindowEvents.ShowMessage -> {
                         Snackbar.make(requireView(), event.message, Snackbar.LENGTH_LONG).show()
+                        true
+                    }
+                    is NewEstimateViewModel.WindowEvents.Navigate -> {
+                        findNavController().navigate(event.direction)
                         true
                     }
                 }.exhaustive
 
             }
+        }
+
+        setFragmentResultListener("chosen_client") { _, bundle ->
+            viewModel.onClientChosen(
+                bundle.getParcelable("client")
+            )
         }
 
         setHasOptionsMenu(true)

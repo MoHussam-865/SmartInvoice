@@ -2,6 +2,7 @@ package com.android_a865.estimatescalculator.feature_main.data.relations
 
 import androidx.room.Embedded
 import androidx.room.Relation
+import com.android_a865.estimatescalculator.feature_client.data.entities.ClientEntity
 import com.android_a865.estimatescalculator.feature_main.data.entities.InvoiceEntity
 import com.android_a865.estimatescalculator.feature_main.data.entities.InvoiceItemEntity
 
@@ -9,6 +10,12 @@ import com.android_a865.estimatescalculator.feature_main.data.entities.InvoiceIt
 data class FullInvoice(
     @Embedded
     val invoice: InvoiceEntity,
+
+    @Relation(
+        parentColumn = "clientId",
+        entityColumn = "id"
+    )
+    val client: ClientEntity?,
 
     @Relation(
         parentColumn = "id",

@@ -106,6 +106,12 @@
         <action
             android:id="@+id/action_newEstimateFragment_to_viewPdfFragment"
             app:destination="@id/viewPdfFragment" />
+        <action
+            android:id="@+id/action_newEstimateFragment_to_chooseClientFragment"
+            app:destination="@id/chooseClientFragment" />
+        <action
+            android:id="@+id/action_newEstimateFragment_to_clientViewFragment"
+            app:destination="@id/clientViewFragment" />
     </fragment>
     <fragment
         android:id="@+id/itemsChooseFragment"
@@ -172,5 +178,14 @@
         <argument
             android:name="client"
             app:argType="com.android_a865.estimatescalculator.feature_client.domain.model.Client" />
+    </fragment>
+    <fragment
+        android:id="@+id/chooseClientFragment"
+        android:name="com.android_a865.estimatescalculator.feature_client.presentation.choose_client.ChooseClientFragment"
+        android:label="Choose Client"
+        tools:layout="@layout/fragment_choose_client">
+        <action
+            android:id="@+id/action_chooseClientFragment_to_addEditClientFragment"
+            app:destination="@id/addEditClientFragment" />
     </fragment>
 </navigation>
