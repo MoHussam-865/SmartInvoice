@@ -6,6 +6,9 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.addCallback
+import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
@@ -31,15 +34,43 @@ class MainFragment : Fragment(R.layout.fragment_main), ItemsAdapter.OnItemEventL
 
     private val itemsAdapter = ItemsAdapter(this)
     private val pathIndicator = PathIndicatorAdapter()
+    private lateinit var toggle: ActionBarDrawerToggle
 
     @ExperimentalCoroutinesApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpActionBarWithNavController()
 
+
         val binding = FragmentMainBinding.bind(view)
 
         binding.apply {
+
+            toggle = ActionBarDrawerToggle(
+                requireActivity(),
+                drawerLayout,
+                mainToolBar,
+                R.string.open,
+                R.string.close
+            )
+            drawerLayout.addDrawerListener(toggle)
+            toggle.syncState()
+
+            navView.setNavigationItemSelectedListener {
+                drawerLayout.close()
+                when (it.itemId) {
+                    R.id.myEstimate -> {
+                        viewModule.onMyEstimateSelected()
+                    }
+
+                    R.id.myClients -> {
+                        viewModule.onMyClientsSelected()
+                    }
+                }
+                true
+            }
+
+
             itemsList.apply {
                 adapter = itemsAdapter
                 layoutManager = LinearLayoutManager(requireContext())
@@ -56,7 +87,7 @@ class MainFragment : Fragment(R.layout.fragment_main), ItemsAdapter.OnItemEventL
             itemsAdapter.submitList(it)
         }
 
-        viewModule.currentPath.asLiveData().observe(viewLifecycleOwner){
+        viewModule.currentPath.asLiveData().observe(viewLifecycleOwner) {
             pathIndicator.submitPath(it)
             binding.pathList.scrollToEnd()
         }
@@ -91,7 +122,10 @@ class MainFragment : Fragment(R.layout.fragment_main), ItemsAdapter.OnItemEventL
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId){
+        if (toggle.onOptionsItemSelected(item)) {
+            return true
+        }
+        return when (item.itemId) {
             R.id.newItem -> {
                 viewModule.onNewItemSelected()
                 true
@@ -107,22 +141,13 @@ class MainFragment : Fragment(R.layout.fragment_main), ItemsAdapter.OnItemEventL
                 true
             }
 
-            R.id.myEstimate -> {
-                viewModule.onMyEstimateSelected()
-                true
-            }
-
-            R.id.myClients -> {
-                viewModule.onMyClientsSelected()
-                true
-            }
 
             else -> super.onOptionsItemSelected(item)
         }
     }
 
     override fun onItemClicked(item: Item, position: Int) =
-            viewModule.onItemClicked(item)
+        viewModule.onItemClicked(item)
 
     override fun onItemLongClick(item: Item) {
         findNavController().navigate(
@@ -134,5 +159,5 @@ class MainFragment : Fragment(R.layout.fragment_main), ItemsAdapter.OnItemEventL
         //itemsViewModule.onItemLongClick(item)
     }
 
-    override fun onSelectionChange(item: Item, position: Int, b: Boolean) { }
+    override fun onSelectionChange(item: Item, position: Int, b: Boolean) {}
 }
