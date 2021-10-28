@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Estimates Calculator</string>
+    <string name="app_name">InvoiceHub</string>
     <string name="add">Add</string>
     <string name="new_estimate">New Estimate</string>
     <string name="new_item">New Item</string>
@@ -19,8 +19,8 @@
     <string name="open_pdf">Open Pdf</string>
     <string name="save_invoice">Save Invoice</string>
     <string name="open_externally">Open Externally</string>
-    <string name="my_estimates">My Estimates</string>
-    <string name="my_clients">My Clients</string>
+    <string name="estimates">Estimates</string>
+    <string name="clients">Clients</string>
     <string name="client_name">Client Name</string>
     <string name="organization">Organization</string>
     <string name="title">Title</string>
@@ -34,6 +34,8 @@
     <string name="delete_items">"Delete Items"</string>
     <string name="delete_client">Delete Client</string>
     <string name="cancel">Cancel</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
     <string name="delete_client_dialog">Are you sure you want to delete this Client\n you can\'t undo this</string>
     <string name="delete_items_dialog">Are you sure you want to delete %s item\n you can\'t undo this</string>
 </resources>

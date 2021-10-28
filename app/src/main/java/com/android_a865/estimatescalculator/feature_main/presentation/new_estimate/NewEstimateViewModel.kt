@@ -1,7 +1,6 @@
 package com.android_a865.estimatescalculator.feature_main.presentation.new_estimate
 
 import android.content.Context
-import android.content.DialogInterface
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -41,7 +40,7 @@ class NewEstimateViewModel @Inject constructor(
                 thisClient ?: invoice?.client
             }
         } else {
-            emptyFlow()
+            flowOf(null)
         }
     }
 

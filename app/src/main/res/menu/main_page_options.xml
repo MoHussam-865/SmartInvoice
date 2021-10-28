@@ -20,12 +20,12 @@
 
     <item
         android:id="@+id/myEstimate"
-        android:title="@string/my_estimates"
+        android:title="@string/estimates"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/myClients"
-        android:title="@string/my_clients"
+        android:title="@string/clients"
         app:showAsAction="never" />
 
 </menu>

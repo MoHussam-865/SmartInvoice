@@ -61,7 +61,6 @@ class MainFragment : Fragment(R.layout.fragment_main), ItemsAdapter.OnItemEventL
             binding.pathList.scrollToEnd()
         }
 
-
         val callback = requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             viewModule.onBackPressed()
         }

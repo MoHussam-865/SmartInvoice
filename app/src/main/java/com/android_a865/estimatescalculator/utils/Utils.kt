@@ -19,8 +19,7 @@ inline fun <T> MutableLiveData<T>.update(fun0: (T?) -> T) {
 
 fun <T> T.toJson(): String = Gson().toJson(this)
 
-inline fun <reified T> String.toObject(): T = Gson().fromJson(this)
+inline fun <reified T> String.toObject(): T =
+    Gson().fromJson(this, object : TypeToken<T>() {}.type)
 
-inline fun <reified T> Gson.fromJson(json: String): T =
-    fromJson(json, object : TypeToken<T>() {}.type)
 
