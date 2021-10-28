@@ -39,4 +39,7 @@
     <string name="delete_items_dialog">هل انت متأكد انك تريد حذف %s صنف\nتنبية : لا يمكنك التراجع فى هذه العملية</string>
     <string name="open">فتح</string>
     <string name="close">غلق</string>
+    <string name="empty_folder">مجلد فارغ\\nاضف الأصناف من قائمة الخيارات</string>
+    <string name="empty_clients">قائمة العملاء ستظهر هنا</string>
+    <string name="empty_invoices">قائمة الفواتير و التسعيرات ستظهر هنا</string>
 </resources>

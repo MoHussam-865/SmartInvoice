@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
@@ -44,11 +45,14 @@ class ClientsFragment : Fragment(R.layout.fragment_clients),
             fab.setOnClickListener {
                 viewModel.onFabClicked()
             }
+
+            viewModel.clients.asLiveData().observe(viewLifecycleOwner) {
+                clientsAdapter.submitList(it)
+                tvEmpty.isVisible = it.isEmpty()
+            }
         }
 
-        viewModel.clients.asLiveData().observe(viewLifecycleOwner) {
-            clientsAdapter.submitList(it)
-        }
+
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.windowEvents.collect { event ->

@@ -76,6 +76,7 @@ class ItemsChooseFragment : Fragment(R.layout.fragment_items_choose),
 
             viewModel.itemsData.asLiveData().observe(viewLifecycleOwner) {
                 itemsAdapter.submitList(it)
+                tvEmpty.isVisible = it.isEmpty()
             }
         }
 

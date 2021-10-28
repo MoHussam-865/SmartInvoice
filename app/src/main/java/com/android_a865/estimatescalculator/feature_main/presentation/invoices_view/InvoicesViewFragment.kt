@@ -2,6 +2,7 @@ package com.android_a865.estimatescalculator.feature_main.presentation.invoices_
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
@@ -39,12 +40,15 @@ class InvoicesViewFragment : Fragment(R.layout.fragment_invoices_view),
             fab.setOnClickListener {
                 viewModel.onNewInvoiceClicked()
             }
+
+            viewModel.invoices.asLiveData().observe(viewLifecycleOwner) {
+                invoicesAdapter.submitList(it)
+                tvEmpty.isVisible = it.isEmpty()
+            }
         }
 
 
-        viewModel.invoices.asLiveData().observe(viewLifecycleOwner) {
-            invoicesAdapter.submitList(it)
-        }
+
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.windowEvents.collect { event ->

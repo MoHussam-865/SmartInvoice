@@ -9,6 +9,7 @@ import androidx.activity.addCallback
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
@@ -85,6 +86,7 @@ class MainFragment : Fragment(R.layout.fragment_main), ItemsAdapter.OnItemEventL
 
         viewModule.itemsData.observe(viewLifecycleOwner) {
             itemsAdapter.submitList(it)
+            binding.tvEmpty.isVisible = it.isEmpty()
         }
 
         viewModule.currentPath.asLiveData().observe(viewLifecycleOwner) {
