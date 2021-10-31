@@ -48,8 +48,6 @@ class InvoicesViewFragment : Fragment(R.layout.fragment_invoices_view),
         }
 
 
-
-
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.windowEvents.collect { event ->
                 when (event) {
@@ -59,6 +57,9 @@ class InvoicesViewFragment : Fragment(R.layout.fragment_invoices_view),
                                 invoice = event.invoice
                             )
                         )
+                    }
+                    is InvoicesViewViewModel.WindowEvents.SetAppSettings -> {
+                        invoicesAdapter.setAppSettings(event.appSettings)
                     }
                 }.exhaustive
 

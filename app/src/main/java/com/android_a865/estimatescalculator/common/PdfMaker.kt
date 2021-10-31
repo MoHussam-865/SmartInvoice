@@ -3,6 +3,7 @@ package com.android_a865.estimatescalculator.common
 import android.content.Context
 import android.util.Log
 import com.android_a865.estimatescalculator.feature_main.domain.model.Invoice
+import com.android_a865.estimatescalculator.feature_settings.domain.models.AppSettings
 import com.android_a865.estimatescalculator.utils.date
 import com.itextpdf.text.*
 import com.itextpdf.text.pdf.BaseFont
@@ -37,6 +38,7 @@ class PdfMaker {
     fun make(
         context: Context,
         invoice: Invoice,
+        appSettings: AppSettings
     ): String? {
         val document = Document(PageSize.A4)
         val fileName = "${System.currentTimeMillis()}.pdf"
@@ -55,7 +57,7 @@ class PdfMaker {
 
             //
             val dateInfo = Paragraph().apply {
-                add(Paragraph(invoice.date.date(), font4))
+                add(Paragraph(invoice.date.date(appSettings.dateFormat), font4))
             }
 
             c1 = PdfPCell(dateInfo).apply {

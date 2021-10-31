@@ -6,32 +6,39 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android_a865.estimatescalculator.common.PdfMaker
 import com.android_a865.estimatescalculator.feature_main.domain.model.Invoice
+import com.android_a865.estimatescalculator.feature_settings.domain.models.AppSettings
+import com.android_a865.estimatescalculator.feature_settings.domain.repository.SettingsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class PdfPreviewViewModule @Inject constructor(
-    state: SavedStateHandle
+    state: SavedStateHandle,
+    private val repository: SettingsRepository
 ) : ViewModel() {
 
     val invoice = state.get<Invoice>("invoice")
     private var fileName: String? = null
+
+    private lateinit var appSettings: AppSettings
 
     private val eventsChannel = Channel<WindowEvents>()
     val windowEvents = eventsChannel.receiveAsFlow()
 
     init {
         viewModelScope.launch {
+            appSettings = repository.getAppSettings().first()
             eventsChannel.send(WindowEvents.SendContext)
         }
     }
 
     fun onStart(context: Context?) = context?.let { context0 ->
         invoice?.let { invoice0 ->
-            fileName = PdfMaker().make(context0, invoice0)
+            fileName = PdfMaker().make(context0, invoice0, appSettings)
 
             fileName?.let {
                 viewModelScope.launch {

@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.android_a865.estimatescalculator.databinding.AdapterInvoiceViewBinding
 import com.android_a865.estimatescalculator.feature_main.domain.model.Invoice
+import com.android_a865.estimatescalculator.feature_settings.domain.models.AppSettings
+import com.android_a865.estimatescalculator.utils.DATE_FORMATS
 import com.android_a865.estimatescalculator.utils.date
 
 class InvoicesAdapter(
@@ -16,6 +18,7 @@ class InvoicesAdapter(
 ) : ListAdapter<Invoice, InvoicesAdapter.ViewHolder>(InvoiceDiffCallback()) {
 
     private lateinit var context: Context
+    private var appSettings: AppSettings? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         context = parent.context
@@ -26,6 +29,9 @@ class InvoicesAdapter(
         )
     }
 
+    fun setAppSettings(appSettings: AppSettings) {
+        this.appSettings = appSettings
+    }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) =
         holder.bind(getItem(position))
@@ -46,7 +52,7 @@ class InvoicesAdapter(
 
         fun bind(invoice: Invoice) {
             binding.apply {
-                tvInvoiceDate.text = invoice.date.date()
+                tvInvoiceDate.text = invoice.date.date(appSettings?.dateFormat ?: DATE_FORMATS[0])
                 tvClientName.text = invoice.client?.name
                 invoiceTotal.text = invoice.total.toString()
 
