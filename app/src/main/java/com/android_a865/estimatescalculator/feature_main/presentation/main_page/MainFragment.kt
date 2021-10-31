@@ -67,6 +67,10 @@ class MainFragment : Fragment(R.layout.fragment_main), ItemsAdapter.OnItemEventL
                     R.id.myClients -> {
                         viewModule.onMyClientsSelected()
                     }
+
+                    R.id.settings -> {
+                        viewModule.onSettingsSelected()
+                    }
                 }
                 true
             }

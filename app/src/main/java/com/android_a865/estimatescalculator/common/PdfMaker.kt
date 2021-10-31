@@ -34,7 +34,10 @@ class PdfMaker {
         font3_.setColor(3, 11, 40)
     }
 
-    fun make(context: Context, invoice: Invoice): String? {
+    fun make(
+        context: Context,
+        invoice: Invoice,
+    ): String? {
         val document = Document(PageSize.A4)
         val fileName = "${System.currentTimeMillis()}.pdf"
         try {

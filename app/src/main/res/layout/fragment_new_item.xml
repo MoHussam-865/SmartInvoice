@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".feature_main.presentation.new_item.NewItemFragment">
 
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/mainToolBar"
@@ -23,9 +23,9 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/item_name_et"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_margin="16dp">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -33,16 +33,15 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/item_name"
                 android:inputType="text"
-                android:padding="16dp"
-                />
+                android:padding="16dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/item_price_et"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_margin="16dp">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -50,8 +49,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/item_price"
                 android:inputType="numberDecimal"
-                android:padding="16dp"
-                />
+                android:padding="16dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

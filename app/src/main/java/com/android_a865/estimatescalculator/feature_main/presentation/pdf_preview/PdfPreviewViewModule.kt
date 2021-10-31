@@ -18,7 +18,7 @@ class PdfPreviewViewModule @Inject constructor(
 ) : ViewModel() {
 
     val invoice = state.get<Invoice>("invoice")
-    var fileName: String? = null
+    private var fileName: String? = null
 
     private val eventsChannel = Channel<WindowEvents>()
     val windowEvents = eventsChannel.receiveAsFlow()

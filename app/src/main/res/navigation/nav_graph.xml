@@ -33,6 +33,12 @@
         <action
             android:id="@+id/action_mainFragment2_to_clientsFragment"
             app:destination="@id/clientsFragment" />
+        <action
+            android:id="@+id/action_mainFragment2_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_mainFragment2_to_companyInfoFragment"
+            app:destination="@id/companyInfoFragment" />
     </fragment>
     <fragment
         android:id="@+id/newItemFragment"
@@ -187,5 +193,19 @@
         <action
             android:id="@+id/action_chooseClientFragment_to_addEditClientFragment"
             app:destination="@id/addEditClientFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/companyInfoFragment"
+        android:name="com.android_a865.estimatescalculator.feature_settings.presentation.company_info.CompanyInfoFragment"
+        android:label="@string/company_info"
+        tools:layout="@layout/fragment_company_info" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.android_a865.estimatescalculator.feature_settings.presentation.settings.SettingsFragment"
+        android:label="@string/settings"
+        tools:layout="@layout/fragment_settings">
+        <action
+            android:id="@+id/action_settingsFragment_to_companyInfoFragment"
+            app:destination="@id/companyInfoFragment" />
     </fragment>
 </navigation>

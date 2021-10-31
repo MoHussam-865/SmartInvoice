@@ -4,4 +4,11 @@ const val AUTHORITY = "com.developera865.Estimate_Calculator.fileprovider"
 
 val DATE_FORMATS = listOf(
     "d/M/yyyy HH:mm:ss",
+    "dd/MM/yyyy",
+    "dd MMM, yyyy",
+    "EEE dd MMM yyyy"
+)
+
+val CURRENCIES = listOf(
+    "USD","EGP"
 )

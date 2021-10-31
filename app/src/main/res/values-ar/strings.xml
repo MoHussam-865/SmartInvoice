@@ -42,4 +42,11 @@
     <string name="empty_folder">مجلد فارغ\\nاضف الأصناف من قائمة الخيارات</string>
     <string name="empty_clients">قائمة العملاء ستظهر هنا</string>
     <string name="empty_invoices">قائمة الفواتير و التسعيرات ستظهر هنا</string>
+    <string name="date_format">صيغة التاريخ</string>
+    <string name="currency">العملة</string>
+    <string name="company_info">بيانات الشركة</string>
+    <string name="settings">إعدادات التطبيق</string>
+    <string name="company_name">إسم الشركة</string>
+    <string name="person_name">إسم الشخص</string>
+    <string name="phone_number">رقم الهاتف</string>
 </resources>

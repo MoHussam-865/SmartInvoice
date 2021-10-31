@@ -87,6 +87,12 @@ class MainFragmentViewModel @Inject constructor(
         ))
     }
 
+    fun onSettingsSelected() = viewModelScope.launch {
+        eventsChannel.send(WindowEvents.Navigate(
+            MainFragmentDirections.actionMainFragment2ToSettingsFragment()
+        ))
+    }
+
     sealed class WindowEvents {
         object CloseTheApp: WindowEvents()
         data class Navigate(val direction: NavDirections): WindowEvents()

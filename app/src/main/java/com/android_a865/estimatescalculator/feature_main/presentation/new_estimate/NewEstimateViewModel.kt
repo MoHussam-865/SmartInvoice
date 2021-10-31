@@ -144,7 +144,10 @@ class NewEstimateViewModel @Inject constructor(
 
         AlertDialog.Builder(context)
             .setTitle("Choose Type")
-            .setSingleChoiceItems(types, invoiceType.value.ordinal) { dialog, i ->
+            .setSingleChoiceItems(
+                types,
+                invoiceType.value.ordinal
+            ) { dialog, i ->
                 invoiceType.value = InvoiceTypes.valueOf(types[i])
                 dialog.dismiss()
             }.show()

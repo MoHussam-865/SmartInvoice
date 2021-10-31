@@ -16,6 +16,9 @@ import com.android_a865.estimatescalculator.feature_main.domain.use_cases.invoic
 import com.android_a865.estimatescalculator.feature_main.domain.use_cases.invoice_use_cases.InvoiceUseCases
 import com.android_a865.estimatescalculator.feature_main.domain.use_cases.invoice_use_cases.UpdateInvoiceUseCase
 import com.android_a865.estimatescalculator.feature_main.domain.use_cases.items_use_cases.*
+import com.android_a865.estimatescalculator.feature_settings.data.data_source.PreferencesManager
+import com.android_a865.estimatescalculator.feature_settings.data.repository.SettingsRepositoryImpl
+import com.android_a865.estimatescalculator.feature_settings.domain.repository.SettingsRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -49,6 +52,13 @@ object AppModule {
     fun provideClientsRepository(db: MyRoomDatabase): ClientsRepository {
         return ClientsRepositoryImpl(db.getClientsDao())
     }
+
+    @Provides
+    @Singleton
+    fun provideSettingsRepository(preferencesManager: PreferencesManager): SettingsRepository {
+        return SettingsRepositoryImpl(preferencesManager)
+    }
+
 
     @Provides
     @Singleton
