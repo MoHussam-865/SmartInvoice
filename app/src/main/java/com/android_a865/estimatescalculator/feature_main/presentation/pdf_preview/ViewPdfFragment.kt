@@ -46,7 +46,7 @@ class ViewPdfFragment : Fragment(R.layout.fragment_view_pdf) {
                         true
                     }
                     PdfPreviewViewModule.WindowEvents.SendContext -> {
-                        viewModule.onStart(context)
+                        viewModule.onStart(requireContext())
                         true
                     }
                     is PdfPreviewViewModule.WindowEvents.OpenPdf -> {
@@ -58,6 +58,11 @@ class ViewPdfFragment : Fragment(R.layout.fragment_view_pdf) {
             }
         }
 
+        viewModule.fileName.let {
+            if (it != null) {
+                openPdf(it)
+            }
+        }
 
         setHasOptionsMenu(true)
     }

@@ -11,10 +11,12 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.android_a865.estimatescalculator.R
 import com.android_a865.estimatescalculator.databinding.FragmentClientViewBinding
+import com.android_a865.estimatescalculator.utils.appCompatActivity
 import com.android_a865.estimatescalculator.utils.exhaustive
 import com.android_a865.estimatescalculator.utils.setUpActionBarWithNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -90,11 +92,17 @@ class ClientViewFragment : Fragment(R.layout.fragment_client_view) {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.client_view_options, menu)
+
+        viewModel.isDatabaseClient.asLiveData().observe(viewLifecycleOwner){
+            menu.findItem(R.id.edit).isVisible = it
+            menu.findItem(R.id.delete).isVisible = it
+            menu.findItem(R.id.add).isVisible = !it
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.edit -> {
+            R.id.edit, R.id.add -> {
                 findNavController().navigate(
                     ClientViewFragmentDirections.actionClientViewFragmentToAddEditClientFragment(
                         client = viewModel.client

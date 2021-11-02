@@ -52,6 +52,7 @@ class InvoicesAdapter(
 
         fun bind(invoice: Invoice) {
             binding.apply {
+                tvInvoiceType.text = invoice.type.name
                 tvInvoiceDate.text = invoice.date.date(appSettings?.dateFormat ?: DATE_FORMATS[0])
                 tvClientName.text = invoice.client?.name
                 invoiceTotal.text = invoice.total.toString()

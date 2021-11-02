@@ -2,6 +2,8 @@ package com.android_a865.estimatescalculator.feature_client.data.dao
 
 import androidx.room.*
 import com.android_a865.estimatescalculator.feature_client.data.entities.ClientEntity
+import com.android_a865.estimatescalculator.feature_client.domain.model.Client
+import com.android_a865.estimatescalculator.feature_main.data.entities.InvoiceEntity
 import kotlinx.coroutines.flow.Flow
 
 
@@ -19,4 +21,20 @@ interface ClientsDao {
 
     @Delete
     suspend fun deleteClient(clientEntity: ClientEntity)
+
+    suspend fun updateInvoicesClient(clientId: Int, client: String) {
+        getInvoicesWithClientId(clientId).forEach {
+            updateInvoice(
+                it.copy(
+                    client = client
+                )
+            )
+        }
+    }
+
+    @Query("SELECT * FROM Invoices WHERE clientId = :id")
+    suspend fun getInvoicesWithClientId(id: Int): List<InvoiceEntity>
+
+    @Update
+    suspend fun updateInvoice(invoiceEntity: InvoiceEntity)
 }

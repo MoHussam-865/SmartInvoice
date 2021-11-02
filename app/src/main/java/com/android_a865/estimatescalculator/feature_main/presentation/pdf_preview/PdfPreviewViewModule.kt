@@ -22,7 +22,7 @@ class PdfPreviewViewModule @Inject constructor(
 ) : ViewModel() {
 
     val invoice = state.get<Invoice>("invoice")
-    private var fileName: String? = null
+    var fileName: String? = null
 
     private lateinit var appSettings: AppSettings
 
@@ -36,9 +36,9 @@ class PdfPreviewViewModule @Inject constructor(
         }
     }
 
-    fun onStart(context: Context?) = context?.let { context0 ->
+    fun onStart(context: Context) = context.apply {
         invoice?.let { invoice0 ->
-            fileName = PdfMaker().make(context0, invoice0, appSettings)
+            fileName = PdfMaker().make(this, invoice0, appSettings)
 
             fileName?.let {
                 viewModelScope.launch {

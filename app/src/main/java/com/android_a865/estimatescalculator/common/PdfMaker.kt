@@ -2,8 +2,10 @@ package com.android_a865.estimatescalculator.common
 
 import android.content.Context
 import android.util.Log
+import com.android_a865.estimatescalculator.feature_client.domain.model.Client
 import com.android_a865.estimatescalculator.feature_main.domain.model.Invoice
 import com.android_a865.estimatescalculator.feature_settings.domain.models.AppSettings
+import com.android_a865.estimatescalculator.feature_settings.domain.models.Company
 import com.android_a865.estimatescalculator.utils.date
 import com.itextpdf.text.*
 import com.itextpdf.text.pdf.BaseFont
@@ -50,10 +52,47 @@ class PdfMaker {
             //
             document.setMargins(2.5f, 2.5f, 2.5f, 2.5f)
             var c1: PdfPCell
+            val table0 = PdfPTable(1)
+            table0.widthPercentage = 100f
+
+            // invoice type
+            val invoiceType = Paragraph()
+            invoiceType.add(Paragraph(invoice.type.name, font1_))
+            invoiceType.alignment = Element.ALIGN_JUSTIFIED
+            c1 = PdfPCell(invoiceType)
+            c1.border = Rectangle.NO_BORDER
+            c1.runDirection = PdfWriter.RUN_DIRECTION_RTL
+            c1.horizontalAlignment = Element.ALIGN_RIGHT
+            table0.addCell(c1)
+            addEmptyRaw(table0)
+
+            // Company Data
+            val companyData = Paragraph()
+            companyData.add(Paragraph(getCompanyInfo(appSettings.company), font2))
+            companyData.alignment = Element.ALIGN_JUSTIFIED
+            c1 = PdfPCell(companyData)
+            c1.border = Rectangle.NO_BORDER
+            c1.runDirection = PdfWriter.RUN_DIRECTION_RTL
+            c1.horizontalAlignment = Element.ALIGN_RIGHT
+            table0.addCell(c1)
+            addEmptyRaw(table0)
+            document.add(table0)
+
+
             val table1 = PdfPTable(2)
             table1.widthPercentage = 100f
 
-            table1.addCell(emptyCell())
+            // To:  (Client Info)
+            val clientInfo = Paragraph()
+            clientInfo.add(Paragraph(getClientInfo(invoice.client), font2))
+            clientInfo.alignment = Element.ALIGN_JUSTIFIED
+            c1 = PdfPCell(clientInfo)
+            c1.runDirection = PdfWriter.RUN_DIRECTION_RTL
+            c1.horizontalAlignment = Element.ALIGN_RIGHT
+            c1.verticalAlignment = Element.ALIGN_CENTER
+            c1.border = Rectangle.NO_BORDER
+            table1.addCell(c1)
+
 
             //
             val dateInfo = Paragraph().apply {
@@ -149,9 +188,21 @@ class PdfMaker {
         border = Rectangle.NO_BORDER
     }
 
+    private fun getCompanyInfo(company: Company): String {
+        return company
+            .run { "$companyName  $personName\n$phone\n$email\n$address" }
+            .replace("\n\n","\n")
+
+    }
+
+    private fun getClientInfo(client: Client?): String {
+        return client
+            ?.run { "$name  $org\n$phone1\n$phone2\n$email\n$address"}
+            ?.replace("\n\n", "\n") ?: "Unknown"
+    }
 
     companion object {
-        private var font1_: Font = Font(Font.FontFamily.TIMES_ROMAN, 48f, Font.BOLD, BaseColor.BLUE)
+        private var font1_: Font = Font(Font.FontFamily.TIMES_ROMAN, 24f, Font.BOLD, BaseColor.BLUE)
         private var font2: Font =
             Font(Font.FontFamily.TIMES_ROMAN, 18f, Font.NORMAL, BaseColor.BLACK)
         private var font3_: Font = Font(Font.FontFamily.TIMES_ROMAN, 18f, Font.BOLD, BaseColor.BLUE)

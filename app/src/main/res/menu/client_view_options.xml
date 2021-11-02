@@ -14,5 +14,11 @@
         android:title="@string/delete"
         app:showAsAction="ifRoom" />
 
+    <item
+        android:id="@+id/add"
+        android:icon="@drawable/add_sign"
+        android:title="@string/add"
+        app:showAsAction="ifRoom" />
+
 
 </menu>

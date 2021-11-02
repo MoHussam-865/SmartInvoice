@@ -13,4 +13,6 @@ interface ClientsRepository {
 
     suspend fun deleteClient(client: ClientEntity)
 
+    suspend fun updateInvoicesClient(clientId: Int, client: String)
+
 }

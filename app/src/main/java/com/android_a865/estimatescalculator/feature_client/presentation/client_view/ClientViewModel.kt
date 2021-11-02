@@ -10,6 +10,7 @@ import com.android_a865.estimatescalculator.feature_client.domain.model.Client
 import com.android_a865.estimatescalculator.feature_client.domain.use_cases.ClientsUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,6 +22,7 @@ class ClientViewModel @Inject constructor(
 ): ViewModel() {
 
     val client = state.get<Client>("client")
+    val isDatabaseClient = clientsUseCases.getClient(client?.id ?: 0).map { it!=null }
 
     private val eventChannel = Channel<WindowEvents>()
     val windowEvents = eventChannel.receiveAsFlow()

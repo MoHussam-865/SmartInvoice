@@ -24,4 +24,8 @@ class ClientsRepositoryImpl(
     override suspend fun deleteClient(client: ClientEntity) {
         dao.deleteClient(client)
     }
+
+    override suspend fun updateInvoicesClient(clientId: Int, client: String) {
+        dao.updateInvoicesClient(clientId, client)
+    }
 }
