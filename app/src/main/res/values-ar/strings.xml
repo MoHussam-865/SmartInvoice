@@ -49,4 +49,6 @@
     <string name="company_name">إسم الشركة</string>
     <string name="person_name">إسم الشخص</string>
     <string name="phone_number">رقم الهاتف</string>
+    <string name="quantity">الكمية</string>
+    <string name="add_to_database">حفظ فى قاعدة البيانات</string>
 </resources>

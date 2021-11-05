@@ -36,9 +36,6 @@
         <action
             android:id="@+id/action_mainFragment2_to_settingsFragment"
             app:destination="@id/settingsFragment" />
-        <action
-            android:id="@+id/action_mainFragment2_to_companyInfoFragment"
-            app:destination="@id/companyInfoFragment" />
     </fragment>
     <fragment
         android:id="@+id/newItemFragment"
@@ -118,6 +115,9 @@
         <action
             android:id="@+id/action_newEstimateFragment_to_clientViewFragment"
             app:destination="@id/clientViewFragment" />
+        <action
+            android:id="@+id/action_newEstimateFragment_to_addEditInvoiceItemFragment"
+            app:destination="@id/addEditInvoiceItemFragment" />
     </fragment>
     <fragment
         android:id="@+id/itemsChooseFragment"
@@ -127,6 +127,9 @@
         <argument
             android:name="items"
             app:argType="com.android_a865.estimatescalculator.feature_main.domain.model.InvoiceItem[]" />
+        <action
+            android:id="@+id/action_itemsChooseFragment_to_addEditInvoiceItemFragment"
+            app:destination="@id/addEditInvoiceItemFragment" />
     </fragment>
     <fragment
         android:id="@+id/viewPdfFragment"
@@ -207,5 +210,19 @@
         <action
             android:id="@+id/action_settingsFragment_to_companyInfoFragment"
             app:destination="@id/companyInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addEditInvoiceItemFragment"
+        android:name="com.android_a865.estimatescalculator.feature_main.presentation.add_edit_invoice_item.AddEditInvoiceItemFragment"
+        android:label="@string/new_item"
+        tools:layout="@layout/fragment_add_edit_invoice_item" >
+        <argument
+            android:name="path"
+            app:argType="com.android_a865.estimatescalculator.utils.Path" />
+        <argument
+            android:name="item"
+            app:argType="com.android_a865.estimatescalculator.feature_main.domain.model.InvoiceItem"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
 </navigation>

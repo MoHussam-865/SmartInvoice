@@ -87,7 +87,7 @@
         android:layout_margin="16dp"/>
 
 
-    <!--com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -95,8 +95,8 @@
         android:layout_alignParentEnd="true"
         android:layout_gravity="end|bottom"
         android:layout_margin="20dp"
-        android:contentDescription="Save"
-        android:src="@drawable/add_sign" /-->
+        android:contentDescription="@string/add"
+        android:src="@drawable/add_sign" />
 
 
 </RelativeLayout>

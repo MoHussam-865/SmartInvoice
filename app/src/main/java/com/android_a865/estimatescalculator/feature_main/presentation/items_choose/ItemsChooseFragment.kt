@@ -6,6 +6,7 @@ import android.view.View
 import androidx.activity.addCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
@@ -59,6 +60,10 @@ class ItemsChooseFragment : Fragment(R.layout.fragment_items_choose),
                 setHasFixedSize(true)
             }
 
+            fab.setOnClickListener {
+                viewModel.onFabClicked()
+            }
+
             viewModel.currentPath.asLiveData().observe(viewLifecycleOwner) {
                 pathIndicator.submitPath(it)
                 pathList.scrollToEnd()
@@ -91,8 +96,21 @@ class ItemsChooseFragment : Fragment(R.layout.fragment_items_choose),
                         callback.remove()
                         findNavController().popBackStack()
                         Log.d("ItemsChooseFragment", "this fragment is popped")
+                        true
+                    }
+                    is ItemsChooseViewModel.ItemsWindowEvents.NavigateTo -> {
+                        findNavController().navigate(event.direction)
+                        true
                     }
                 }.exhaustive
+            }
+        }
+
+        setFragmentResultListener("invoice_item") { _, bundle ->
+            val item = bundle.getParcelable<InvoiceItem>("item")
+
+            item?.let {
+                viewModel.onInvoiceItemAdded(it)
             }
         }
 

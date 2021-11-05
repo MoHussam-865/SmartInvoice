@@ -139,6 +139,7 @@ class NewEstimateFragment : Fragment(R.layout.fragment_new_estimate),
         inflater.inflate(R.menu.estimate_options, menu)
     }
 
+    @ExperimentalCoroutinesApi
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.open_pdf -> {

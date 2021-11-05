@@ -9,7 +9,7 @@ interface ItemsRepository {
 
     suspend fun getItemById(id: Int): ItemEntity
 
-    suspend fun insertItem(item: ItemEntity)
+    suspend fun insertItem(item: ItemEntity): Long
 
     suspend fun updateItem(item: ItemEntity)
 

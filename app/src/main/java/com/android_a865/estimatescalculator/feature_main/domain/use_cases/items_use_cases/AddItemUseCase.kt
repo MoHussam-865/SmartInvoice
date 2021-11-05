@@ -7,7 +7,8 @@ import com.android_a865.estimatescalculator.feature_main.domain.repository.Items
 class AddItemUseCase(
     val repository: ItemsRepository
 ) {
-    suspend operator fun invoke(item: Item) {
-        repository.insertItem(item.toEntity())
+    suspend operator fun invoke(item: Item): Int {
+        val itemId = repository.insertItem(item.toEntity())
+        return itemId.toInt()
     }
 }

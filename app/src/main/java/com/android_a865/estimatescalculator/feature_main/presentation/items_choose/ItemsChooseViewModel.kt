@@ -1,6 +1,8 @@
 package com.android_a865.estimatescalculator.feature_main.presentation.items_choose
 
 import androidx.lifecycle.*
+import androidx.navigation.NavDirections
+import com.android_a865.estimatescalculator.feature_main.domain.model.Invoice
 import com.android_a865.estimatescalculator.feature_main.domain.model.InvoiceItem
 import com.android_a865.estimatescalculator.feature_main.domain.model.Item
 import com.android_a865.estimatescalculator.feature_main.domain.use_cases.items_use_cases.ItemsUseCases
@@ -68,9 +70,21 @@ class ItemsChooseViewModel @Inject constructor(
     fun onQtySet(item: InvoiceItem, myQty: Double) =
         selectedItems.update { it?.setQtyTo(item, myQty) }
 
+    fun onFabClicked() = viewModelScope.launch {
+        itemsWindowEventsChannel.send(
+            ItemsWindowEvents.NavigateTo(
+                ItemsChooseFragmentDirections.actionItemsChooseFragmentToAddEditInvoiceItemFragment(
+                    path = currentPath.value
+                )
+            )
+        )
+    }
+
+    fun onInvoiceItemAdded(item: InvoiceItem) = selectedItems.update { it?.addOf(item) }
+
 
     sealed class ItemsWindowEvents {
-        //data class NavigateTo(val direction: NavDirections) : ItemsWindowEvents()
+        data class NavigateTo(val direction: NavDirections) : ItemsWindowEvents()
         object GoBack : ItemsWindowEvents()
     }
 }

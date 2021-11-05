@@ -16,6 +16,19 @@ fun List<InvoiceItem>.addOneOf(item: InvoiceItem): List<InvoiceItem> {
     return items.toList()
 }
 
+fun List<InvoiceItem>.addOf(item: InvoiceItem): List<InvoiceItem> {
+    var found = false
+    val items = this.map {
+        if (item.id == it.id) {
+            found = true
+            it.run { copy(qty = qty + item.qty) }
+        } else it
+    }.toMutableList()
+
+    if (!found) items.add(item)
+    return items.toList()
+}
+
 fun List<InvoiceItem>.removeOneOf(item: InvoiceItem): List<InvoiceItem> = map {
 
     if (item.id == it.id) {

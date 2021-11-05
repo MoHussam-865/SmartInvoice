@@ -48,4 +48,6 @@
     <string name="company_name">Company Name</string>
     <string name="person_name">Person Name</string>
     <string name="phone_number">Phone Number</string>
+    <string name="quantity">Quantity</string>
+    <string name="add_to_database">Save to database</string>
 </resources>

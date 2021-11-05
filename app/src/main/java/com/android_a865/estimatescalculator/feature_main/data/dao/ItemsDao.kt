@@ -124,5 +124,5 @@ interface ItemsDao {
 
     // insert Item
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertItemEntity(itemEntity: ItemEntity)
+    suspend fun insertItemEntity(itemEntity: ItemEntity): Long
 }
