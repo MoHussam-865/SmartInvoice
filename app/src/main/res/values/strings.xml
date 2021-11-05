@@ -50,4 +50,11 @@
     <string name="phone_number">Phone Number</string>
     <string name="quantity">Quantity</string>
     <string name="add_to_database">Save to database</string>
+    <string name="folder">Folder</string>
+    <string name="item">Item</string>
+    <string name="database">Database</string>
+    <string name="choose_items">Choose Items</string>
+    <string name="choose_client">Choose Client</string>
+    <string name="pdf_preview">Pdf Preview</string>
+    <string name="client_view">Client View</string>
 </resources>

@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/mainFragment2"
         android:name="com.android_a865.estimatescalculator.feature_main.presentation.main_page.MainFragment"
-        android:label="Database"
+        android:label="@string/database"
         tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_mainFragment2_to_newItemFragment"
@@ -40,7 +40,7 @@
     <fragment
         android:id="@+id/newItemFragment"
         android:name="com.android_a865.estimatescalculator.feature_main.presentation.new_item.NewItemFragment"
-        android:label="Item"
+        android:label="@string/item"
         tools:layout="@layout/fragment_new_item">
         <argument
             android:name="item"
@@ -59,7 +59,7 @@
     <fragment
         android:id="@+id/newFolderFragment"
         android:name="com.android_a865.estimatescalculator.feature_main.presentation.new_folder.NewFolderFragment"
-        android:label="Folder"
+        android:label="@string/folder"
         tools:layout="@layout/fragment_new_folder">
         <argument
             android:name="folder"
@@ -78,7 +78,7 @@
     <fragment
         android:id="@+id/selectingFragment"
         android:name="com.android_a865.estimatescalculator.feature_main.presentation.selecting.SelectingFragment"
-        android:label="fragment_selecting"
+        android:label=""
         tools:layout="@layout/fragment_selecting" >
         <argument
             android:name="path"
@@ -122,7 +122,7 @@
     <fragment
         android:id="@+id/itemsChooseFragment"
         android:name="com.android_a865.estimatescalculator.feature_main.presentation.items_choose.ItemsChooseFragment"
-        android:label="Choose Items"
+        android:label="@string/choose_items"
         tools:layout="@layout/fragment_items_choose">
         <argument
             android:name="items"
@@ -134,7 +134,7 @@
     <fragment
         android:id="@+id/viewPdfFragment"
         android:name="com.android_a865.estimatescalculator.feature_main.presentation.pdf_preview.ViewPdfFragment"
-        android:label="Pdf Preview"
+        android:label="@string/pdf_preview"
         tools:layout="@layout/fragment_view_pdf">
         <argument
             android:name="invoice"
@@ -179,7 +179,7 @@
     <fragment
         android:id="@+id/clientViewFragment"
         android:name="com.android_a865.estimatescalculator.feature_client.presentation.client_view.ClientViewFragment"
-        android:label="Client View"
+        android:label="@string/client_view"
         tools:layout="@layout/fragment_client_view">
         <action
             android:id="@+id/action_clientViewFragment_to_addEditClientFragment"
@@ -191,7 +191,7 @@
     <fragment
         android:id="@+id/chooseClientFragment"
         android:name="com.android_a865.estimatescalculator.feature_client.presentation.choose_client.ChooseClientFragment"
-        android:label="Choose Client"
+        android:label="@string/choose_client"
         tools:layout="@layout/fragment_choose_client">
         <action
             android:id="@+id/action_chooseClientFragment_to_addEditClientFragment"
@@ -214,7 +214,7 @@
     <fragment
         android:id="@+id/addEditInvoiceItemFragment"
         android:name="com.android_a865.estimatescalculator.feature_main.presentation.add_edit_invoice_item.AddEditInvoiceItemFragment"
-        android:label="@string/new_item"
+        android:label="@string/item"
         tools:layout="@layout/fragment_add_edit_invoice_item" >
         <argument
             android:name="path"

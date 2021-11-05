@@ -51,4 +51,11 @@
     <string name="phone_number">رقم الهاتف</string>
     <string name="quantity">الكمية</string>
     <string name="add_to_database">حفظ فى قاعدة البيانات</string>
+    <string name="folder">ملف</string>
+    <string name="item">صنف</string>
+    <string name="database">قاعدة البيانات</string>
+    <string name="choose_items">إختيار الاصناف</string>
+    <string name="choose_client">إختيار العميل</string>
+    <string name="pdf_preview">Pdf عرض</string>
+    <string name="client_view">عرض العميل</string>
 </resources>
