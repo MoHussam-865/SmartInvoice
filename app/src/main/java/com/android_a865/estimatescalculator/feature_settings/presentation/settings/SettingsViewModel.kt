@@ -1,14 +1,15 @@
 package com.android_a865.estimatescalculator.feature_settings.presentation.settings
 
 import android.content.Context
-import android.util.Log
+import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
+import com.android_a865.estimatescalculator.R
 import com.android_a865.estimatescalculator.feature_settings.domain.repository.SettingsRepository
-import com.android_a865.estimatescalculator.utils.CURRENCIES
 import com.android_a865.estimatescalculator.utils.DATE_FORMATS
+import com.android_a865.estimatescalculator.utils.date
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.collect
@@ -40,19 +41,22 @@ class SettingsViewModel @Inject constructor(
 
 
     fun onCompanyInfoSelected() = viewModelScope.launch {
-        eventsChannel.send(WindowEvents.Navigate(
-            SettingsFragmentDirections.actionSettingsFragmentToCompanyInfoFragment()
-        ))
+        eventsChannel.send(
+            WindowEvents.Navigate(
+                SettingsFragmentDirections.actionSettingsFragmentToCompanyInfoFragment()
+            )
+        )
     }
 
     fun onDateFormatSelected(context: Context) {
-        Log.d("SettingsViewModel", "$dateFormat")
 
+        val time = System.currentTimeMillis()
+        val array = DATE_FORMATS.map { time.date(it) }.toTypedArray()
 
         AlertDialog.Builder(context)
-            .setTitle("Choose Format")
+            .setTitle(context.resources.getString(R.string.choose_format))
             .setSingleChoiceItems(
-                DATE_FORMATS.toTypedArray(),
+                array,
                 DATE_FORMATS.indexOf(dateFormat)
             ) { dialog, i ->
 
@@ -66,25 +70,29 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun onCurrencySelected(context: Context) {
+        val input = EditText(context)
+        input.setText(currency)
 
-        Log.d("SettingsViewModel", "$currency")
-
-
-        AlertDialog.Builder(context)
-            .setTitle("Choose Currency")
-            .setSingleChoiceItems(
-                CURRENCIES.toTypedArray(),
-                CURRENCIES.indexOf(currency)
-            ) { dialog, i ->
+        val builder = android.app.AlertDialog.Builder(context)
+        builder.setTitle(context.resources.getString(R.string.choose_currency))
+            .setView(input)
+            .setPositiveButton(context.resources.getString(R.string.ok)) { dialogInterface, _ ->
+                val currency = input.text.toString()
 
                 viewModelScope.launch {
-                    repository.updateCurrency(CURRENCIES[i])
+                    repository.updateCurrency(currency)
                 }
-
-                dialog.dismiss()
+                dialogInterface.dismiss()
+            }
+            .setNegativeButton(context.resources.getString(R.string.cancel)) { dialogInterface, _ ->
+                dialogInterface.dismiss()
             }.show()
 
+        input.requestFocus()
+
+
     }
+
 
     sealed class WindowEvents {
         data class Navigate(val direction: NavDirections): WindowEvents()

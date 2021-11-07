@@ -93,6 +93,18 @@ class MainFragmentViewModel @Inject constructor(
         ))
     }
 
+    fun onSubscribeSelected() = viewModelScope.launch {
+        eventsChannel.send(WindowEvents.Navigate(
+            MainFragmentDirections.actionMainFragment2ToSubscribeFragment()
+        ))
+    }
+
+    fun onReportsSelected()  = viewModelScope.launch {
+        eventsChannel.send(WindowEvents.Navigate(
+            MainFragmentDirections.actionMainFragment2ToReportsMainFragment()
+        ))
+    }
+
     sealed class WindowEvents {
         object CloseTheApp: WindowEvents()
         data class Navigate(val direction: NavDirections): WindowEvents()

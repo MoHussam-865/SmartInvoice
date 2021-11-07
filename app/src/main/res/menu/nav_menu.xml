@@ -15,9 +15,20 @@
         android:icon="@drawable/ic_client"/>
 
     <item
+        android:id="@+id/reports"
+        android:title="@string/reports"
+        android:icon="@drawable/ic_analysis"/>
+
+    <item
         android:id="@+id/settings"
         android:title="@string/settings"
         android:icon="@drawable/ic_settings"/>
+
+    <item
+        android:id="@+id/subscribe"
+        android:title="@string/subscribe"
+        android:icon="@drawable/ic_star"/>
+
 
 
 </menu>

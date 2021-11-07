@@ -36,6 +36,12 @@
         <action
             android:id="@+id/action_mainFragment2_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_mainFragment2_to_reportsMainFragment"
+            app:destination="@id/reportsMainFragment" />
+        <action
+            android:id="@+id/action_mainFragment2_to_subscribeFragment"
+            app:destination="@id/subscribeFragment" />
     </fragment>
     <fragment
         android:id="@+id/newItemFragment"
@@ -225,4 +231,18 @@
             app:nullable="true"
             android:defaultValue="@null" />
     </fragment>
+    <fragment
+        android:id="@+id/reportsMainFragment"
+        android:name="com.android_a865.estimatescalculator.feature_reports.presentation.main.ReportsMainFragment"
+        android:label="@string/reports"
+        tools:layout="@layout/fragment_reports_main">
+        <action
+            android:id="@+id/action_reportsMainFragment_to_subscribeFragment"
+            app:destination="@id/subscribeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/subscribeFragment"
+        android:name="com.android_a865.estimatescalculator.feature_in_app.presentation.main.SubscribeFragment"
+        android:label="@string/subscribe"
+        tools:layout="@layout/fragment_subscribe" />
 </navigation>

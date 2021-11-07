@@ -7,7 +7,6 @@ import androidx.datastore.preferences.core.*
 import androidx.datastore.preferences.preferencesDataStore
 import com.android_a865.estimatescalculator.feature_settings.domain.models.AppSettings
 import com.android_a865.estimatescalculator.feature_settings.domain.models.Company
-import com.android_a865.estimatescalculator.utils.CURRENCIES
 import com.android_a865.estimatescalculator.utils.DATE_FORMATS
 import com.android_a865.estimatescalculator.utils.toJson
 import com.android_a865.estimatescalculator.utils.toObject
@@ -39,7 +38,7 @@ class PreferencesManager @Inject constructor(
             AppSettings(
                 company = preferences[PreferencesKeys.COMPANY_INFO]?.toObject() ?: Company(),
                 dateFormat = preferences[PreferencesKeys.DATE_FORMAT] ?: DATE_FORMATS[0],
-                currency = preferences[PreferencesKeys.CURRENCY] ?: CURRENCIES[0],
+                currency = preferences[PreferencesKeys.CURRENCY] ?: "",
                 isFirst = preferences[PreferencesKeys.IS_FIRST] ?: true
             )
         }

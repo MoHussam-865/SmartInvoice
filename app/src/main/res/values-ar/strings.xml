@@ -58,4 +58,10 @@
     <string name="choose_client">إختيار العميل</string>
     <string name="pdf_preview">Pdf عرض</string>
     <string name="client_view">عرض العميل</string>
+    <string name="choose_format">إختر صيغة التاريخ</string>
+    <string name="choose_currency">إختر العملة</string>
+    <string name="reports">التقارير</string>
+    <string name="subscribe">الإشتراك</string>
+    <string name="coming_soon">قريبا</string>
+    <string name="ok">تم</string>
 </resources>

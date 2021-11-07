@@ -6,9 +6,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.addCallback
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -70,6 +68,14 @@ class MainFragment : Fragment(R.layout.fragment_main), ItemsAdapter.OnItemEventL
 
                     R.id.settings -> {
                         viewModule.onSettingsSelected()
+                    }
+
+                    R.id.subscribe -> {
+                        viewModule.onSubscribeSelected()
+                    }
+
+                    R.id.reports -> {
+                        viewModule.onReportsSelected()
                     }
                 }
                 true
