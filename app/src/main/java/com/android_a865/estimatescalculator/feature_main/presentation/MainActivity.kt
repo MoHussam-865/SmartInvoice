@@ -16,6 +16,6 @@ class MainActivity : AppCompatActivity() {
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        sharedViewModel.onStart()
+        sharedViewModel.onAppStarted()
     }
 }

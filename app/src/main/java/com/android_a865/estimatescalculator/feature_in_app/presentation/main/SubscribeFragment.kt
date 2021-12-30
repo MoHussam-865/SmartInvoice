@@ -3,8 +3,10 @@ package com.android_a865.estimatescalculator.feature_in_app.presentation.main
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import com.android_a865.estimatescalculator.R
 import com.android_a865.estimatescalculator.databinding.FragmentSubscribeBinding
@@ -33,7 +35,25 @@ class SubscribeFragment : Fragment(R.layout.fragment_subscribe) {
             btnYearlySubscription.setOnClickListener {
                 viewModel.subscribe(YEARLY_SUBSCRIPTION)
             }
+
+            btnCancelSubscription.setOnClickListener {
+                viewModel.onCancelSubscriptionClicked()
+            }
+
+            viewModel.isSubscribed.observe(viewLifecycleOwner) {
+                llCancel.isVisible = it
+                llMonthly.isVisible = !it
+                llYearly.isVisible = !it
+
+                viewModel.getProductsData()
+            }
+
+            viewModel.products.asLiveData().observe(viewLifecycleOwner) {
+                tvMonthlyPrice.text = it.monthly?.price
+                tvYearlyPrice.text = it.yearly?.price
+            }
         }
+
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.windowEvents.collect { event ->

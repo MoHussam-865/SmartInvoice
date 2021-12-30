@@ -63,5 +63,14 @@
     <string name="reports">Reports</string>
     <string name="subscribe">Subscribe</string>
     <string name="coming_soon">Coming Soon</string>
+    <string name="renewed_unless_canceled">Your Subscription Will be auto renewed unless canceled</string>
+    <string name="cancel_subscription">Cancel Subscription</string>
+    <string name="you_are_subscribed">You are Subscribed</string>
+    <string name="monthly_subscription">Monthly Subscription</string>
+    <string name="month">/ Month</string>
+    <string name="monthly_features">Enjoy Unlimited number of Invoices</string>
+    <string name="yearly_subscription">Yearly Subscription</string>
+    <string name="per_year">/ Year</string>
+    <string name="yearly_features">Save more than 25%</string>
 
 </resources>

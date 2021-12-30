@@ -4,5 +4,6 @@ data class AppSettings(
     val company: Company,
     val dateFormat: String,
     val currency: String,
-    val isFirst: Boolean
+    val isFirst: Boolean,
+    val isSubscribed: Boolean
 )

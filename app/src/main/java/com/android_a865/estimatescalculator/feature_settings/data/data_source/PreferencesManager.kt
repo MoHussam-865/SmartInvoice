@@ -39,7 +39,8 @@ class PreferencesManager @Inject constructor(
                 company = preferences[PreferencesKeys.COMPANY_INFO]?.toObject() ?: Company(),
                 dateFormat = preferences[PreferencesKeys.DATE_FORMAT] ?: DATE_FORMATS[0],
                 currency = preferences[PreferencesKeys.CURRENCY] ?: "",
-                isFirst = preferences[PreferencesKeys.IS_FIRST] ?: true
+                isFirst = preferences[PreferencesKeys.IS_FIRST] ?: true,
+                isSubscribed = preferences[PreferencesKeys.IS_SUBSCRIBED] ?: false
             )
         }
 
@@ -68,11 +69,18 @@ class PreferencesManager @Inject constructor(
         }
     }
 
+    suspend fun updateIsSubscribed(isSubscribed: Boolean) {
+        context.dataStore.edit { preferences ->
+            preferences[PreferencesKeys.IS_SUBSCRIBED] = isSubscribed
+        }
+    }
+
 
     private object PreferencesKeys {
         val COMPANY_INFO = stringPreferencesKey("company_info")
         val DATE_FORMAT = stringPreferencesKey("date_format")
         val CURRENCY = stringPreferencesKey("currency")
         val IS_FIRST = booleanPreferencesKey("is_first")
+        val IS_SUBSCRIBED = booleanPreferencesKey("is_subscribed")
     }
 }

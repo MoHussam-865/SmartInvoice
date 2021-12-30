@@ -64,4 +64,13 @@
     <string name="subscribe">الإشتراك</string>
     <string name="coming_soon">قريبا</string>
     <string name="ok">تم</string>
+    <string name="renewed_unless_canceled">"الإشتراك يتجدد تلقائيا "</string>
+    <string name="cancel_subscription">إلغاء الإشتراك</string>
+    <string name="you_are_subscribed">أنت مشترك الان</string>
+    <string name="monthly_subscription">الأشتراك الشهرى</string>
+    <string name="month">/ شهر</string>
+    <string name="monthly_features">عدد لانهائى من الفواتير</string>
+    <string name="yearly_subscription">الإشتراك السنوى</string>
+    <string name="per_year">/ سنة</string>
+    <string name="yearly_features">"وفر 25% "</string>
 </resources>

@@ -15,4 +15,6 @@ interface SettingsRepository {
     suspend fun updateCurrency(currency: String)
 
     suspend fun updateIsFirst(isFirst: Boolean)
+
+    suspend fun updateIsSubscribed(isSubscribed: Boolean)
 }

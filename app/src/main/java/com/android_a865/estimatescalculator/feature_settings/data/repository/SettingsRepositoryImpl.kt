@@ -31,4 +31,8 @@ class SettingsRepositoryImpl(
     override suspend fun updateIsFirst(isFirst: Boolean) {
         preferences.updateIsFirst(isFirst)
     }
+
+    override suspend fun updateIsSubscribed(isSubscribed: Boolean) {
+        preferences.updateIsSubscribed(isSubscribed)
+    }
 }
