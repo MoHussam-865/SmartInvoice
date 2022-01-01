@@ -54,7 +54,6 @@ class SubscribeFragment : Fragment(R.layout.fragment_subscribe) {
             }
         }
 
-
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.windowEvents.collect { event ->
                 when (event) {
