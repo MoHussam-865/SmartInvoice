@@ -72,5 +72,6 @@
     <string name="yearly_subscription">Yearly Subscription</string>
     <string name="per_year">/ Year</string>
     <string name="yearly_features">Save more than 25%</string>
+    <string name="search">Search</string>
 
 </resources>

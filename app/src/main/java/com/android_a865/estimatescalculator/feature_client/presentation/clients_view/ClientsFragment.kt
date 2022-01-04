@@ -1,10 +1,9 @@
 package com.android_a865.estimatescalculator.feature_client.presentation.clients_view
 
 import android.os.Bundle
+import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
@@ -17,6 +16,7 @@ import com.android_a865.estimatescalculator.databinding.FragmentClientsBinding
 import com.android_a865.estimatescalculator.feature_client.domain.model.Client
 import com.android_a865.estimatescalculator.feature_main.presentation.main_page.MainFragmentViewModel
 import com.android_a865.estimatescalculator.utils.exhaustive
+import com.android_a865.estimatescalculator.utils.onTextChanged
 import com.android_a865.estimatescalculator.utils.setUpActionBarWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -65,8 +65,19 @@ class ClientsFragment : Fragment(R.layout.fragment_clients),
             }
         }
 
-        setHasOptionsMenu(false)
+        setHasOptionsMenu(true)
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.clients_view_options, menu)
+
+        val searchItem = menu.findItem(R.id.search)
+        val searchView = searchItem.actionView as SearchView
+        searchView.onTextChanged {
+            viewModel.searchQuery.value = it
+        }
+    }
+
 
     override fun onItemClicked(client: Client) {
         viewModel.onItemClicked(client)

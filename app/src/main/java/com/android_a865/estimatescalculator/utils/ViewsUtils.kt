@@ -5,6 +5,7 @@ import android.widget.AdapterView
 import android.widget.EditText
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -39,17 +40,14 @@ fun EditText.setTextWithCursor(str: String) {
     //Log.d("view util", "new = $str, old = $text, $diff, selection = $newSelection")
 }
 
-inline fun Spinner.onItemSelectedListener(crossinline listener: (String) -> Unit) {
-    object : AdapterView.OnItemSelectedListener {
-        override fun onItemSelected(
-            adapterView: AdapterView<*>?,
-            p1: View?,
-            position: Int,
-            id: Long
-        ) {
-            listener(adapterView?.getItemAtPosition(position).toString())
-        }
+// Search View
+inline fun SearchView.onTextChanged(crossinline listener: (String) -> Unit) {
+    setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        override fun onQueryTextSubmit(query: String?): Boolean = true
 
-        override fun onNothingSelected(p0: AdapterView<*>?) {}
-    }
+        override fun onQueryTextChange(newText: String?): Boolean {
+            listener(newText.orEmpty())
+            return true
+        }
+    })
 }
