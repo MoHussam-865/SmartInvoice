@@ -8,7 +8,9 @@ import com.android_a865.estimatescalculator.feature_settings.domain.models.AppSe
 import com.android_a865.estimatescalculator.feature_settings.domain.repository.SettingsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,9 +19,13 @@ import javax.inject.Inject
 class InvoicesViewViewModel @Inject constructor(
     invoiceUseCases: InvoiceUseCases,
     private val repository: SettingsRepository
-): ViewModel() {
+) : ViewModel() {
 
-    val invoices = invoiceUseCases.getInvoices()
+    var filterOptions: MutableStateFlow<FilterOptions> = MutableStateFlow(FilterOptions.All)
+
+    val invoices = filterOptions.flatMapLatest {
+        invoiceUseCases.getInvoices(it)
+    }
 
     private val eventsChannel = Channel<WindowEvents>()
     val windowEvents = eventsChannel.receiveAsFlow()
@@ -35,7 +41,6 @@ class InvoicesViewViewModel @Inject constructor(
     }
 
 
-
     fun onInvoiceClicked(invoice: Invoice) = viewModelScope.launch {
         eventsChannel.send(WindowEvents.OpenInvoice(invoice))
     }
@@ -45,9 +50,8 @@ class InvoicesViewViewModel @Inject constructor(
     }
 
     sealed class WindowEvents {
-        data class OpenInvoice(val invoice: Invoice?): WindowEvents()
-        data class SetAppSettings(val appSettings: AppSettings): WindowEvents()
+        data class OpenInvoice(val invoice: Invoice?) : WindowEvents()
+        data class SetAppSettings(val appSettings: AppSettings) : WindowEvents()
     }
-
 
 }

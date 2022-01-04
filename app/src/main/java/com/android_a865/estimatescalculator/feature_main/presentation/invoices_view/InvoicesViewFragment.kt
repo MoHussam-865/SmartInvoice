@@ -1,6 +1,9 @@
 package com.android_a865.estimatescalculator.feature_main.presentation.invoices_view
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -17,6 +20,7 @@ import com.android_a865.estimatescalculator.utils.exhaustive
 import com.android_a865.estimatescalculator.utils.setUpActionBarWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import java.util.logging.Filter
 
 @AndroidEntryPoint
 class InvoicesViewFragment : Fragment(R.layout.fragment_invoices_view),
@@ -67,8 +71,49 @@ class InvoicesViewFragment : Fragment(R.layout.fragment_invoices_view),
         }
 
 
-        setHasOptionsMenu(false)
+        setHasOptionsMenu(true)
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.invoices_view_options, menu)
+
+        viewModel.filterOptions.asLiveData().observe(viewLifecycleOwner) {
+            when (it) {
+                FilterOptions.All -> menu.findItem(R.id.all_invoices).isChecked = true
+                FilterOptions.Draft -> menu.findItem(R.id.draft).isChecked = true
+                FilterOptions.Estimate -> menu.findItem(R.id.estimate).isChecked = true
+                FilterOptions.Invoice -> menu.findItem(R.id.invoice).isChecked = true
+            }.exhaustive
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.all_invoices -> {
+                viewModel.filterOptions.value = FilterOptions.All
+                true
+            }
+
+            R.id.invoice -> {
+                viewModel.filterOptions.value = FilterOptions.Invoice
+                true
+            }
+
+            R.id.estimate -> {
+                viewModel.filterOptions.value = FilterOptions.Estimate
+                true
+            }
+
+            R.id.draft -> {
+                viewModel.filterOptions.value = FilterOptions.Draft
+                true
+            }
+
+
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
 
     override fun onItemClicked(invoice: Invoice) {
         viewModel.onInvoiceClicked(invoice)

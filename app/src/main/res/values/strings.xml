@@ -73,5 +73,6 @@
     <string name="per_year">/ Year</string>
     <string name="yearly_features">Save more than 25%</string>
     <string name="search">Search</string>
+    <string name="filter">Filter</string>
 
 </resources>
