@@ -6,5 +6,6 @@ interface ReportRepository {
 
     suspend fun getTotalOf(invoiceType: String): Double
 
+    suspend fun getNumberOfClients(): Int
 
 }

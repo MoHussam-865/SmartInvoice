@@ -74,5 +74,9 @@
     <string name="yearly_features">Save more than 25%</string>
     <string name="search">Search</string>
     <string name="filter">Filter</string>
+    <string name="total_number_of_drafts" translatable="false">Total Number of Drafts</string>
+    <string name="total_number_of_invoices" translatable="false">Total Number of Invoices</string>
+    <string name="money_total" translatable="false">Money Total</string>
+    <string name="total_number_of_estimates" translatable="false">Total Number of Estimates</string>
 
 </resources>

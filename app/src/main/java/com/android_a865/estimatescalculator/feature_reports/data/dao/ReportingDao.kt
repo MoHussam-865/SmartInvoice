@@ -17,6 +17,8 @@ interface ReportingDao {
     @Query("SELECT SUM(total) FROM Invoices WHERE type = :invoiceType")
     suspend fun getTotalOf(invoiceType: String): Double
 
+    @Query("SELECT COUNT(DISTINCT clientId) FROM Invoices")
+    suspend fun getNumberOfClients(): Int
 
 
 }

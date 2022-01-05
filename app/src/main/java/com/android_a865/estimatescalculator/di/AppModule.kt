@@ -19,6 +19,7 @@ import com.android_a865.estimatescalculator.feature_main.domain.use_cases.items_
 import com.android_a865.estimatescalculator.feature_reports.data.repository.ReportRepositoryImpl
 import com.android_a865.estimatescalculator.feature_reports.domain.repository.ReportRepository
 import com.android_a865.estimatescalculator.feature_reports.domain.use_cases.GetInvoiceNumbersUseCase
+import com.android_a865.estimatescalculator.feature_reports.domain.use_cases.GetNumberOfClientsUseCase
 import com.android_a865.estimatescalculator.feature_reports.domain.use_cases.GetTotalMoneyUseCase
 import com.android_a865.estimatescalculator.feature_reports.domain.use_cases.ReportUseCases
 import com.android_a865.estimatescalculator.feature_settings.data.data_source.PreferencesManager
@@ -111,7 +112,8 @@ object AppModule {
     fun provideReportUseCases(repository: ReportRepository): ReportUseCases {
         return ReportUseCases(
             getNumberOf = GetInvoiceNumbersUseCase(repository),
-            getTotalMoney = GetTotalMoneyUseCase(repository)
+            getTotalMoney = GetTotalMoneyUseCase(repository),
+            getNumberOfClients = GetNumberOfClientsUseCase(repository)
         )
     }
 

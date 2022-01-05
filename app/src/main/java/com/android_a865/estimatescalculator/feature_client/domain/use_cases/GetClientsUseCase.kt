@@ -6,7 +6,6 @@ import com.android_a865.estimatescalculator.feature_client.domain.model.Client
 import com.android_a865.estimatescalculator.feature_client.domain.repository.ClientsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.forEach
 import kotlinx.coroutines.flow.map
 import java.util.*
 

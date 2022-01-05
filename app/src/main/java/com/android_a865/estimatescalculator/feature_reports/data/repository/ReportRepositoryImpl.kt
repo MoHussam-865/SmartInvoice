@@ -14,4 +14,8 @@ class ReportRepositoryImpl(
     override suspend fun getTotalOf(invoiceType: String): Double {
         return dao.getTotalOf(invoiceType)
     }
+
+    override suspend fun getNumberOfClients(): Int {
+        return dao.getNumberOfClients()
+    }
 }

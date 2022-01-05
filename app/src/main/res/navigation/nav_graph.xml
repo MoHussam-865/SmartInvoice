@@ -233,16 +233,21 @@
     </fragment>
     <fragment
         android:id="@+id/reportsMainFragment"
-        android:name="com.android_a865.estimatescalculator.feature_reports.presentation.main.ReportsMainFragment"
+        android:name="com.android_a865.estimatescalculator.feature_reports.presentation.overview.ReportsMainFragment"
         android:label="@string/reports"
         tools:layout="@layout/fragment_reports_main">
         <action
-            android:id="@+id/action_reportsMainFragment_to_subscribeFragment"
-            app:destination="@id/subscribeFragment" />
+            android:id="@+id/action_reportsMainFragment_to_fragmentReportList"
+            app:destination="@id/fragmentReportList" />
     </fragment>
     <fragment
         android:id="@+id/subscribeFragment"
         android:name="com.android_a865.estimatescalculator.feature_in_app.presentation.main.SubscribeFragment"
         android:label="@string/subscribe"
         tools:layout="@layout/fragment_subscribe" />
+    <fragment
+        android:id="@+id/fragmentReportList"
+        android:name="com.android_a865.estimatescalculator.feature_reports.presentation.report_list.FragmentReportList"
+        android:label="fragment_report_list"
+        tools:layout="@layout/fragment_report_list" />
 </navigation>
