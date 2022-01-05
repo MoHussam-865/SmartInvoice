@@ -16,6 +16,11 @@ import com.android_a865.estimatescalculator.feature_main.domain.use_cases.invoic
 import com.android_a865.estimatescalculator.feature_main.domain.use_cases.invoice_use_cases.InvoiceUseCases
 import com.android_a865.estimatescalculator.feature_main.domain.use_cases.invoice_use_cases.UpdateInvoiceUseCase
 import com.android_a865.estimatescalculator.feature_main.domain.use_cases.items_use_cases.*
+import com.android_a865.estimatescalculator.feature_reports.data.repository.ReportRepositoryImpl
+import com.android_a865.estimatescalculator.feature_reports.domain.repository.ReportRepository
+import com.android_a865.estimatescalculator.feature_reports.domain.use_cases.GetInvoiceNumbersUseCase
+import com.android_a865.estimatescalculator.feature_reports.domain.use_cases.GetTotalMoneyUseCase
+import com.android_a865.estimatescalculator.feature_reports.domain.use_cases.ReportUseCases
 import com.android_a865.estimatescalculator.feature_settings.data.data_source.PreferencesManager
 import com.android_a865.estimatescalculator.feature_settings.data.repository.SettingsRepositoryImpl
 import com.android_a865.estimatescalculator.feature_settings.domain.repository.SettingsRepository
@@ -59,6 +64,11 @@ object AppModule {
         return SettingsRepositoryImpl(preferencesManager)
     }
 
+    @Provides
+    @Singleton
+    fun provideReportRepository(db: MyRoomDatabase): ReportRepository {
+        return ReportRepositoryImpl(db.getReportingDao())
+    }
 
     @Provides
     @Singleton
@@ -92,6 +102,16 @@ object AppModule {
             addEditClient = AddEditClientUseCase(repository),
             deleteClient = DeleteClientUseCase(repository),
             getClient = GetClientByIdUseCase(repository)
+        )
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideReportUseCases(repository: ReportRepository): ReportUseCases {
+        return ReportUseCases(
+            getNumberOf = GetInvoiceNumbersUseCase(repository),
+            getTotalMoney = GetTotalMoneyUseCase(repository)
         )
     }
 

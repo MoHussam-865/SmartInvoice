@@ -10,6 +10,7 @@ import com.android_a865.estimatescalculator.feature_main.data.dao.ItemsDao
 import com.android_a865.estimatescalculator.feature_main.data.entities.InvoiceEntity
 import com.android_a865.estimatescalculator.feature_main.data.entities.InvoiceItemEntity
 import com.android_a865.estimatescalculator.feature_main.data.entities.ItemEntity
+import com.android_a865.estimatescalculator.feature_reports.data.dao.ReportingDao
 
 @Database(
     entities = [
@@ -30,6 +31,8 @@ abstract class MyRoomDatabase: RoomDatabase() {
     abstract fun getInvoicesDao(): InvoicesDao
 
     abstract fun getClientsDao(): ClientsDao
+
+    abstract fun getReportingDao(): ReportingDao
 
     companion object {
         // Room Database

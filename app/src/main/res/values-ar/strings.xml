@@ -73,4 +73,6 @@
     <string name="yearly_subscription">الإشتراك السنوى</string>
     <string name="per_year">/ سنة</string>
     <string name="yearly_features">"وفر 25% "</string>
+    <string name="search">بحث</string>
+    <string name="filter">فلتر</string>
 </resources>
