@@ -1,20 +1,11 @@
 package com.android_a865.estimatescalculator.feature_settings.presentation.settings
 
-import android.Manifest
 import android.app.Activity
-import android.app.DownloadManager
-import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.os.FileUtils
 import android.util.Log
 import android.view.View
-import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -37,45 +28,11 @@ const val REQUEST_CODE = 100
 class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
     private val viewModel by viewModels<SettingsViewModel>()
-    private lateinit var getFile: ActivityResultLauncher<String>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpActionBarWithNavController()
         val binding = FragmentSettingsBinding.bind(view)
-
-        getFile = registerForActivityResult(
-            ActivityResultContracts.GetContent()
-        ) {
-            Log.d("ImportingError", "working")
-            try {
-
-                val inputStream: FileInputStream? = context?.openFileInput(it.path)
-
-                val isr = InputStreamReader(inputStream)
-                val reader = BufferedReader(isr)
-
-                val data = reader.readText()
-
-                reader.close()
-
-                viewModel.saveData(data)
-
-                Log.d("ImportingError", "File Read")
-                showMessage("Import Succeeded")
-
-            }
-            catch (e: FileNotFoundException) {
-                showMessage("File Not Found")
-
-            }
-            catch (e: Exception) {
-                Log.d("ImportingError", e.message.toString())
-                Log.d("ImportingError", it.path.toString())
-
-            }
-
-        }
 
         binding.apply {
             tvDateFormat.setOnClickListener {
