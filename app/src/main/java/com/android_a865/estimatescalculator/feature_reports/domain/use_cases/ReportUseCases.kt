@@ -4,4 +4,5 @@ data class ReportUseCases(
     val getNumberOf: GetInvoiceNumbersUseCase,
     val getTotalMoney: GetTotalMoneyUseCase,
     val getNumberOfClients: GetNumberOfClientsUseCase,
+    val getNumberOfItems: GetNumberOfItemsUseCase
 )

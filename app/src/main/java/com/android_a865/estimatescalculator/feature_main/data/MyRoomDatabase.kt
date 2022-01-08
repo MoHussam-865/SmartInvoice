@@ -4,6 +4,8 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.android_a865.estimatescalculator.feature_client.data.dao.ClientsDao
 import com.android_a865.estimatescalculator.feature_client.data.entities.ClientEntity
+import com.android_a865.estimatescalculator.feature_settings.data.dao.ImportExportDao
+import com.android_a865.estimatescalculator.feature_in_app.data.dao.SubscriptionDao
 import com.android_a865.estimatescalculator.feature_main.data.MyRoomDatabase.Companion.DATABASE_VERSION
 import com.android_a865.estimatescalculator.feature_main.data.dao.InvoicesDao
 import com.android_a865.estimatescalculator.feature_main.data.dao.ItemsDao
@@ -33,6 +35,11 @@ abstract class MyRoomDatabase: RoomDatabase() {
     abstract fun getClientsDao(): ClientsDao
 
     abstract fun getReportingDao(): ReportingDao
+
+    abstract fun getSubscriptionDao(): SubscriptionDao
+
+    abstract fun getImportExportDao(): ImportExportDao
+
 
     companion object {
         // Room Database

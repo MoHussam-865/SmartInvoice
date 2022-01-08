@@ -5,6 +5,11 @@ import androidx.room.Room
 import com.android_a865.estimatescalculator.feature_client.data.repository.ClientsRepositoryImpl
 import com.android_a865.estimatescalculator.feature_client.domain.repository.ClientsRepository
 import com.android_a865.estimatescalculator.feature_client.domain.use_cases.*
+import com.android_a865.estimatescalculator.feature_settings.data.repository.ImportExportRepositoryImpl
+import com.android_a865.estimatescalculator.feature_settings.domain.repository.ImportExportRepository
+import com.android_a865.estimatescalculator.feature_in_app.data.repository.SubscriptionRepositoryImpl
+import com.android_a865.estimatescalculator.feature_in_app.domain.repository.SubscriptionRepository
+import com.android_a865.estimatescalculator.feature_in_app.domain.use_cases.SubscriptionUseCase
 import com.android_a865.estimatescalculator.feature_main.data.MyRoomDatabase
 import com.android_a865.estimatescalculator.feature_main.data.MyRoomDatabase.Companion.DATABASE_NAME
 import com.android_a865.estimatescalculator.feature_main.data.repository.InvoiceRepositoryImpl
@@ -18,13 +23,13 @@ import com.android_a865.estimatescalculator.feature_main.domain.use_cases.invoic
 import com.android_a865.estimatescalculator.feature_main.domain.use_cases.items_use_cases.*
 import com.android_a865.estimatescalculator.feature_reports.data.repository.ReportRepositoryImpl
 import com.android_a865.estimatescalculator.feature_reports.domain.repository.ReportRepository
-import com.android_a865.estimatescalculator.feature_reports.domain.use_cases.GetInvoiceNumbersUseCase
-import com.android_a865.estimatescalculator.feature_reports.domain.use_cases.GetNumberOfClientsUseCase
-import com.android_a865.estimatescalculator.feature_reports.domain.use_cases.GetTotalMoneyUseCase
-import com.android_a865.estimatescalculator.feature_reports.domain.use_cases.ReportUseCases
+import com.android_a865.estimatescalculator.feature_reports.domain.use_cases.*
 import com.android_a865.estimatescalculator.feature_settings.data.data_source.PreferencesManager
 import com.android_a865.estimatescalculator.feature_settings.data.repository.SettingsRepositoryImpl
 import com.android_a865.estimatescalculator.feature_settings.domain.repository.SettingsRepository
+import com.android_a865.estimatescalculator.feature_settings.domain.use_cases.ExportUseCase
+import com.android_a865.estimatescalculator.feature_settings.domain.use_cases.ImportExportUseCases
+import com.android_a865.estimatescalculator.feature_settings.domain.use_cases.ImportUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -73,6 +78,18 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun provideSubscriptionRepository(
+        db: MyRoomDatabase,
+        preferencesManager: PreferencesManager
+    ): SubscriptionRepository {
+        return SubscriptionRepositoryImpl(
+            db.getSubscriptionDao(),
+            preferencesManager
+        )
+    }
+
+    @Provides
+    @Singleton
     fun provideItemsUseCases(repository: ItemsRepository): ItemsUseCases {
         return ItemsUseCases(
             getItems = GetItemsUseCase(repository),
@@ -113,8 +130,33 @@ object AppModule {
         return ReportUseCases(
             getNumberOf = GetInvoiceNumbersUseCase(repository),
             getTotalMoney = GetTotalMoneyUseCase(repository),
-            getNumberOfClients = GetNumberOfClientsUseCase(repository)
+            getNumberOfClients = GetNumberOfClientsUseCase(repository),
+            getNumberOfItems = GetNumberOfItemsUseCase(repository)
         )
     }
+
+
+    @Provides
+    @Singleton
+    fun provideSubscriptionUseCases(repository: SubscriptionRepository): SubscriptionUseCase {
+        return SubscriptionUseCase(repository)
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideImportExportRepository(db: MyRoomDatabase): ImportExportRepository {
+        return ImportExportRepositoryImpl(db.getImportExportDao())
+    }
+
+    @Provides
+    @Singleton
+    fun provideImportExportUseCases(repository: ImportExportRepository): ImportExportUseCases {
+        return ImportExportUseCases(
+            export = ExportUseCase(repository),
+            import = ImportUseCase(repository)
+        )
+    }
+
 
 }

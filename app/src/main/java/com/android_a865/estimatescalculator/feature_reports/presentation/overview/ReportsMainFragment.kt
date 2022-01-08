@@ -35,15 +35,23 @@ class ReportsMainFragment : Fragment(R.layout.fragment_reports_main) {
             }
 
             viewModel.totalMoney.observe(viewLifecycleOwner) {
-                tvTotalMoney.text = it.toString()
+                tvTotalMoney.text = "$it"
             }
 
             viewModel.clientsCount.observe(viewLifecycleOwner) {
-                tvClientsNumber.text = it.toString()
+                tvClientsNumber.text = "$it"
+            }
+
+            viewModel.itemsCount.observe(viewLifecycleOwner) {
+                tvItemsNumber.text = "$it"
             }
 
             btnViewClients.setOnClickListener {
                 viewModel.onViewClientsClicked()
+            }
+
+            btnViewItems.setOnClickListener {
+                viewModel.onViewItemsClicked()
             }
 
 

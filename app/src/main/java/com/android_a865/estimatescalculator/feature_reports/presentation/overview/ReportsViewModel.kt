@@ -4,8 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
-import com.android_a865.estimatescalculator.databinding.FragmentReportsMainBinding
-import com.android_a865.estimatescalculator.feature_main.presentation.main_page.MainFragmentViewModel
+import com.android_a865.estimatescalculator.feature_reports.domain.model.ReportsTypes
 import com.android_a865.estimatescalculator.feature_reports.domain.model.TypesNumber
 import com.android_a865.estimatescalculator.feature_reports.domain.use_cases.ReportUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,8 +20,10 @@ class ReportsViewModel @Inject constructor(
 
 
     val numbers = MutableLiveData<TypesNumber>()
-    val totalMoney = MutableLiveData<Double>()
-    val clientsCount = MutableLiveData<Int>()
+    val totalMoney = MutableLiveData(0.0)
+    val clientsCount = MutableLiveData(0)
+    val itemsCount = MutableLiveData(0)
+
 
     private val eventsChannel = Channel<WindowEvents>()
     val windowEvents = eventsChannel.receiveAsFlow()
@@ -33,6 +34,7 @@ class ReportsViewModel @Inject constructor(
             numbers.value = reportsUseCases.getNumberOf()
             totalMoney.value = reportsUseCases.getTotalMoney()
             clientsCount.value = reportsUseCases.getNumberOfClients()
+            itemsCount.value = reportsUseCases.getNumberOfItems()
         }
     }
 
@@ -40,7 +42,19 @@ class ReportsViewModel @Inject constructor(
     fun onViewClientsClicked() {
         viewModelScope.launch {
             eventsChannel.send(WindowEvents.NavigateTo(
-                ReportsMainFragmentDirections.actionReportsMainFragmentToFragmentReportList()
+                ReportsMainFragmentDirections.actionReportsMainFragmentToFragmentReportList(
+                    ReportsTypes.ClientsBased
+                )
+            ))
+        }
+    }
+
+    fun onViewItemsClicked() {
+        viewModelScope.launch {
+            eventsChannel.send(WindowEvents.NavigateTo(
+                ReportsMainFragmentDirections.actionReportsMainFragmentToFragmentReportList(
+                    ReportsTypes.ItemsBased
+                )
             ))
         }
     }

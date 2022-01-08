@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/EstimatesCalculator/app/src/main/res/layout/adapter_clients_report.xml" value="0.14479166666666668" />
+        <entry key="..\:/EstimatesCalculator/app/src/main/res/layout/fragment_report_list.xml" value="0.1" />
+        <entry key="..\:/EstimatesCalculator/app/src/main/res/layout/fragment_reports_main.xml" value="0.2" />
+        <entry key="..\:/EstimatesCalculator/app/src/main/res/layout/fragment_settings.xml" value="0.264" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

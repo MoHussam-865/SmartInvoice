@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
 import com.android_a865.estimatescalculator.R
 import com.android_a865.estimatescalculator.feature_settings.domain.repository.SettingsRepository
+import com.android_a865.estimatescalculator.feature_settings.domain.use_cases.ImportExportUseCases
 import com.android_a865.estimatescalculator.utils.DATE_FORMATS
 import com.android_a865.estimatescalculator.utils.date
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +20,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
-    private val repository: SettingsRepository
+    private val repository: SettingsRepository,
+    private val importExportUseCases: ImportExportUseCases
 ): ViewModel() {
 
     private val appSettingsFlow = repository.getAppSettings()
@@ -93,9 +95,20 @@ class SettingsViewModel @Inject constructor(
 
     }
 
+    fun onExportSelected() = viewModelScope.launch {
+        eventsChannel.send(WindowEvents.Export(
+            importExportUseCases.export()
+        ))
+    }
+
+    fun saveData(finalData: String) = viewModelScope.launch {
+        importExportUseCases.import(finalData)
+    }
+
 
     sealed class WindowEvents {
         data class Navigate(val direction: NavDirections): WindowEvents()
+        data class Export(val data: String): WindowEvents()
     }
 
 }

@@ -15,3 +15,5 @@ val DATE_FORMATS = listOf(
 
 const val MONTHLY_SUBSCRIPTION = "monthly0"
 const val YEARLY_SUBSCRIPTION = "yearly0"
+
+const val NumberOfFreeInvoices = 50

@@ -1,27 +1,81 @@
 package com.android_a865.estimatescalculator.feature_settings.presentation.settings
 
+import android.Manifest
+import android.app.Activity
+import android.app.DownloadManager
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
+import android.os.FileUtils
+import android.util.Log
 import android.view.View
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat.checkSelfPermission
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.android_a865.estimatescalculator.R
 import com.android_a865.estimatescalculator.databinding.FragmentSettingsBinding
+import com.android_a865.estimatescalculator.utils.AUTHORITY
 import com.android_a865.estimatescalculator.utils.exhaustive
 import com.android_a865.estimatescalculator.utils.setUpActionBarWithNavController
+import com.android_a865.estimatescalculator.utils.showMessage
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import java.io.*
+
+
+const val REQUEST_CODE = 100
 
 @AndroidEntryPoint
 class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
     private val viewModel by viewModels<SettingsViewModel>()
+    private lateinit var getFile: ActivityResultLauncher<String>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpActionBarWithNavController()
         val binding = FragmentSettingsBinding.bind(view)
+
+        getFile = registerForActivityResult(
+            ActivityResultContracts.GetContent()
+        ) {
+            Log.d("ImportingError", "working")
+            try {
+
+                val inputStream: FileInputStream? = context?.openFileInput(it.path)
+
+                val isr = InputStreamReader(inputStream)
+                val reader = BufferedReader(isr)
+
+                val data = reader.readText()
+
+                reader.close()
+
+                viewModel.saveData(data)
+
+                Log.d("ImportingError", "File Read")
+                showMessage("Import Succeeded")
+
+            }
+            catch (e: FileNotFoundException) {
+                showMessage("File Not Found")
+
+            }
+            catch (e: Exception) {
+                Log.d("ImportingError", e.message.toString())
+                Log.d("ImportingError", it.path.toString())
+
+            }
+
+        }
 
         binding.apply {
             tvDateFormat.setOnClickListener {
@@ -35,6 +89,14 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             tvCompanyInfo.setOnClickListener {
                 viewModel.onCompanyInfoSelected()
             }
+
+            tvExport.setOnClickListener {
+                viewModel.onExportSelected()
+            }
+
+            tvImport.setOnClickListener {
+                import()
+            }
         }
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
@@ -43,9 +105,101 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                     is SettingsViewModel.WindowEvents.Navigate -> {
                         findNavController().navigate(event.direction)
                     }
+                    is SettingsViewModel.WindowEvents.Export -> {
+                        export(event.data)
+                    }
                 }.exhaustive
             }
         }
 
     }
+
+    // import & export
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                if (data != null) {
+                    // the file that has the data
+                    data.data?.let { saveData(it) }
+                } else showMessage("Empty")
+            } else {
+                showMessage("Canceled")
+            }
+        }
+    }
+
+
+    private fun export(data: String) {
+
+        try {
+            context?.let {
+                val fileName = "${System.currentTimeMillis()}.json"
+
+                val file = File(it.filesDir, fileName)
+
+                val fileWriter = OutputStreamWriter(FileOutputStream(file))
+
+                fileWriter.write(data)
+                fileWriter.close()
+
+
+                val uri = FileProvider.getUriForFile(it, AUTHORITY, file)
+
+                val intent = Intent(Intent.ACTION_SEND)
+                intent.type = "text/plain"
+                intent.putExtra(Intent.EXTRA_SUBJECT, file.name)
+                intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
+                intent.putExtra(Intent.EXTRA_STREAM, uri)
+                startActivity(intent)
+
+
+
+                Log.d("ExportingError", "Working")
+            }
+
+        } catch (e: Exception) {
+            showMessage("Error")
+            Log.d("ExportingError", e.message.toString())
+        }
+
+    }
+
+    private fun import() {
+        // Opens the storage
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+        intent.type = "text/plain" // text file
+
+        startActivityForResult(
+            Intent.createChooser(intent, "Choose data file"),
+            REQUEST_CODE
+        )
+
+    }
+
+    private fun saveData(uri: Uri) {
+        try {
+
+            val inputStream = context?.contentResolver?.openInputStream(uri)
+
+            inputStream?.let {
+                val isr = InputStreamReader(it)
+                val reader = BufferedReader(isr)
+                val data = reader.readText()
+                reader.close()
+
+                viewModel.saveData(data)
+                showMessage("Import Succeeded")
+            }
+
+        }
+        catch (e: FileNotFoundException) {
+            showMessage("File Not Found")
+        }
+        catch (e: Exception) {
+            Log.d("ImportingError", e.message.toString())
+        }
+    }
+
 }

@@ -20,7 +20,6 @@ import com.android_a865.estimatescalculator.utils.exhaustive
 import com.android_a865.estimatescalculator.utils.setUpActionBarWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
-import java.util.logging.Filter
 
 @AndroidEntryPoint
 class InvoicesViewFragment : Fragment(R.layout.fragment_invoices_view),
@@ -55,12 +54,8 @@ class InvoicesViewFragment : Fragment(R.layout.fragment_invoices_view),
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.windowEvents.collect { event ->
                 when (event) {
-                    is InvoicesViewViewModel.WindowEvents.OpenInvoice -> {
-                        findNavController().navigate(
-                            InvoicesViewFragmentDirections.actionInvoicesViewFragmentToNewEstimateFragment(
-                                invoice = event.invoice
-                            )
-                        )
+                    is InvoicesViewViewModel.WindowEvents.NavigateTo -> {
+                        findNavController().navigate(event.direction)
                     }
                     is InvoicesViewViewModel.WindowEvents.SetAppSettings -> {
                         invoicesAdapter.setAppSettings(event.appSettings)
@@ -116,6 +111,6 @@ class InvoicesViewFragment : Fragment(R.layout.fragment_invoices_view),
 
 
     override fun onItemClicked(invoice: Invoice) {
-        viewModel.onInvoiceClicked(invoice)
+        viewModel.onEditInvoiceClicked(invoice)
     }
 }

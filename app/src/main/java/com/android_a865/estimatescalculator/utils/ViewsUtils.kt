@@ -4,6 +4,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.EditText
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
@@ -24,6 +25,9 @@ fun RecyclerView.scrollToEnd() = smoothScrollToPosition(adapter?.itemCount ?: 0)
 
 val Fragment.appCompatActivity get() = (activity as AppCompatActivity)
 
+fun Fragment.showMessage(msg: String) {
+    Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+}
 
 fun EditText.setTextWithCursor(str: String) {
 

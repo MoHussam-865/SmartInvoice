@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
+import com.android_a865.estimatescalculator.feature_in_app.domain.use_cases.SubscriptionUseCase
 import com.android_a865.estimatescalculator.feature_main.domain.model.Item
 import com.android_a865.estimatescalculator.feature_main.domain.use_cases.items_use_cases.ItemsUseCases
 import com.android_a865.estimatescalculator.utils.Path
@@ -22,6 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MainFragmentViewModel @Inject constructor(
     private val itemsUseCases: ItemsUseCases,
+    private val subscriptionUseCase: SubscriptionUseCase,
     state: SavedStateHandle
 ): ViewModel() {
 
@@ -33,11 +35,19 @@ class MainFragmentViewModel @Inject constructor(
         itemsUseCases.getItems(path.path)
     }
 
+    private var hasAccess = false
+
     @ExperimentalCoroutinesApi
     val itemsData = itemsFlow.asLiveData()
 
     private val eventsChannel = Channel<WindowEvents>()
     val windowEvents = eventsChannel.receiveAsFlow()
+
+    init {
+        viewModelScope.launch {
+            hasAccess = subscriptionUseCase()
+        }
+    }
 
 
     fun onItemClicked(item: Item) = currentPath.update { item.open() }
@@ -70,9 +80,17 @@ class MainFragmentViewModel @Inject constructor(
     }
 
     fun onNewEstimateSelected() = viewModelScope.launch {
-        eventsChannel.send(WindowEvents.Navigate(
-            MainFragmentDirections.actionMainFragment2ToNewEstimateFragment()
-        ))
+
+        if (hasAccess) {
+            eventsChannel.send(WindowEvents.Navigate(
+                MainFragmentDirections.actionMainFragment2ToNewEstimateFragment()
+            ))
+        } else {
+            eventsChannel.send(WindowEvents.Navigate(
+                MainFragmentDirections.actionMainFragment2ToSubscribeFragment()
+            ))
+        }
+
     }
 
     fun onMyEstimateSelected() = viewModelScope.launch {
@@ -100,9 +118,17 @@ class MainFragmentViewModel @Inject constructor(
     }
 
     fun onReportsSelected()  = viewModelScope.launch {
-        eventsChannel.send(WindowEvents.Navigate(
-            MainFragmentDirections.actionMainFragment2ToReportsMainFragment()
-        ))
+
+        if (hasAccess) {
+            eventsChannel.send(WindowEvents.Navigate(
+                MainFragmentDirections.actionMainFragment2ToReportsMainFragment()
+            ))
+        } else {
+            eventsChannel.send(WindowEvents.Navigate(
+                MainFragmentDirections.actionMainFragment2ToSubscribeFragment()
+            ))
+        }
+
     }
 
     sealed class WindowEvents {

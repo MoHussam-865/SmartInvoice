@@ -154,6 +154,9 @@
         <action
             android:id="@+id/action_invoicesViewFragment_to_newEstimateFragment"
             app:destination="@id/newEstimateFragment" />
+        <action
+            android:id="@+id/action_invoicesViewFragment_to_subscribeFragment"
+            app:destination="@id/subscribeFragment" />
     </fragment>
     <fragment
         android:id="@+id/clientsFragment"
@@ -248,6 +251,10 @@
     <fragment
         android:id="@+id/fragmentReportList"
         android:name="com.android_a865.estimatescalculator.feature_reports.presentation.report_list.FragmentReportList"
-        android:label="fragment_report_list"
-        tools:layout="@layout/fragment_report_list" />
+        android:label="@string/reports"
+        tools:layout="@layout/fragment_report_list" >
+        <argument
+            android:name="report_type"
+            app:argType="com.android_a865.estimatescalculator.feature_reports.domain.model.ReportsTypes" />
+    </fragment>
 </navigation>

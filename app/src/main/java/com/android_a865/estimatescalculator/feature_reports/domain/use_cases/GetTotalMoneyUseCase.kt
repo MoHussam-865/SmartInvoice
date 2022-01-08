@@ -7,7 +7,7 @@ class GetTotalMoneyUseCase(
     private val repository: ReportRepository
 ) {
     suspend operator fun invoke(): Double {
-        return repository.getTotalOf(InvoiceTypes.Invoice.name)
+        return repository.getTotalOf(InvoiceTypes.Invoice.name) ?: 0.0
     }
 
 }

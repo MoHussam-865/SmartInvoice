@@ -75,4 +75,6 @@
     <string name="yearly_features">"وفر 25% "</string>
     <string name="search">بحث</string>
     <string name="filter">فلتر</string>
+    <string name="export">تصدير</string>
+    <string name="import_string">إستيراد</string>
 </resources>

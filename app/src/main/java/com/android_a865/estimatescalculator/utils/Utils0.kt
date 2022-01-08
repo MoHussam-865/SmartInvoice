@@ -18,3 +18,5 @@ fun String.double(default: Double = 0.0): Double {
 fun Long.date(format: String = DATE_FORMATS[0]) : String {
     return SimpleDateFormat(format, Locale.getDefault()).format(this)
 }
+
+

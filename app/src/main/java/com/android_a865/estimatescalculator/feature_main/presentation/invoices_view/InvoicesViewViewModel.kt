@@ -1,7 +1,10 @@
 package com.android_a865.estimatescalculator.feature_main.presentation.invoices_view
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavDirections
+import com.android_a865.estimatescalculator.feature_in_app.domain.use_cases.SubscriptionUseCase
 import com.android_a865.estimatescalculator.feature_main.domain.model.Invoice
 import com.android_a865.estimatescalculator.feature_main.domain.use_cases.invoice_use_cases.InvoiceUseCases
 import com.android_a865.estimatescalculator.feature_settings.domain.models.AppSettings
@@ -18,7 +21,8 @@ import javax.inject.Inject
 @HiltViewModel
 class InvoicesViewViewModel @Inject constructor(
     invoiceUseCases: InvoiceUseCases,
-    private val repository: SettingsRepository
+    private val repository: SettingsRepository,
+    private val subscriptionUseCase: SubscriptionUseCase
 ) : ViewModel() {
 
     var filterOptions: MutableStateFlow<FilterOptions> = MutableStateFlow(FilterOptions.All)
@@ -26,6 +30,8 @@ class InvoicesViewViewModel @Inject constructor(
     val invoices = filterOptions.flatMapLatest {
         invoiceUseCases.getInvoices(it)
     }
+
+    private var hasAccess = false
 
     private val eventsChannel = Channel<WindowEvents>()
     val windowEvents = eventsChannel.receiveAsFlow()
@@ -37,20 +43,37 @@ class InvoicesViewViewModel @Inject constructor(
                     repository.getAppSettings().first()
                 )
             )
+
+            hasAccess = subscriptionUseCase()
+            Log.d("Subscription", hasAccess.toString())
         }
     }
 
 
-    fun onInvoiceClicked(invoice: Invoice) = viewModelScope.launch {
-        eventsChannel.send(WindowEvents.OpenInvoice(invoice))
+    fun onEditInvoiceClicked(invoice: Invoice) = viewModelScope.launch {
+        eventsChannel.send(WindowEvents.NavigateTo(
+            InvoicesViewFragmentDirections.actionInvoicesViewFragmentToNewEstimateFragment(
+                invoice = invoice
+            )
+        ))
     }
 
     fun onNewInvoiceClicked() = viewModelScope.launch {
-        eventsChannel.send(WindowEvents.OpenInvoice(null))
+        if (hasAccess) {
+            eventsChannel.send(WindowEvents.NavigateTo(
+                InvoicesViewFragmentDirections.actionInvoicesViewFragmentToNewEstimateFragment(
+                    invoice = null
+                )
+            ))
+        } else {
+            eventsChannel.send(WindowEvents.NavigateTo(
+                InvoicesViewFragmentDirections.actionInvoicesViewFragmentToSubscribeFragment()
+            ))
+        }
     }
 
     sealed class WindowEvents {
-        data class OpenInvoice(val invoice: Invoice?) : WindowEvents()
+        data class NavigateTo(val direction: NavDirections) : WindowEvents()
         data class SetAppSettings(val appSettings: AppSettings) : WindowEvents()
     }
 

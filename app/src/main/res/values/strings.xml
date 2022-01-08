@@ -78,5 +78,7 @@
     <string name="total_number_of_invoices" translatable="false">Total Number of Invoices</string>
     <string name="money_total" translatable="false">Money Total</string>
     <string name="total_number_of_estimates" translatable="false">Total Number of Estimates</string>
+    <string name="export">Export</string>
+    <string name="import_string">Import</string>
 
 </resources>
