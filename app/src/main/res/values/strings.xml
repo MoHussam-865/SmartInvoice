@@ -80,5 +80,7 @@
     <string name="total_number_of_estimates" translatable="false">Total Number of Estimates</string>
     <string name="export">Export</string>
     <string name="import_string">Import</string>
-
+    <string name="warning">Warning</string>
+    <string name="importing_dialog">Existing data will be overwritten are you sure you want to proceed</string>
+    <string name="proceed">Proceed</string>
 </resources>

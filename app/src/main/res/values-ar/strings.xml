@@ -77,4 +77,7 @@
     <string name="filter">فلتر</string>
     <string name="export">تصدير</string>
     <string name="import_string">إستيراد</string>
+    <string name="warning">تنبيه</string>
+    <string name="importing_dialog">سيتم إستبدال البيات الموجودة حاليا</string>
+    <string name="proceed">تقدم</string>
 </resources>

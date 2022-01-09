@@ -1,6 +1,8 @@
 package com.android_a865.estimatescalculator.feature_settings.presentation.settings
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -52,7 +54,8 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             }
 
             tvImport.setOnClickListener {
-                import()
+                viewModel.onImportSelected()
+
             }
         }
 
@@ -64,6 +67,9 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                     }
                     is SettingsViewModel.WindowEvents.Export -> {
                         export(event.data)
+                    }
+                    SettingsViewModel.WindowEvents.Import -> {
+                        import()
                     }
                 }.exhaustive
             }
@@ -78,7 +84,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             if (resultCode == Activity.RESULT_OK) {
                 if (data != null) {
                     // the file that has the data
-                    data.data?.let { saveData(it) }
+                    data.data?.let { saveData(requireContext(), it) }
                 } else showMessage("Empty")
             } else {
                 showMessage("Canceled")
@@ -135,28 +141,44 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
     }
 
-    private fun saveData(uri: Uri) {
-        try {
+    private fun saveData(context: Context, uri: Uri) {
 
-            val inputStream = context?.contentResolver?.openInputStream(uri)
+        AlertDialog.Builder(context)
+            .setTitle(context.resources.getString(R.string.warning))
+            .setMessage(context.resources.getString(R.string.importing_dialog))
+            .setPositiveButton(context.resources.getString(R.string.proceed)) { dialog, _ ->
 
-            inputStream?.let {
-                val isr = InputStreamReader(it)
-                val reader = BufferedReader(isr)
-                val data = reader.readText()
-                reader.close()
 
-                viewModel.saveData(data)
-                showMessage("Import Succeeded")
+                try {
+
+                    val inputStream = context.contentResolver?.openInputStream(uri)
+
+                    inputStream?.let {
+                        val isr = InputStreamReader(it)
+                        val reader = BufferedReader(isr)
+                        val data = reader.readText()
+                        reader.close()
+
+                        viewModel.saveData(data)
+                        showMessage("Import Succeeded")
+                    }
+
+                }
+                catch (e: FileNotFoundException) {
+                    showMessage("File Not Found")
+                }
+                catch (e: Exception) {
+                    Log.d("ImportingError", e.message.toString())
+                }
+
+
+                dialog.dismiss()
             }
+            .setNegativeButton(context.resources.getString(R.string.cancel)) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
 
-        }
-        catch (e: FileNotFoundException) {
-            showMessage("File Not Found")
-        }
-        catch (e: Exception) {
-            Log.d("ImportingError", e.message.toString())
-        }
     }
 
 }

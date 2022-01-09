@@ -219,6 +219,9 @@
         <action
             android:id="@+id/action_settingsFragment_to_companyInfoFragment"
             app:destination="@id/companyInfoFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_subscribeFragment"
+            app:destination="@id/subscribeFragment" />
     </fragment>
     <fragment
         android:id="@+id/addEditInvoiceItemFragment"

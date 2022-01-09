@@ -27,12 +27,14 @@ class SettingsViewModel @Inject constructor(
     private val appSettingsFlow = repository.getAppSettings()
     private var dateFormat: String? = null
     private var currency: String? = null
+    private var isSubscribed = false
 
     init {
         viewModelScope.launch {
             appSettingsFlow.collect {
                 dateFormat = it.dateFormat
                 currency = it.currency
+                isSubscribed = it.isSubscribed
             }
         }
     }
@@ -96,19 +98,37 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun onExportSelected() = viewModelScope.launch {
-        eventsChannel.send(WindowEvents.Export(
-            importExportUseCases.export()
-        ))
+        if (isSubscribed) {
+            eventsChannel.send(
+                WindowEvents.Export(
+                    importExportUseCases.export()
+                )
+            )
+        } else acquireSubscription()
+
+    }
+
+    fun onImportSelected() = viewModelScope.launch {
+        if (isSubscribed) {
+            eventsChannel.send(WindowEvents.Import)
+        } else acquireSubscription()
+
     }
 
     fun saveData(finalData: String) = viewModelScope.launch {
         importExportUseCases.import(finalData)
     }
 
+    private fun acquireSubscription() = viewModelScope.launch {
+        eventsChannel.send(WindowEvents.Navigate(
+            SettingsFragmentDirections.actionSettingsFragmentToSubscribeFragment()
+        ))
+    }
 
     sealed class WindowEvents {
         data class Navigate(val direction: NavDirections): WindowEvents()
         data class Export(val data: String): WindowEvents()
+        object Import : WindowEvents()
     }
 
 }
