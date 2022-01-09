@@ -1,8 +1,13 @@
 package com.android_a865.estimatescalculator.feature_main.presentation
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.Network
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.isVisible
@@ -18,6 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val sharedViewModel by viewModels<SharedViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
@@ -26,19 +32,41 @@ class MainActivity : AppCompatActivity() {
         sharedViewModel.onAppStarted()
 
         binding.apply {
-            sharedViewModel.isSubscribed.observe(this@MainActivity) {
-                if (it){
+
+
+            sharedViewModel.isSubscribed.observe(this@MainActivity) { isSubscribed ->
+                if (isSubscribed){
                     adView.isVisible = false
                 } else {
-                    MobileAds.initialize(this@MainActivity)
-                    val adRequest = AdRequest.Builder().build()
-                    adView.isVisible = true
-                    adView.loadAd(adRequest)
+                    val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+                    connectivityManager.let {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            it.registerDefaultNetworkCallback(object : ConnectivityManager.NetworkCallback() {
+                                override fun onAvailable(network: Network) {
+                                    //take action when network connection is gained
 
-                    loadInterstitialAd()
+                                    runOnUiThread {
+                                        loadAdsOnConnected(binding)
+                                    }
+
+                                }
+                            })
+                        }
+                    }
+
                 }
             }
+
         }
+    }
+
+    private fun loadAdsOnConnected(binding: ActivityMainBinding) {
+        MobileAds.initialize(this@MainActivity)
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.isVisible = true
+        binding.adView.loadAd(adRequest)
+
+        loadInterstitialAd()
     }
 
     private fun loadInterstitialAd() {
