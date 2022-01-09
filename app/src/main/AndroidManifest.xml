@@ -14,6 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EstimatesCalculator">
+
         <activity android:name=".feature_main.presentation.MainActivity"
             android:exported="true">
             <intent-filter>
@@ -33,6 +34,11 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/path_provider" />
         </provider>
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-2521710064847894~5886437294" />
+
     </application>
 
 </manifest>

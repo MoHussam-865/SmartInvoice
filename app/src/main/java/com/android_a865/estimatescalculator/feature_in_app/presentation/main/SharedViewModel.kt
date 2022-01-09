@@ -12,6 +12,7 @@ import com.android_a865.estimatescalculator.feature_in_app.domain.model.Security
 import com.android_a865.estimatescalculator.feature_settings.domain.models.AppSettings
 import com.android_a865.estimatescalculator.feature_settings.domain.repository.SettingsRepository
 import com.android_a865.estimatescalculator.utils.*
+import com.google.android.gms.ads.interstitial.InterstitialAd
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.channels.Channel
@@ -22,7 +23,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-const val tag = "SharedViewModel"
+const val TAG = "SharedViewModel"
 
 
 @HiltViewModel
@@ -31,11 +32,12 @@ class SharedViewModel @Inject constructor(
     @ApplicationContext context: Context
 ) : ViewModel() {
 
+    var myAd: InterstitialAd? = null
 
     private var appSetting: AppSettings? = null
 
-    private val x = repository.getAppSettings().map { it.isSubscribed }
-    val isSubscribed = x.asLiveData()
+    private val subscriptionStatusFlow = repository.getAppSettings().map { it.isSubscribed }
+    val isSubscribed = subscriptionStatusFlow.asLiveData()
 
     val products = MutableStateFlow(AppProducts())
 
@@ -43,18 +45,18 @@ class SharedViewModel @Inject constructor(
         PurchasesUpdatedListener { billingResult, purchases ->
             if (billingResult.responseCode == BillingClient.BillingResponseCode.OK && purchases != null) {
                 handlePurchases(purchases)
-                Log.d(tag , "Item Purchased")
+                Log.d(TAG , "Item Purchased")
             }
             else if (billingResult.responseCode == BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED) {
                 getPurchases()
-                Log.d(tag, "Already Owned")
+                Log.d(TAG, "Already Owned")
             }
             else if (billingResult.responseCode == BillingClient.BillingResponseCode.USER_CANCELED) {
                 showMessage("Purchase Canceled")
             }
             else {
                 showMessage("Error")
-                Log.d(tag, billingResult.debugMessage)
+                Log.d(TAG, billingResult.debugMessage)
             }
         }
 
@@ -71,7 +73,7 @@ class SharedViewModel @Inject constructor(
                 appSetting = it
             }
         }
-        Log.d(tag, "initiated")
+        Log.d(TAG, "initiated")
     }
 
     fun subscribe(productId: String) = billingClient.doOnReady {
@@ -92,7 +94,7 @@ class SharedViewModel @Inject constructor(
 
                     if (skuDetailsList != null && skuDetailsList.size > 0) {
 
-                        Log.d(tag, "Launching Billing Flow")
+                        Log.d(TAG, "Launching Billing Flow")
 
                         val flowParams = BillingFlowParams.newBuilder()
                             .setSkuDetails(skuDetailsList.first())
@@ -137,7 +139,7 @@ class SharedViewModel @Inject constructor(
 
             billingClient.querySkuDetailsAsync(params.build()) { billingResult0, skuDetailsList ->
 
-                Log.d(tag, "getting supported products")
+                Log.d(TAG, "getting supported products")
 
                 if (billingResult0.responseCode == BillingClient.BillingResponseCode.OK) {
 
@@ -152,7 +154,7 @@ class SharedViewModel @Inject constructor(
                         }
 
                         if (monthly.isNotEmpty()) {
-                            products.update {
+                            products.update0 {
                                 it.copy(
                                     monthly = monthly.first()
                                 )
@@ -160,7 +162,7 @@ class SharedViewModel @Inject constructor(
                         }
 
                         if (yearly.isNotEmpty()) {
-                            products.update {
+                            products.update0 {
                                 it.copy(
                                     yearly = yearly.first()
                                 )
@@ -192,12 +194,12 @@ class SharedViewModel @Inject constructor(
             if (isSubscribed) {
 
                 val productId = purchase.skus.first()
-                Log.d(tag, productId)
+                Log.d(TAG, productId)
                 if (productId in validProducts) {
                     validPurchases.add(productId)
-                    Log.d(tag, "one valid subscription")
+                    Log.d(TAG, "one valid subscription")
                 }else{
-                    Log.d(tag, "one invalid subscription")
+                    Log.d(TAG, "one invalid subscription")
                 }
             }
 
@@ -231,7 +233,7 @@ class SharedViewModel @Inject constructor(
                         if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
                             //if purchase is acknowledged
                             // then saved value in preference
-                            Log.d(tag," Item Subscribed")
+                            Log.d(TAG," Item Subscribed")
                         }
                     }
                 } else {
@@ -239,7 +241,7 @@ class SharedViewModel @Inject constructor(
                     val subscribed = isSubscribed.value ?: false
                     if (!subscribed) {
                         // save Subscribe Item Value To Pref as true)
-                        Log.d(tag, " Item Subscribed")
+                        Log.d(TAG, " Item Subscribed")
                     }
                 }
                 return true
@@ -266,7 +268,7 @@ class SharedViewModel @Inject constructor(
 
     fun onAppStarted() {
         // to force init called from MainActivity
-        Log.d(tag, "on app start check")
+        Log.d(TAG, "on app start check")
         billingClient.doOnReady {
             getPurchases()
         }
@@ -293,7 +295,7 @@ class SharedViewModel @Inject constructor(
 
     private fun getPurchases() {
         billingClient.queryPurchasesAsync(BillingClient.SkuType.SUBS) { _, purchases ->
-            Log.d(tag, "${purchases.size} purchases")
+            Log.d(TAG, "${purchases.size} purchases")
             handlePurchases(purchases)
         }
     }
@@ -307,7 +309,7 @@ class SharedViewModel @Inject constructor(
         return try {
             Security.verifyPurchase(base64Key, signedData, signature)
         } catch (e: Exception) {
-            Log.d(tag, e.message.toString())
+            Log.d(TAG, e.message.toString())
             false
         }
     }

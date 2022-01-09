@@ -1,6 +1,7 @@
 package com.android_a865.estimatescalculator.feature_main.presentation.new_estimate
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -8,6 +9,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
@@ -17,22 +19,25 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.android_a865.estimatescalculator.R
 import com.android_a865.estimatescalculator.common.adapters.InvoiceItemsAdapter
 import com.android_a865.estimatescalculator.databinding.FragmentNewEstimateBinding
+import com.android_a865.estimatescalculator.feature_in_app.presentation.main.SharedViewModel
 import com.android_a865.estimatescalculator.feature_main.domain.model.InvoiceItem
 import com.android_a865.estimatescalculator.utils.exhaustive
 import com.android_a865.estimatescalculator.utils.setUpActionBarWithNavController
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
+
+
+const val TAG = "AdModDebug"
 
 @AndroidEntryPoint
 class NewEstimateFragment : Fragment(R.layout.fragment_new_estimate),
     InvoiceItemsAdapter.OnItemEventListener {
 
     private val viewModel by viewModels<NewEstimateViewModel>()
+    private val sharedViewModel by activityViewModels<SharedViewModel>()
     private val itemsAdapter = InvoiceItemsAdapter(this)
 
-    @ExperimentalCoroutinesApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpActionBarWithNavController()
@@ -121,8 +126,14 @@ class NewEstimateFragment : Fragment(R.layout.fragment_new_estimate),
                         findNavController().navigate(event.direction)
                         true
                     }
+                    is NewEstimateViewModel.WindowEvents.ShowAd -> {
+                        if (sharedViewModel.isSubscribed.value != true) {
+                            Log.d(TAG, "showing ad")
+                            sharedViewModel.myAd?.show(requireActivity())
+                        }
+                        true
+                    }
                 }.exhaustive
-
             }
         }
 
@@ -139,7 +150,6 @@ class NewEstimateFragment : Fragment(R.layout.fragment_new_estimate),
         inflater.inflate(R.menu.estimate_options, menu)
     }
 
-    @ExperimentalCoroutinesApi
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.open_pdf -> {

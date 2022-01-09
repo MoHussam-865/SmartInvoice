@@ -74,7 +74,7 @@ fun <T> List<T>.remove(position: Int): List<T> = this.run {
 }
 
 
-fun <T> List<T>?.update(position: Int, fun0: (T) -> T): List<T> = orEmpty().run {
+fun <T> List<T>?.update0(position: Int, fun0: (T) -> T): List<T> = orEmpty().run {
     toMutableList()[position] = fun0(this[position])
     toList()
 }

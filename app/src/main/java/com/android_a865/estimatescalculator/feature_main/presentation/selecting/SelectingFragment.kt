@@ -78,7 +78,6 @@ ItemsAdapter.OnItemEventListener {
         setHasOptionsMenu(true)
     }
 
-    @ExperimentalCoroutinesApi
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.select_items_options, menu)
 

@@ -14,8 +14,8 @@ import com.android_a865.estimatescalculator.feature_main.domain.model.InvoiceIte
 import com.android_a865.estimatescalculator.feature_main.domain.model.InvoiceTypes
 import com.android_a865.estimatescalculator.feature_main.domain.use_cases.invoice_use_cases.InvoiceUseCases
 import com.android_a865.estimatescalculator.utils.*
+import com.google.android.gms.ads.interstitial.InterstitialAd
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
@@ -33,7 +33,7 @@ class NewEstimateViewModel @Inject constructor(
 
     val invoiceType = MutableStateFlow(invoice?.type ?: InvoiceTypes.Estimate)
     private val clientId = MutableStateFlow(invoice?.client?.id ?: 0)
-    @ExperimentalCoroutinesApi
+
     private val invoiceClient = clientId.flatMapLatest {
         if (it != 0) {
             clientsUseCases.getClient(it).map { thisClient ->
@@ -44,35 +44,41 @@ class NewEstimateViewModel @Inject constructor(
         }
     }
 
-    @ExperimentalCoroutinesApi
     val client = invoiceClient.asLiveData()
 
     val itemsFlow = MutableStateFlow(invoice?.items ?: listOf())
 
-    @ExperimentalCoroutinesApi
     val totalFlow = itemsFlow.flatMapLatest { items ->
         flowOf(items.sumOf { it.total })
     }
 
-
     private val eventsChannel = Channel<WindowEvents>()
     val invoiceWindowEvents = eventsChannel.receiveAsFlow()
 
+    init {
+        viewModelScope.launch {
+            eventsChannel.send(
+                WindowEvents.ShowAd
+            )
+        }
+    }
 
-    fun onItemRemoveClicked(item: InvoiceItem) = itemsFlow.update {
+
+
+    fun onItemRemoveClicked(item: InvoiceItem) = itemsFlow.update0 {
         it.removeAllOf(item)
     }
 
-    fun onOneItemAdded(item: InvoiceItem) = itemsFlow.update {
+    fun onOneItemAdded(item: InvoiceItem) = itemsFlow.update0 {
         it.addOneOf(item)
     }
 
-    fun onOneItemRemoved(item: InvoiceItem) = itemsFlow.update {
+    fun onOneItemRemoved(item: InvoiceItem) = itemsFlow.update0 {
         it.removeOneOf(item)
     }
 
 
-    fun onItemQtyChanged(item: InvoiceItem, qty: String) = itemsFlow.update {
+    fun onItemQtyChanged(item: InvoiceItem, qty: String) = itemsFlow.update0 {
         it.setQtyTo(item, qty.double(1.0))
     }
 
@@ -80,11 +86,10 @@ class NewEstimateViewModel @Inject constructor(
         chosenItems?.let { items ->
             // this delay is to solve an unexpected bug
             delay(100)
-            itemsFlow.update { items }
+            itemsFlow.update0 { items }
         }
     }
 
-    @ExperimentalCoroutinesApi
     fun onOpenPdfClicked() {
 
         if (itemsFlow.value.isEmpty()) {
@@ -98,7 +103,6 @@ class NewEstimateViewModel @Inject constructor(
         }
     }
 
-    @ExperimentalCoroutinesApi
     fun onSaveClicked() {
         if (itemsFlow.value.isEmpty()) {
             showInvalidMessage("Add Items first")
@@ -121,7 +125,6 @@ class NewEstimateViewModel @Inject constructor(
         }
     }
 
-    @ExperimentalCoroutinesApi
     private fun getInvoice(): Invoice {
         return invoice?.copy(
             type = invoiceType.value,
@@ -159,7 +162,6 @@ class NewEstimateViewModel @Inject constructor(
         }
     }
 
-    @ExperimentalCoroutinesApi
     fun onViewClientClicked() = viewModelScope.launch {
         eventsChannel.send(WindowEvents.Navigate(
             NewEstimateFragmentDirections.actionNewEstimateFragmentToClientViewFragment(
@@ -178,6 +180,7 @@ class NewEstimateViewModel @Inject constructor(
     sealed class WindowEvents {
         data class OpenPdf(val invoice: Invoice) : WindowEvents()
         data class ShowMessage(val message: String) : WindowEvents()
+        object ShowAd: WindowEvents()
         data class NavigateBack(val message: String) : WindowEvents()
         data class Navigate(val direction: NavDirections): WindowEvents()
     }

@@ -4,7 +4,7 @@ import android.util.Log
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingResult
-import com.android_a865.estimatescalculator.feature_in_app.presentation.main.tag
+import com.android_a865.estimatescalculator.feature_in_app.presentation.main.TAG
 
 inline fun BillingClient.doOnReady(crossinline onReady: () -> Unit) {
     if (isReady) {
@@ -12,14 +12,14 @@ inline fun BillingClient.doOnReady(crossinline onReady: () -> Unit) {
     } else {
         startConnection(object: BillingClientStateListener {
             override fun onBillingServiceDisconnected() {
-                Log.d(tag, "Billing service disconnected")
+                Log.d(TAG, "Billing service disconnected")
             }
 
             override fun onBillingSetupFinished(billingResult: BillingResult) {
                 if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
                     onReady()
                 }else {
-                    Log.d(tag, billingResult.debugMessage)
+                    Log.d(TAG, billingResult.debugMessage)
                 }
             }
         })

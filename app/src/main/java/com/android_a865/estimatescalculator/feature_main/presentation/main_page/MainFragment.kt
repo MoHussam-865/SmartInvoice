@@ -22,6 +22,7 @@ import com.android_a865.estimatescalculator.feature_main.domain.model.Item
 import com.android_a865.estimatescalculator.utils.exhaustive
 import com.android_a865.estimatescalculator.utils.scrollToEnd
 import com.android_a865.estimatescalculator.utils.setUpActionBarWithNavController
+import com.google.android.material.badge.ExperimentalBadgeUtils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
@@ -35,7 +36,6 @@ class MainFragment : Fragment(R.layout.fragment_main), ItemsAdapter.OnItemEventL
     private val pathIndicator = PathIndicatorAdapter()
     private lateinit var toggle: ActionBarDrawerToggle
 
-    @ExperimentalCoroutinesApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpActionBarWithNavController()

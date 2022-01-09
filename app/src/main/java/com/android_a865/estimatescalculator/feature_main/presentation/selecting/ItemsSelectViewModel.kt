@@ -9,7 +9,6 @@ import com.android_a865.estimatescalculator.feature_main.domain.model.Item
 import com.android_a865.estimatescalculator.feature_main.domain.use_cases.items_use_cases.ItemsUseCases
 import com.android_a865.estimatescalculator.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flatMapLatest
@@ -31,7 +30,7 @@ class ItemsSelectViewModel @Inject constructor(
     val itemsData = MutableLiveData(listOf<Item>())
 
     val all get() = itemsData.value.orEmpty().size
-    @ExperimentalCoroutinesApi
+
     var numSelected = itemsData.asFlow().flatMapLatest {
         flowOf(it.numSelected)
     }
@@ -49,7 +48,7 @@ class ItemsSelectViewModel @Inject constructor(
     }
 
 
-    fun onSelectAllChanged(b: Boolean) = itemsData.update { it.selectAll(b) }
+    fun onSelectAllChanged(b: Boolean) = itemsData.update0 { it.selectAll(b) }
 
 
     fun onDeleteOptionSelected(context: Context) {
@@ -75,14 +74,14 @@ class ItemsSelectViewModel @Inject constructor(
 
     fun onItemClicked(item: Item, position: Int) {
         item.changeSelection()
-        itemsData.update { it }
+        itemsData.update0 { it }
         notifyAdapter(position)
     }
 
     fun onSelectChanged(item: Item, position: Int, b: Boolean) {
         if (item.isSelected != b) {
             item.isSelected = b
-            itemsData.update { it }
+            itemsData.update0 { it }
             notifyAdapter(position)
         }
     }

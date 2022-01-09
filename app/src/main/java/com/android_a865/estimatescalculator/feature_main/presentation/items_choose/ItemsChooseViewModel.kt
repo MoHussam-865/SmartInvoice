@@ -2,13 +2,11 @@ package com.android_a865.estimatescalculator.feature_main.presentation.items_cho
 
 import androidx.lifecycle.*
 import androidx.navigation.NavDirections
-import com.android_a865.estimatescalculator.feature_main.domain.model.Invoice
 import com.android_a865.estimatescalculator.feature_main.domain.model.InvoiceItem
 import com.android_a865.estimatescalculator.feature_main.domain.model.Item
 import com.android_a865.estimatescalculator.feature_main.domain.use_cases.items_use_cases.ItemsUseCases
 import com.android_a865.estimatescalculator.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -22,7 +20,6 @@ class ItemsChooseViewModel @Inject constructor(
 
     val currentPath = MutableStateFlow(state.get<Path>("path") ?: Path())
 
-    @ExperimentalCoroutinesApi
     private val itemsFlow = currentPath.flatMapLatest { path ->
         itemsUseCases.getInvoiceItems(path.path)
     }
@@ -30,7 +27,6 @@ class ItemsChooseViewModel @Inject constructor(
     val selectedItems = MutableLiveData(
         state.get<Array<InvoiceItem>>("items")?.toList() ?: listOf()
     )
-    @ExperimentalCoroutinesApi
     val itemsData = combine(itemsFlow, selectedItems.asFlow()) { items, selected ->
         Pair(items, selected)
     }.flatMapLatest { (items, selected) ->
@@ -45,7 +41,7 @@ class ItemsChooseViewModel @Inject constructor(
 
     fun onBackPress() {
         if (currentPath.value.isRoot) goBack()
-        else currentPath.update { it.back() }
+        else currentPath.update0 { it.back() }
     }
 
     private fun goBack() = viewModelScope.launch {
@@ -56,19 +52,19 @@ class ItemsChooseViewModel @Inject constructor(
         if (item.isFolder) {
             viewModelScope.launch {
                 val myItem: Item = itemsUseCases.getItemByID(item.id)
-                currentPath.update { myItem.open() }
+                currentPath.update0 { myItem.open() }
             }
         }
     }
 
-    fun onAddItemClicked(item: InvoiceItem) = selectedItems.update { it?.addOneOf(item) }
+    fun onAddItemClicked(item: InvoiceItem) = selectedItems.update0 { it?.addOneOf(item) }
 
-    fun onMinusItemClicked(item: InvoiceItem) = selectedItems.update { it?.removeOneOf(item) }
+    fun onMinusItemClicked(item: InvoiceItem) = selectedItems.update0 { it?.removeOneOf(item) }
 
-    fun onItemRemoveClicked(item: InvoiceItem) = selectedItems.update { it?.removeAllOf(item) }
+    fun onItemRemoveClicked(item: InvoiceItem) = selectedItems.update0 { it?.removeAllOf(item) }
 
     fun onQtySet(item: InvoiceItem, myQty: Double) =
-        selectedItems.update { it?.setQtyTo(item, myQty) }
+        selectedItems.update0 { it?.setQtyTo(item, myQty) }
 
     fun onFabClicked() = viewModelScope.launch {
         itemsWindowEventsChannel.send(
@@ -80,7 +76,7 @@ class ItemsChooseViewModel @Inject constructor(
         )
     }
 
-    fun onInvoiceItemAdded(item: InvoiceItem) = selectedItems.update { it?.addOf(item) }
+    fun onInvoiceItemAdded(item: InvoiceItem) = selectedItems.update0 { it?.addOf(item) }
 
 
     sealed class ItemsWindowEvents {
