@@ -34,19 +34,20 @@
         <TextView
             android:id="@+id/itemUP"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:autoSizeStepGranularity="1sp"
+            android:layout_weight="1"
             android:autoSizeMaxTextSize="18sp"
             android:autoSizeMinTextSize="12sp"
+            android:autoSizeStepGranularity="1sp"
             android:autoSizeTextType="uniform"
             android:gravity="end"
             android:textColor="@android:color/holo_green_dark"
-            tool:text="500 $"
-            tool:targetApi="o" />
+            tool:targetApi="o"
+            tool:text="500 $" />
 
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content">
 
             <LinearLayout

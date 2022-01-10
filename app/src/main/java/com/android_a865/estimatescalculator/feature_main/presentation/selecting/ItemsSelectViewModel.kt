@@ -53,7 +53,6 @@ class ItemsSelectViewModel @Inject constructor(
 
     fun onDeleteOptionSelected(context: Context) {
         val items = itemsData.value.filterSelected()
-        // TODO get the total number affected by this
         AlertDialog.Builder(context)
             .setTitle(context.resources.getString(R.string.delete_items))
             .setMessage(String.format(context.resources.getString(R.string.delete_items_dialog),items.size))

@@ -43,12 +43,11 @@
             android:id="@+id/folderName"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:gravity="left|center_vertical"
-            android:layout_gravity="left|center_vertical"
+            android:gravity="start|center_vertical"
             android:textColor="@color/black"
             android:textSize="15sp"
             tool:text="Item 1"
-            tools:ignore="RtlHardcoded" />
+            tools:ignore="NestedWeights,RtlHardcoded" />
 
         <TextView
             android:id="@+id/details"
@@ -57,8 +56,7 @@
             android:layout_height="match_parent"
             android:textColor="@android:color/holo_green_dark"
             android:textSize="15sp"
-            android:gravity="right|center_vertical"
-            android:layout_gravity="right|center_vertical"
+            android:gravity="end|center_vertical"
             tool:text="item"
             tools:ignore="NestedWeights,RtlHardcoded" />
 

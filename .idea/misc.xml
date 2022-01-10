@@ -4,9 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/EstimatesCalculator/app/src/main/res/layout/activity_main.xml" value="0.4" />
+        <entry key="..\:/EstimatesCalculator/app/src/main/res/layout/adapter_choose_items_list.xml" value="0.16" />
         <entry key="..\:/EstimatesCalculator/app/src/main/res/layout/adapter_clients_report.xml" value="0.14479166666666668" />
+        <entry key="..\:/EstimatesCalculator/app/src/main/res/layout/adapter_items_page.xml" value="0.14479166666666668" />
         <entry key="..\:/EstimatesCalculator/app/src/main/res/layout/fragment_new_estimate.xml" value="0.176" />
-        <entry key="..\:/EstimatesCalculator/app/src/main/res/layout/fragment_report_list.xml" value="0.1" />
+        <entry key="..\:/EstimatesCalculator/app/src/main/res/layout/fragment_report_list.xml" value="0.2" />
         <entry key="..\:/EstimatesCalculator/app/src/main/res/layout/fragment_reports_main.xml" value="0.2" />
         <entry key="..\:/EstimatesCalculator/app/src/main/res/layout/fragment_settings.xml" value="0.264" />
       </map>

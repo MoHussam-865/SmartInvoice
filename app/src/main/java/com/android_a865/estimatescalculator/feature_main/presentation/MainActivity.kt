@@ -71,6 +71,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadInterstitialAd() {
         val adRequest = AdRequest.Builder().build()
+        // TODO replace with production ID
         InterstitialAd.load(
             this,
             getString(R.string.ad_mob_interstitial_test),
