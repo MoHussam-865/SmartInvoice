@@ -2,9 +2,10 @@ package com.android_a865.estimatescalculator.feature_reports.domain.model
 
 import com.android_a865.estimatescalculator.feature_client.domain.model.Client
 import com.android_a865.estimatescalculator.feature_main.domain.model.Invoice
-import com.android_a865.estimatescalculator.feature_main.presentation.invoices_view.FilterOptions
+import com.android_a865.estimatescalculator.feature_main.domain.model.InvoiceItem
 
-data class ClientInvoices(
+data class ClientsReport(
     val client: Client,
-    val invoices: List<Invoice>
+    val invoices: List<Invoice>,
+    val items: List<InvoiceItem>
 )

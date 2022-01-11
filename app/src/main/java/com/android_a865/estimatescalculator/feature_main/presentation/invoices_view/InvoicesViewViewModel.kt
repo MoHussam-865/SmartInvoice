@@ -59,17 +59,11 @@ class InvoicesViewViewModel @Inject constructor(
     }
 
     fun onNewInvoiceClicked() = viewModelScope.launch {
-        if (hasAccess) {
             eventsChannel.send(WindowEvents.NavigateTo(
                 InvoicesViewFragmentDirections.actionInvoicesViewFragmentToNewEstimateFragment(
                     invoice = null
                 )
             ))
-        } else {
-            eventsChannel.send(WindowEvents.NavigateTo(
-                InvoicesViewFragmentDirections.actionInvoicesViewFragmentToSubscribeFragment()
-            ))
-        }
     }
 
     sealed class WindowEvents {

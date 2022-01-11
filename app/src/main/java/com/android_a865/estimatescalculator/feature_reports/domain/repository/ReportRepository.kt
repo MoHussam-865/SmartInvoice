@@ -1,6 +1,7 @@
 package com.android_a865.estimatescalculator.feature_reports.domain.repository
 
 import com.android_a865.estimatescalculator.feature_client.data.entities.ClientEntity
+import com.android_a865.estimatescalculator.feature_main.data.entities.InvoiceItemEntity
 import com.android_a865.estimatescalculator.feature_main.data.relations.FullInvoice
 
 interface ReportRepository {
@@ -16,4 +17,9 @@ interface ReportRepository {
     suspend fun getClients(): List<ClientEntity>
 
     suspend fun getClientInvoices(id: Int): List<FullInvoice>
+
+    suspend fun getInvoicesItems(): List<InvoiceItemEntity>
+
+    suspend fun getInvoices(): List<FullInvoice>
+
 }

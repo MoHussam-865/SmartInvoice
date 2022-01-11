@@ -2,7 +2,6 @@ package com.android_a865.estimatescalculator.feature_in_app.domain.use_cases
 
 import android.util.Log
 import com.android_a865.estimatescalculator.feature_in_app.domain.repository.SubscriptionRepository
-import com.android_a865.estimatescalculator.utils.NumberOfFreeInvoices
 import kotlinx.coroutines.flow.first
 
 class SubscriptionUseCase(
@@ -15,6 +14,6 @@ class SubscriptionUseCase(
 
         Log.d("Subscription", "$invoicesNumber, $isSubscribed")
 
-        return invoicesNumber < NumberOfFreeInvoices || isSubscribed
+        return isSubscribed
     }
 }

@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import com.android_a865.estimatescalculator.feature_client.data.entities.ClientEntity
+import com.android_a865.estimatescalculator.feature_main.data.entities.InvoiceItemEntity
 import com.android_a865.estimatescalculator.feature_main.data.relations.FullInvoice
 
 
@@ -28,6 +29,14 @@ interface ReportingDao {
     @Transaction
     @Query("SELECT * FROM Invoices WHERE clientId = :id")
     suspend fun getClientInvoices(id: Int): List<FullInvoice>
+
+
+    @Query("SELECT * FROM InvoiceItems")
+    suspend fun getInvoicesItems(): List<InvoiceItemEntity>
+
+    @Transaction
+    @Query("SELECT * FROM Invoices")
+    suspend fun getInvoices(): List<FullInvoice>
 
 
 }

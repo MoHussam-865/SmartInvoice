@@ -77,17 +77,9 @@ class MainFragmentViewModel @Inject constructor(
     }
 
     fun onNewEstimateSelected() = viewModelScope.launch {
-
-        if (hasAccess) {
             eventsChannel.send(WindowEvents.Navigate(
                 MainFragmentDirections.actionMainFragment2ToNewEstimateFragment()
             ))
-        } else {
-            eventsChannel.send(WindowEvents.Navigate(
-                MainFragmentDirections.actionMainFragment2ToSubscribeFragment()
-            ))
-        }
-
     }
 
     fun onMyEstimateSelected() = viewModelScope.launch {
@@ -115,8 +107,8 @@ class MainFragmentViewModel @Inject constructor(
     }
 
     fun onReportsSelected()  = viewModelScope.launch {
-
-        if (hasAccess) {
+        // TODO Change on production
+        /*if (hasAccess) {
             eventsChannel.send(WindowEvents.Navigate(
                 MainFragmentDirections.actionMainFragment2ToReportsMainFragment()
             ))
@@ -124,7 +116,11 @@ class MainFragmentViewModel @Inject constructor(
             eventsChannel.send(WindowEvents.Navigate(
                 MainFragmentDirections.actionMainFragment2ToSubscribeFragment()
             ))
-        }
+        }*/
+
+        eventsChannel.send(WindowEvents.Navigate(
+            MainFragmentDirections.actionMainFragment2ToReportsMainFragment()
+        ))
 
     }
 

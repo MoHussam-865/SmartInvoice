@@ -86,5 +86,10 @@
 
     <string name="ad_mob_banner_test" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
     <string name="ad_mob_interstitial_test" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
-    <string name="ad_mob_production" translatable="false">ca-app-pub-2521710064847894~5886437294</string>
+
+    <string name="ad_mob_banner" translatable="false">ca-app-pub-2521710064847894/9539985118</string>
+    <string name="ad_mob_interstitial" translatable="false">ca-app-pub-2521710064847894/7305554071</string>
+    <string name="ad_mob_app_id" translatable="false">ca-app-pub-2521710064847894~5886437294</string>
+
+
 </resources>

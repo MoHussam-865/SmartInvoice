@@ -7,7 +7,6 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.isVisible
@@ -71,10 +70,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadInterstitialAd() {
         val adRequest = AdRequest.Builder().build()
-        // TODO replace with production ID
+        // TODO replace with ad_mob_interstitial
         InterstitialAd.load(
             this,
-            getString(R.string.ad_mob_interstitial_test),
+            getString(R.string.ad_mob_interstitial),
             adRequest,
             object : InterstitialAdLoadCallback() {
                 override fun onAdFailedToLoad(adError: LoadAdError) {
