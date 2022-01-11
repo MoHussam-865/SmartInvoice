@@ -80,4 +80,7 @@
     <string name="warning">تنبيه</string>
     <string name="importing_dialog">سيتم إستبدال البيات الموجودة حاليا</string>
     <string name="proceed">تقدم</string>
+    <string name="open_report_as_excel">فتح ملف إكسيل</string>
+    <string name="estimate">تسعيرة</string>
+    <string name="invoices">فاتورة</string>
 </resources>

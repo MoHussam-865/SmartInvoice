@@ -301,10 +301,6 @@ class SharedViewModel @Inject constructor(
     }
 
 
-    fun onCancelSubscriptionClicked() {
-        // TODO
-    }
-
     private fun verifyValidSignature(signedData: String, signature: String): Boolean {
         return try {
             Security.verifyPurchase(base64Key, signedData, signature)

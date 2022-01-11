@@ -36,9 +36,6 @@ class SubscribeFragment : Fragment(R.layout.fragment_subscribe) {
                 viewModel.subscribe(YEARLY_SUBSCRIPTION)
             }
 
-            btnCancelSubscription.setOnClickListener {
-                viewModel.onCancelSubscriptionClicked()
-            }
 
             viewModel.isSubscribed.observe(viewLifecycleOwner) {
                 llCancel.isVisible = it

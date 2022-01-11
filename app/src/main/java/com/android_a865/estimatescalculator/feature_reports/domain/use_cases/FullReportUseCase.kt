@@ -4,17 +4,21 @@ import com.android_a865.estimatescalculator.feature_client.domain.model.Client
 import com.android_a865.estimatescalculator.feature_main.data.mapper.toInvoice
 import com.android_a865.estimatescalculator.feature_main.domain.model.InvoiceItem
 import com.android_a865.estimatescalculator.feature_main.domain.model.InvoiceTypes
-import com.android_a865.estimatescalculator.feature_reports.domain.model.ClientsReport
+import com.android_a865.estimatescalculator.feature_reports.domain.model.ClientReport
+import com.android_a865.estimatescalculator.feature_reports.domain.model.FullReport
 import com.android_a865.estimatescalculator.feature_reports.domain.repository.ReportRepository
 import com.android_a865.estimatescalculator.utils.addUnique
 import com.android_a865.estimatescalculator.utils.date
 import java.util.*
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class FullReportUseCase(
+@Singleton
+class FullReportUseCase @Inject constructor(
     private val repository: ReportRepository
 ) {
 
-    suspend operator fun invoke(): List<ClientsReport> {
+    suspend operator fun invoke(): FullReport {
         val bills = repository.getInvoices().map { it.toInvoice() }
         val allInvoices = bills.filter { it.type == InvoiceTypes.Invoice }
         val allEstimates = bills.filter { it.type == InvoiceTypes.Estimate }
@@ -27,10 +31,9 @@ class FullReportUseCase(
 
 
         /** Client based Report */
-        val clientsReport = mutableListOf<ClientsReport>()
         val clients = mutableListOf<Client>()
         // gets The Unique Clients
-        allInvoices.forEach { invoice ->
+        bills.forEach { invoice ->
 
             invoice.client?.let { client ->
                 clients.addUnique(client) { listClient ->
@@ -41,21 +44,23 @@ class FullReportUseCase(
         }
 
         // getClient Invoices & Items
-        clients.map { client ->
+        val clientsReport = clients.map { client ->
             val clientInvoices = allInvoices.filter { invoice ->
                 invoice.client == client
+            }
+            val clientEstimates = allEstimates.filter { estimate ->
+                estimate.client == client
             }
 
 
 
             val clientItems = mutableListOf<InvoiceItem>()
-            allInvoices.forEach { invoice ->
-
+            clientInvoices.forEach { invoice ->
                 invoice.items.forEach { item ->
                     clientItems.addUnique(
-                        data = item,
+                        item = item,
                         onFound = { invoiceItem ->
-                            return@addUnique item.copy(
+                            return@addUnique invoiceItem.copy(
                                 qty = item.qty + invoiceItem.qty,
                                 total = item.total + invoiceItem.total
                             )
@@ -67,9 +72,10 @@ class FullReportUseCase(
                 }
             }
 
-            ClientsReport(
+            ClientReport(
                 client = client,
                 invoices = clientInvoices,
+                estimates = clientEstimates,
                 items = clientItems
             )
         }
@@ -79,7 +85,7 @@ class FullReportUseCase(
         allInvoices.forEach { invoice ->
             invoice.items.forEach { item ->
                 allItems.addUnique(
-                    data = item,
+                    item = item,
                     onFound = { invoiceItem ->
                         return@addUnique item.copy(
                             qty = item.qty + invoiceItem.qty,
@@ -100,7 +106,7 @@ class FullReportUseCase(
 
 
             uniqueDays.addUnique(
-                data = date,
+                item = date,
                 equals = { myDate ->
                     myDate == date
                 }
@@ -108,9 +114,15 @@ class FullReportUseCase(
 
         }
 
-        return clientsReport
+        return FullReport(
+            numberOfInvoices = numberOfInvoices,
+            numberOfEstimates = numberOfEstimates,
+            invoicesTotal = invoicesTotal,
+            estimatesTotal = estimatesTotal,
+            clientsReport = clientsReport,
+            itemsReport = allItems
+        )
 
     }
-
 
 }

@@ -48,25 +48,31 @@
                     android:padding="8dp">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="8dp"
-                        android:text="@string/total_number_of_invoices"
-                        android:textColor="@android:color/black" />
-
-                    <TextView
                         android:id="@+id/tv_invoices_number"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        tools:text="20"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:text="@string/invoices"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/tv_invoices_total"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:textColor="@android:color/holo_green_dark"
-                        tools:text="152" />
+                        tools:text="1505" />
 
                 </LinearLayout>
 
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_margin="16dp"
                     android:layout_weight="1"
                     android:background="@drawable/rounded_white_background"
@@ -74,169 +80,57 @@
                     android:gravity="center"
                     android:orientation="vertical"
                     android:padding="8dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="8dp"
-                        android:text="@string/total_number_of_estimates"
-                        android:textColor="@android:color/black" />
 
                     <TextView
                         android:id="@+id/tv_estimates_number"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@android:color/holo_green_dark"
-                        tools:text="125" />
-
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-            <!--number of drafts & total money-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:baselineAligned="false"
-                android:orientation="horizontal"
-                android:padding="8dp">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="16dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_white_background"
-                    android:elevation="5dp"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="8dp">
+                        tools:text="20"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
-                        android:text="@string/total_number_of_drafts"
+                        android:text="@string/estimate"
                         android:textColor="@android:color/black" />
 
                     <TextView
-                        android:id="@+id/tv_draft_number"
+                        android:id="@+id/tv_estimates_total"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@android:color/holo_green_dark"
-                        tools:text="152" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="16dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_white_background"
-                    android:elevation="5dp"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="8dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="8dp"
-                        android:text="@string/money_total"
-                        android:textColor="@android:color/black" />
-
-                    <TextView
-                        android:id="@+id/tv_total_money"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@android:color/holo_green_dark"
-                        tools:text="25,000" />
+                        tools:text="1505" />
 
                 </LinearLayout>
 
 
             </LinearLayout>
 
-
-            <!--clients number-->
-            <LinearLayout
-                android:layout_width="match_parent"
+            <Button
+                android:id="@+id/btn_make_report"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="18dp"
-                android:background="@drawable/rounded_white_background"
-                android:elevation="5dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="8dp">
+                android:layout_gravity="center_horizontal"
+                android:visibility="gone"
+                android:layout_marginTop="50dp"
+                android:text="@string/open_report_as_excel" />
 
-
-                <TextView
-                    android:id="@+id/tv_clients_number"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="16dp"
-                    android:textColor="@android:color/holo_green_dark"
-                    tools:text="5" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:padding="8dp"
-                    android:text="@string/clients"
-                    android:textColor="@android:color/black" />
-
-                <Button
-                    android:id="@+id/btn_view_clients"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:text="@string/view"
-                    android:textColor="@android:color/holo_blue_dark" />
-
-
-            </LinearLayout>
-
-            <!--items number-->
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="18dp"
-                android:background="@drawable/rounded_white_background"
-                android:elevation="5dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="8dp">
+                android:layout_gravity="center_horizontal"
+                android:textSize="25sp"
+                android:layout_marginTop="50dp"
+                android:text="@string/coming_soon"
+                />
 
-
-                <TextView
-                    android:id="@+id/tv_items_number"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="16dp"
-                    android:textColor="@android:color/holo_green_dark"
-                    tools:text="5" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:padding="8dp"
-                    android:text="@string/items"
-                    android:textColor="@android:color/black" />
-
-                <Button
-                    android:id="@+id/btn_view_items"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:text="@string/view"
-                    android:textColor="@android:color/holo_blue_dark" />
-
-
-            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textSize="18sp"
+                android:text="Make Sure the app is up to date"
+                />
 
         </LinearLayout>
 

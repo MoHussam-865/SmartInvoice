@@ -90,6 +90,9 @@
     <string name="ad_mob_banner" translatable="false">ca-app-pub-2521710064847894/9539985118</string>
     <string name="ad_mob_interstitial" translatable="false">ca-app-pub-2521710064847894/7305554071</string>
     <string name="ad_mob_app_id" translatable="false">ca-app-pub-2521710064847894~5886437294</string>
+    <string name="open_report_as_excel">Open Report as Excel</string>
+    <string name="estimate">Estimate</string>
+    <string name="invoices">Invoices</string>
 
 
 </resources>

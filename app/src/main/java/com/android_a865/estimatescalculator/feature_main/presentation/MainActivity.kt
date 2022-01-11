@@ -32,18 +32,20 @@ class MainActivity : AppCompatActivity() {
 
         binding.apply {
 
-
             sharedViewModel.isSubscribed.observe(this@MainActivity) { isSubscribed ->
                 if (isSubscribed){
+                    Log.d(TAG, "ads must not be shown")
                     adView.isVisible = false
                 } else {
+
+                    Log.d(TAG, "Checking Connectivity")
                     val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
                     connectivityManager.let {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                             it.registerDefaultNetworkCallback(object : ConnectivityManager.NetworkCallback() {
                                 override fun onAvailable(network: Network) {
                                     //take action when network connection is gained
-
+                                    Log.d(TAG, "Connected")
                                     runOnUiThread {
                                         loadAdsOnConnected(binding)
                                     }
