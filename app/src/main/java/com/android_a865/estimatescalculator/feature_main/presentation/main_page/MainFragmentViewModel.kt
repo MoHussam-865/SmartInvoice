@@ -107,8 +107,8 @@ class MainFragmentViewModel @Inject constructor(
     }
 
     fun onReportsSelected()  = viewModelScope.launch {
-        // TODO Change on production
-        if (hasAccess) {
+        // TODO block Reporting feature
+        /*if (hasAccess) {
             eventsChannel.send(WindowEvents.Navigate(
                 MainFragmentDirections.actionMainFragment2ToReportsMainFragment()
             ))
@@ -116,11 +116,11 @@ class MainFragmentViewModel @Inject constructor(
             eventsChannel.send(WindowEvents.Navigate(
                 MainFragmentDirections.actionMainFragment2ToSubscribeFragment()
             ))
-        }
+        }*/
 
-        /*eventsChannel.send(WindowEvents.Navigate(
+        eventsChannel.send(WindowEvents.Navigate(
             MainFragmentDirections.actionMainFragment2ToReportsMainFragment()
-        ))*/
+        ))
 
     }
 

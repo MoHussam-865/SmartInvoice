@@ -128,7 +128,7 @@ class ReportsMainFragment : Fragment(R.layout.fragment_reports_main) {
         var i = 1
         report?.clientsReport?.forEach { clientReport ->
 
-            clientReport.items.forEach { item ->
+            clientReport.items.value.forEach { item ->
                 myRow = clientItemsSheet.createRow(i)
 
                 fillRow(
@@ -145,6 +145,32 @@ class ReportsMainFragment : Fragment(R.layout.fragment_reports_main) {
             }
 
         }
+
+        val itemsSheet = wb.createSheet("Items")
+        myRow = itemsSheet.createRow(0)
+        fillRow(
+            myRow,
+            listOf(
+                "Item ID",
+                "Item Name",
+                "Sales Count",
+                "Sales Total"
+            )
+        )
+
+        report?.itemsReport?.value?.forEachIndexed { index, item ->
+            myRow = itemsSheet.createRow(index+1)
+            fillRow(
+                myRow,
+                listOf(
+                    item.id.toString(),
+                    item.name,
+                    item.qty.toString(),
+                    item.total.toString()
+                )
+            )
+        }
+
 
         openReportExternally(wb)
 

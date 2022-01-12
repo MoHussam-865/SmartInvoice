@@ -9,5 +9,5 @@ data class FullReport(
     val estimatesTotal: Double,
 
     val clientsReport: List<ClientReport>,
-    val itemsReport: List<InvoiceItem>,
+    val itemsReport: SmartList<InvoiceItem>,
 )

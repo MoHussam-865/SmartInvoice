@@ -8,5 +8,5 @@ data class ClientReport(
     val client: Client,
     val invoices: List<Invoice>,
     val estimates: List<Invoice>,
-    val items: List<InvoiceItem>
+    val items: SmartList<InvoiceItem>
 )

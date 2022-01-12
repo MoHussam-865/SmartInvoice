@@ -6,9 +6,9 @@ import com.android_a865.estimatescalculator.feature_main.domain.model.InvoiceIte
 import com.android_a865.estimatescalculator.feature_main.domain.model.InvoiceTypes
 import com.android_a865.estimatescalculator.feature_reports.domain.model.ClientReport
 import com.android_a865.estimatescalculator.feature_reports.domain.model.FullReport
+import com.android_a865.estimatescalculator.feature_reports.domain.model.SmartList
 import com.android_a865.estimatescalculator.feature_reports.domain.repository.ReportRepository
-import com.android_a865.estimatescalculator.utils.addUnique
-import com.android_a865.estimatescalculator.utils.date
+import com.android_a865.estimatescalculator.utils.*
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -54,21 +54,12 @@ class FullReportUseCase @Inject constructor(
 
 
 
-            val clientItems = mutableListOf<InvoiceItem>()
+            val clientItems = SmartList<InvoiceItem>(emptyList())
             clientInvoices.forEach { invoice ->
                 invoice.items.forEach { item ->
-                    clientItems.addUnique(
-                        item = item,
-                        onFound = { invoiceItem ->
-                            return@addUnique invoiceItem.copy(
-                                qty = item.qty + invoiceItem.qty,
-                                total = item.total + invoiceItem.total
-                            )
-                        },
-                        equals = { invoiceItem ->
-                            invoiceItem.id == item.id
-                        }
-                    )
+                    clientItems.update0 {
+                        it.addOf(item)
+                    }
                 }
             }
 
@@ -81,21 +72,12 @@ class FullReportUseCase @Inject constructor(
         }
 
         /** Items based Report */
-        val allItems = mutableListOf<InvoiceItem>()
+        val allItems = SmartList<InvoiceItem>(emptyList())
         allInvoices.forEach { invoice ->
             invoice.items.forEach { item ->
-                allItems.addUnique(
-                    item = item,
-                    onFound = { invoiceItem ->
-                        return@addUnique item.copy(
-                            qty = item.qty + invoiceItem.qty,
-                            total = item.total + invoiceItem.total
-                        )
-                    },
-                    equals = { invoiceItem ->
-                        item.id == invoiceItem.id
-                    }
-                )
+                allItems.update0 {
+                    it.addOf(item)
+                }
             }
         }
 
@@ -106,7 +88,7 @@ class FullReportUseCase @Inject constructor(
 
 
             uniqueDays.addUnique(
-                item = date,
+                data = date,
                 equals = { myDate ->
                     myDate == date
                 }

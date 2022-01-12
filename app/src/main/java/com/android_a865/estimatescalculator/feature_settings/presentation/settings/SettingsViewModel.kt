@@ -98,7 +98,8 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun onExportSelected() = viewModelScope.launch {
-        // TODO Change on Production
+        // TODO limit Export feature
+        /** uncomment */
         if (isSubscribed) {
             eventsChannel.send(
                 WindowEvents.Export(
@@ -106,18 +107,21 @@ class SettingsViewModel @Inject constructor(
                 )
             )
         } else acquireSubscription()
+
+        /** comment */
         /*eventsChannel.send(
-            WindowEvents.Export(
-                importExportUseCases.export()
-            )
+            WindowEvents.Export(importExportUseCases.export())
         )*/
     }
 
     fun onImportSelected() = viewModelScope.launch {
-        // TODO Change On Production
+        // TODO limit Import feature
+        /** uncomment */
         if (isSubscribed) {
             eventsChannel.send(WindowEvents.Import)
         } else acquireSubscription()
+
+        /** comment */
         /*eventsChannel.send(WindowEvents.Import)*/
     }
 
