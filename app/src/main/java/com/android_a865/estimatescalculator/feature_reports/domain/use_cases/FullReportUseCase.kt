@@ -5,19 +5,21 @@ import com.android_a865.estimatescalculator.feature_main.data.mapper.toInvoice
 import com.android_a865.estimatescalculator.feature_main.domain.model.InvoiceItem
 import com.android_a865.estimatescalculator.feature_main.domain.model.InvoiceTypes
 import com.android_a865.estimatescalculator.feature_reports.domain.model.ClientReport
+import com.android_a865.estimatescalculator.feature_reports.domain.model.DaysReport
 import com.android_a865.estimatescalculator.feature_reports.domain.model.FullReport
 import com.android_a865.estimatescalculator.feature_reports.domain.model.SmartList
 import com.android_a865.estimatescalculator.feature_reports.domain.repository.ReportRepository
 import com.android_a865.estimatescalculator.utils.*
-import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class FullReportUseCase @Inject constructor(
-    private val repository: ReportRepository
+    private val repository: ReportRepository,
+
 ) {
 
+    val defaultDateFormat = "d/M/yyyy"
     suspend operator fun invoke(): FullReport {
         val bills = repository.getInvoices().map { it.toInvoice() }
         val allInvoices = bills.filter { it.type == InvoiceTypes.Invoice }
@@ -84,7 +86,7 @@ class FullReportUseCase @Inject constructor(
         /** Days based Report */
         val uniqueDays = mutableListOf<String>()
         allInvoices.forEach { invoice ->
-            val date = invoice.date.date("d/M/yyyy")
+            val date = invoice.date.date(defaultDateFormat)
 
 
             uniqueDays.addUnique(
@@ -96,13 +98,33 @@ class FullReportUseCase @Inject constructor(
 
         }
 
+        val daysReport = uniqueDays.map { date ->
+            val dayInvoices = bills.filter { invoice ->
+                invoice.type == InvoiceTypes.Invoice &&
+                        invoice.date.date(defaultDateFormat) == date
+            }
+            val dayEstimates = bills.filter { invoice ->
+                invoice.type == InvoiceTypes.Estimate &&
+                        invoice.date.date(defaultDateFormat) == date
+            }
+
+            DaysReport(
+                date = date,
+                invoices = dayInvoices,
+                estimates = dayEstimates
+            )
+        }
+
+
+
         return FullReport(
             numberOfInvoices = numberOfInvoices,
             numberOfEstimates = numberOfEstimates,
             invoicesTotal = invoicesTotal,
             estimatesTotal = estimatesTotal,
             clientsReport = clientsReport,
-            itemsReport = allItems
+            itemsReport = allItems,
+            daysReport = daysReport
         )
 
     }

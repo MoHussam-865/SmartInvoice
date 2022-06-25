@@ -10,4 +10,5 @@ data class FullReport(
 
     val clientsReport: List<ClientReport>,
     val itemsReport: SmartList<InvoiceItem>,
+    val daysReport: List<DaysReport>
 )

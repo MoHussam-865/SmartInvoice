@@ -1,9 +1,6 @@
 package com.android_a865.estimatescalculator.feature_reports.presentation.overview
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -69,9 +66,11 @@ class ReportsMainFragment : Fragment(R.layout.fragment_reports_main) {
     private fun exportReportSample(report: FullReport?) {
         val wb: Workbook = HSSFWorkbook()
 
-        val clientsSheet = wb.createSheet("Clients")
 
-        var myRow = clientsSheet.createRow(0)
+        /**Client Report*/
+        var mySheet = wb.createSheet("Clients")
+
+        var myRow = mySheet.createRow(0)
         fillRow(
             myRow,
             listOf(
@@ -91,7 +90,7 @@ class ReportsMainFragment : Fragment(R.layout.fragment_reports_main) {
         )
 
         report?.clientsReport?.forEachIndexed { index, clientReport ->
-            myRow = clientsSheet.createRow(index+1)
+            myRow = mySheet.createRow(index+1)
             fillRow(
                 myRow,
                 listOf(
@@ -111,9 +110,9 @@ class ReportsMainFragment : Fragment(R.layout.fragment_reports_main) {
             )
         }
 
-        val clientItemsSheet = wb.createSheet("Client items")
+        mySheet = wb.createSheet("Client items")
 
-        myRow = clientItemsSheet.createRow(0)
+        myRow = mySheet.createRow(0)
         fillRow(
             myRow,
             listOf(
@@ -129,7 +128,7 @@ class ReportsMainFragment : Fragment(R.layout.fragment_reports_main) {
         report?.clientsReport?.forEach { clientReport ->
 
             clientReport.items.value.forEach { item ->
-                myRow = clientItemsSheet.createRow(i)
+                myRow = mySheet.createRow(i)
 
                 fillRow(
                     myRow,
@@ -146,8 +145,9 @@ class ReportsMainFragment : Fragment(R.layout.fragment_reports_main) {
 
         }
 
-        val itemsSheet = wb.createSheet("Items")
-        myRow = itemsSheet.createRow(0)
+        /**Items Report*/
+        mySheet = wb.createSheet("Items")
+        myRow = mySheet.createRow(0)
         fillRow(
             myRow,
             listOf(
@@ -159,7 +159,7 @@ class ReportsMainFragment : Fragment(R.layout.fragment_reports_main) {
         )
 
         report?.itemsReport?.value?.forEachIndexed { index, item ->
-            myRow = itemsSheet.createRow(index+1)
+            myRow = mySheet.createRow(index+1)
             fillRow(
                 myRow,
                 listOf(
@@ -171,6 +171,86 @@ class ReportsMainFragment : Fragment(R.layout.fragment_reports_main) {
             )
         }
 
+
+        /**Days Report*/
+
+        mySheet = wb.createSheet("Daily Report")
+        myRow = mySheet.createRow(0)
+        fillRow(
+            myRow,
+            listOf(
+                "Date",
+                "number of Invoices",
+                "invoices Total",
+                "number of estimates",
+                "estimates Total"
+            )
+        )
+
+        report?.daysReport?.forEachIndexed { index, day ->
+            myRow = mySheet.createRow(index+1)
+            fillRow(
+                myRow,
+                listOf(
+                    day.date,
+                    day.invoices.size.toString(),
+                    day.invoices.sumOf { it.total }.toString(),
+                    day.estimates.size.toString(),
+                    day.estimates.sumOf { it.total }.toString()
+                )
+            )
+        }
+
+
+        /**----------------------------------------*/
+        mySheet = wb.createSheet("Daily Report2")
+        myRow = mySheet.createRow(0)
+        fillRow(
+            myRow,
+            listOf(
+                "Client Id",
+                "Client Name",
+                "Date",
+                "Type",
+                "Total"
+            )
+        )
+
+        i = 1
+        report?.daysReport?.forEachIndexed { index, day ->
+
+            day.invoices.forEach { invoice ->
+                myRow = mySheet.createRow(i)
+                fillRow(
+                    myRow,
+                    listOf(
+                        invoice.client?.id.toString(),
+                        invoice.client?.name ?: "",
+                        day.date,
+                        invoice.type.name,
+                        invoice.total.toString()
+                    )
+                )
+            }
+
+
+            day.estimates.forEach { estimate ->
+                myRow = mySheet.createRow(i)
+                fillRow(
+                    myRow,
+                    listOf(
+                        estimate.client?.id.toString(),
+                        estimate.client?.name ?: "",
+                        day.date,
+                        estimate.type.name,
+                        estimate.total.toString()
+                    )
+                )
+            }
+
+
+            i++
+        }
 
         openReportExternally(wb)
 

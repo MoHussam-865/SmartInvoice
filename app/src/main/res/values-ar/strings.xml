@@ -69,7 +69,11 @@
     <string name="you_are_subscribed">أنت مشترك الان</string>
     <string name="monthly_subscription">الأشتراك الشهرى</string>
     <string name="month">/ شهر</string>
-    <string name="monthly_features">عدد لانهائى من الفواتير</string>
+    <string name="monthly_features">
+        .عدد لانهائى من الفواتير\n
+        .تقارير إحترافية\n
+        .مشاركة البيانات عن طريق الإستيراد والتصدير
+    </string>
     <string name="yearly_subscription">الإشتراك السنوى</string>
     <string name="per_year">/ سنة</string>
     <string name="yearly_features">"وفر 25% "</string>
