@@ -1,9 +1,6 @@
 package com.android_a865.estimatescalculator.utils
 
-import android.view.View
-import android.widget.AdapterView
 import android.widget.EditText
-import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -13,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.android_a865.estimatescalculator.R
+import java.text.DecimalFormat
 
 fun Fragment.setUpActionBarWithNavController() {
     view?.findViewById<Toolbar>(R.id.mainToolBar)?.let {
@@ -29,19 +27,29 @@ fun Fragment.showMessage(msg: String) {
     Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
 }
 
-fun EditText.setTextWithCursor(str: String) {
+fun Double.toFormattedString(): String {
+    val format = DecimalFormat("0.#")
+    return format.format(this)
+}
 
-    val newTextLength = str.length
-    val oldTextLength = text.toString().length
-    val diff = if (newTextLength > oldTextLength) 1 else -1
-    val newSelection = selectionStart + diff
 
-    setText(str)
+fun EditText.setQty(str: String): Boolean {
 
-    if (newSelection >= 0) {
-        setSelection(newSelection)
+    val value = str.toDouble()
+    try {
+        if (text.toString().toDouble() != value) {
+            if (value == 0.0) {
+                setText("")
+                return false
+            }
+            setText(value.toFormattedString())
+            return true
+        }
+    } catch (e: Exception){
+        setText(str)
+        return false
     }
-    //Log.d("view util", "new = $str, old = $text, $diff, selection = $newSelection")
+    return true
 }
 
 // Search View

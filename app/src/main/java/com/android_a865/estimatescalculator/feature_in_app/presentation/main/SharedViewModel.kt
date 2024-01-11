@@ -45,16 +45,13 @@ class SharedViewModel @Inject constructor(
         PurchasesUpdatedListener { billingResult, purchases ->
             if (billingResult.responseCode == BillingClient.BillingResponseCode.OK && purchases != null) {
                 handlePurchases(purchases)
-                Log.d(TAG , "Item Purchased")
-            }
-            else if (billingResult.responseCode == BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED) {
+                Log.d(TAG, "Item Purchased")
+            } else if (billingResult.responseCode == BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED) {
                 getPurchases()
                 Log.d(TAG, "Already Owned")
-            }
-            else if (billingResult.responseCode == BillingClient.BillingResponseCode.USER_CANCELED) {
+            } else if (billingResult.responseCode == BillingClient.BillingResponseCode.USER_CANCELED) {
                 showMessage("Purchase Canceled")
-            }
-            else {
+            } else {
                 showMessage("Error")
                 Log.d(TAG, billingResult.debugMessage)
             }
@@ -107,8 +104,7 @@ class SharedViewModel @Inject constructor(
                     } else {
                         showMessage("Item not found")
                     }
-                }
-                else {
+                } else {
                     showMessage("Error ${billingResult0.debugMessage}")
                 }
             }
@@ -154,19 +150,15 @@ class SharedViewModel @Inject constructor(
                         }
 
                         if (monthly.isNotEmpty()) {
-                            products.update0 {
-                                it.copy(
+                            products.value = products.value.copy(
                                     monthly = monthly.first()
                                 )
-                            }
                         }
 
                         if (yearly.isNotEmpty()) {
-                            products.update0 {
-                                it.copy(
-                                    yearly = yearly.first()
-                                )
-                            }
+                            products.value = products.value.copy(
+                                yearly = yearly.first()
+                            )
                         }
 
 
@@ -198,7 +190,7 @@ class SharedViewModel @Inject constructor(
                 if (productId in validProducts) {
                     validPurchases.add(productId)
                     Log.d(TAG, "one valid subscription")
-                }else{
+                } else {
                     Log.d(TAG, "one invalid subscription")
                 }
             }
@@ -233,7 +225,7 @@ class SharedViewModel @Inject constructor(
                         if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
                             //if purchase is acknowledged
                             // then saved value in preference
-                            Log.d(TAG," Item Subscribed")
+                            Log.d(TAG, " Item Subscribed")
                         }
                     }
                 } else {

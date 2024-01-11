@@ -43,17 +43,13 @@ fun List<InvoiceItem>.removeAllOf(item: InvoiceItem): List<InvoiceItem> = filter
 }.toList()
 
 fun List<InvoiceItem>.setQtyTo(item: InvoiceItem, myQty: Double): List<InvoiceItem> {
-    var found = false
+    val item0 = item.copy(qty = myQty)
 
-    val items = this.map {
-        if (item.id == it.id) {
-            found = true
-            it.run { copy(qty = myQty) }
+    return map {
+        if (item0.id == it.id) {
+            item0
         } else it
-    }.toMutableList()
-
-    if (!found) items.add(item.run { copy(qty = myQty) })
-    return items.toList().filtered
+    }.toMutableList().toList()
 }
 
 fun List<InvoiceItem>.include(selectedItems: List<InvoiceItem>): List<InvoiceItem> = map { item ->
