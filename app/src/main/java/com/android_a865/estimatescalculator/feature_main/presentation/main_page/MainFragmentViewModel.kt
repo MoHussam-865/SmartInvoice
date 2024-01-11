@@ -47,7 +47,9 @@ class MainFragmentViewModel @Inject constructor(
     }
 
 
-    fun onItemClicked(item: Item) = currentPath.update0 { item.open() }
+    fun onItemClicked(item: Item) {
+        currentPath.value = item.open()
+    }
 
 
     fun onBackPressed() {
@@ -56,7 +58,7 @@ class MainFragmentViewModel @Inject constructor(
                 eventsChannel.send(WindowEvents.CloseTheApp)
             }
         } else {
-            currentPath.update0 { it.back() }
+            currentPath.value =  currentPath.value.back()
         }
     }
 

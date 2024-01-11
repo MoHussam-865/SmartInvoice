@@ -41,7 +41,7 @@ class AddEditInvoiceItemViewModel @Inject constructor(
             return
         }
 
-        if (price == null || price == 0.0) {
+        if (price == null || price <= 0.0) {
             showInvalidInputMessage("Invalid price")
             return
         }
@@ -52,11 +52,9 @@ class AddEditInvoiceItemViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-            var itemId = 0
-
 
             // this function will insert or update (if id != 0)
-            itemId = itemsUseCases.addItem(
+            val itemId = itemsUseCases.addItem(
                 Item(
                     id = myItem?.id ?: 0,
                     name = itemName,

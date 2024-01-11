@@ -8,7 +8,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.android_a865.estimatescalculator.databinding.AdapterNewEstimateBinding
 import com.android_a865.estimatescalculator.feature_main.domain.model.InvoiceItem
-import com.android_a865.estimatescalculator.utils.setTextWithCursor
+import com.android_a865.estimatescalculator.utils.setQty
+import com.android_a865.estimatescalculator.utils.toFormattedString
 
 class InvoiceItemsAdapter(
     private val listener: OnItemEventListener,
@@ -55,11 +56,19 @@ class InvoiceItemsAdapter(
                     }
                 }
 
-                etQty.addTextChangedListener { text ->
+                etQty.addTextChangedListener {
                     val position = adapterPosition
                     if (position != RecyclerView.NO_POSITION) {
                         val item = getItem(position)
-                        listener.onQtyChanged(item, text.toString())
+                        val text = it.toString()
+                        if (text.isNotBlank()) {
+                            val qty = text.toDouble()
+                            if (qty != item.qty) {
+                                listener.onQtyChanged(item, qty.toString())
+                            }
+                        } else {
+                            listener.onQtyChanged(item, "0")
+                        }
                     }
                 }
 
@@ -69,13 +78,11 @@ class InvoiceItemsAdapter(
 
         fun bind(item: InvoiceItem) {
             binding.apply {
-
                 itemName.text = item.name
-                itemUnitPrice.text = item.price.toString()
-                itemTotal.text = item.total.toString()
-
-                etQty.setTextWithCursor(item.qty.toString())
-
+                itemUnitPrice.text = item.price.toFormattedString()
+                etQty.setQty(item.qty.toFormattedString())
+                itemTotal.text = item.total.toFormattedString()
+                etQty.setSelection(etQty.length())
             }
         }
     }

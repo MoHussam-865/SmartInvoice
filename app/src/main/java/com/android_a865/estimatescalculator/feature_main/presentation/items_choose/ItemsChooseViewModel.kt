@@ -41,7 +41,7 @@ class ItemsChooseViewModel @Inject constructor(
 
     fun onBackPress() {
         if (currentPath.value.isRoot) goBack()
-        else currentPath.update0 { it.back() }
+        else currentPath.value = currentPath.value.back()
     }
 
     private fun goBack() = viewModelScope.launch {
@@ -52,7 +52,7 @@ class ItemsChooseViewModel @Inject constructor(
         if (item.isFolder) {
             viewModelScope.launch {
                 val myItem: Item = itemsUseCases.getItemByID(item.id)
-                currentPath.update0 { myItem.open() }
+                currentPath.value = myItem.open()
             }
         }
     }

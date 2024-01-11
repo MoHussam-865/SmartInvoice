@@ -1,15 +1,16 @@
 package com.android_a865.estimatescalculator.utils
 
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-fun String.double(default: Double = 0.0): Double {
+fun String.double(): Double {
 
     return try {
-        this.toDouble()
+        toDouble()
     } catch (e: Exception) {
-        default
+        return 0.0
     }
 
 }

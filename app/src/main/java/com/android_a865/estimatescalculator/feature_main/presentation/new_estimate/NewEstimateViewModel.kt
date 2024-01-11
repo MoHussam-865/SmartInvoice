@@ -14,7 +14,6 @@ import com.android_a865.estimatescalculator.feature_main.domain.model.InvoiceIte
 import com.android_a865.estimatescalculator.feature_main.domain.model.InvoiceTypes
 import com.android_a865.estimatescalculator.feature_main.domain.use_cases.invoice_use_cases.InvoiceUseCases
 import com.android_a865.estimatescalculator.utils.*
-import com.google.android.gms.ads.interstitial.InterstitialAd
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
@@ -48,9 +47,7 @@ class NewEstimateViewModel @Inject constructor(
 
     val itemsFlow = MutableStateFlow(invoice?.items ?: listOf())
 
-    val totalFlow = itemsFlow.flatMapLatest { items ->
-        flowOf(items.sumOf { it.total })
-    }
+    val totalFlow = MutableStateFlow(invoice?.total ?: 0.0)
 
     private val eventsChannel = Channel<WindowEvents>()
     val invoiceWindowEvents = eventsChannel.receiveAsFlow()
@@ -65,28 +62,28 @@ class NewEstimateViewModel @Inject constructor(
 
 
 
-    fun onItemRemoveClicked(item: InvoiceItem) = itemsFlow.update0 {
-        it.removeAllOf(item)
+    fun onItemRemoveClicked(item: InvoiceItem) {
+        itemsFlow.value = itemsFlow.value.removeAllOf(item)
     }
 
-    fun onOneItemAdded(item: InvoiceItem) = itemsFlow.update0 {
-        it.addOneOf(item)
+    fun onOneItemAdded(item: InvoiceItem) {
+        itemsFlow.value = itemsFlow.value.addOneOf(item)
     }
 
-    fun onOneItemRemoved(item: InvoiceItem) = itemsFlow.update0 {
-        it.removeOneOf(item)
+    fun onOneItemRemoved(item: InvoiceItem) {
+        itemsFlow.value =  itemsFlow.value.removeOneOf(item)
     }
 
 
-    fun onItemQtyChanged(item: InvoiceItem, qty: String) = itemsFlow.update0 {
-        it.setQtyTo(item, qty.double(1.0))
+    fun onItemQtyChanged(item: InvoiceItem, qty: String) {
+        itemsFlow.value = itemsFlow.value.setQtyTo(item, qty.double())
     }
 
     fun onItemsSelected(chosenItems: List<InvoiceItem>?) = viewModelScope.launch {
         chosenItems?.let { items ->
             // this delay is to solve an unexpected bug
             delay(100)
-            itemsFlow.update0 { items }
+            itemsFlow.value = items
         }
     }
 

@@ -22,7 +22,9 @@ import com.android_a865.estimatescalculator.databinding.FragmentNewEstimateBindi
 import com.android_a865.estimatescalculator.feature_in_app.presentation.main.SharedViewModel
 import com.android_a865.estimatescalculator.feature_main.domain.model.InvoiceItem
 import com.android_a865.estimatescalculator.utils.exhaustive
+import com.android_a865.estimatescalculator.utils.filtered
 import com.android_a865.estimatescalculator.utils.setUpActionBarWithNavController
+import com.android_a865.estimatescalculator.utils.toFormattedString
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -54,7 +56,7 @@ class NewEstimateFragment : Fragment(R.layout.fragment_new_estimate),
             addItems.setOnClickListener {
                 findNavController().navigate(
                     NewEstimateFragmentDirections.actionNewEstimateFragmentToItemsChooseFragment(
-                        viewModel.itemsFlow.value.toTypedArray()
+                        viewModel.itemsFlow.value.filtered.toTypedArray()
                     )
                 )
             }
@@ -83,10 +85,7 @@ class NewEstimateFragment : Fragment(R.layout.fragment_new_estimate),
 
             viewModel.itemsFlow.asLiveData().observe(viewLifecycleOwner) {
                 itemsAdapter.submitList(it)
-            }
-
-            viewModel.totalFlow.asLiveData().observe(viewLifecycleOwner) {
-                itemsTotal.text = it.toString()
+                itemsTotal.text = it.sumOf { item -> item.total }.toFormattedString()
             }
 
         }
