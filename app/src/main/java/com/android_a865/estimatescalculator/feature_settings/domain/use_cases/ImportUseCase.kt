@@ -38,7 +38,6 @@ class ImportUseCase(
             Log.d("Importing Error", e.message.toString())
             return "Error"
         }
-
     }
 
 }

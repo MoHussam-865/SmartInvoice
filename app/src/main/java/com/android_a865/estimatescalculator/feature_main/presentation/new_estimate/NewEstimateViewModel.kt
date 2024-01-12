@@ -52,11 +52,14 @@ class NewEstimateViewModel @Inject constructor(
     private val eventsChannel = Channel<WindowEvents>()
     val invoiceWindowEvents = eventsChannel.receiveAsFlow()
 
+    /** in app ads */
     init {
-        viewModelScope.launch {
-            eventsChannel.send(
-                WindowEvents.ShowAd
-            )
+        if (!NO_AD) {
+            viewModelScope.launch {
+                eventsChannel.send(
+                    WindowEvents.ShowAd
+                )
+            }
         }
     }
 

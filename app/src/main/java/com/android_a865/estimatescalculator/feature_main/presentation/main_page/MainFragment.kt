@@ -70,6 +70,7 @@ class MainFragment : Fragment(R.layout.fragment_main), ItemsAdapter.OnItemEventL
                         viewModule.onSettingsSelected()
                     }
 
+                    /** uncomment for in app ads*/
                     R.id.subscribe -> {
                         viewModule.onSubscribeSelected()
                     }

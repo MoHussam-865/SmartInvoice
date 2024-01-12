@@ -14,6 +14,7 @@ import com.android_a865.estimatescalculator.R
 import com.android_a865.estimatescalculator.databinding.ActivityMainBinding
 import com.android_a865.estimatescalculator.feature_in_app.presentation.main.SharedViewModel
 import com.android_a865.estimatescalculator.feature_main.presentation.new_estimate.TAG
+import com.android_a865.estimatescalculator.utils.NO_AD
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
@@ -30,34 +31,38 @@ class MainActivity : AppCompatActivity() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         sharedViewModel.onAppStarted()
 
-        binding.apply {
+        if (!NO_AD) {
+            binding.apply {
 
-            sharedViewModel.isSubscribed.observe(this@MainActivity) { isSubscribed ->
-                if (isSubscribed){
-                    Log.d(TAG, "ads must not be shown")
-                    adView.isVisible = false
-                } else {
+                sharedViewModel.isSubscribed.observe(this@MainActivity) { isSubscribed ->
+                    if (isSubscribed) {
+                        Log.d(TAG, "ads must not be shown")
+                        adView.isVisible = false
+                    } else {
 
-                    Log.d(TAG, "Checking Connectivity")
-                    val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-                    connectivityManager.let {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                            it.registerDefaultNetworkCallback(object : ConnectivityManager.NetworkCallback() {
-                                override fun onAvailable(network: Network) {
-                                    //take action when network connection is gained
-                                    Log.d(TAG, "Connected")
-                                    runOnUiThread {
-                                        loadAdsOnConnected(binding)
+                        Log.d(TAG, "Checking Connectivity")
+                        val connectivityManager =
+                            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+                        connectivityManager.let {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                it.registerDefaultNetworkCallback(object :
+                                    ConnectivityManager.NetworkCallback() {
+                                    override fun onAvailable(network: Network) {
+                                        //take action when network connection is gained
+                                        Log.d(TAG, "Connected")
+                                        runOnUiThread {
+                                            loadAdsOnConnected(binding)
+                                        }
+
                                     }
-
-                                }
-                            })
+                                })
+                            }
                         }
+
                     }
-
                 }
-            }
 
+            }
         }
     }
 

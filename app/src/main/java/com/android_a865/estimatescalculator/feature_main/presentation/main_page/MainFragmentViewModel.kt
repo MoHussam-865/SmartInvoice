@@ -8,6 +8,7 @@ import androidx.navigation.NavDirections
 import com.android_a865.estimatescalculator.feature_in_app.domain.use_cases.SubscriptionUseCase
 import com.android_a865.estimatescalculator.feature_main.domain.model.Item
 import com.android_a865.estimatescalculator.feature_main.domain.use_cases.items_use_cases.ItemsUseCases
+import com.android_a865.estimatescalculator.utils.NO_AD
 import com.android_a865.estimatescalculator.utils.Path
 import com.android_a865.estimatescalculator.utils.update0
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -102,6 +103,7 @@ class MainFragmentViewModel @Inject constructor(
         ))
     }
 
+    /** TODO don't remove this method */
     fun onSubscribeSelected() = viewModelScope.launch {
         eventsChannel.send(WindowEvents.Navigate(
             MainFragmentDirections.actionMainFragment2ToSubscribeFragment()
@@ -110,7 +112,7 @@ class MainFragmentViewModel @Inject constructor(
 
     fun onReportsSelected()  = viewModelScope.launch {
         // TODO block Reporting feature
-        /*if (hasAccess) {
+        if (hasAccess || NO_AD) {
             eventsChannel.send(WindowEvents.Navigate(
                 MainFragmentDirections.actionMainFragment2ToReportsMainFragment()
             ))
@@ -118,11 +120,11 @@ class MainFragmentViewModel @Inject constructor(
             eventsChannel.send(WindowEvents.Navigate(
                 MainFragmentDirections.actionMainFragment2ToSubscribeFragment()
             ))
-        }*/
+        }
 
-        eventsChannel.send(WindowEvents.Navigate(
+        /*eventsChannel.send(WindowEvents.Navigate(
             MainFragmentDirections.actionMainFragment2ToReportsMainFragment()
-        ))
+        ))*/
 
     }
 
