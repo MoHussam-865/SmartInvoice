@@ -15,8 +15,7 @@ import javax.inject.Singleton
 
 @Singleton
 class FullReportUseCase @Inject constructor(
-    private val repository: ReportRepository,
-
+    private val repository: ReportRepository
 ) {
 
     val defaultDateFormat = "d/M/yyyy"

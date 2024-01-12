@@ -68,11 +68,7 @@
     <string name="you_are_subscribed">You are Subscribed</string>
     <string name="monthly_subscription">Monthly Subscription</string>
     <string name="month">/ Month</string>
-    <string name="monthly_features">
-        .Enjoy Unlimited number of Invoices\n
-        .Get Professional Reports\n
-        .Share Data cross devices by Import &amp; Export
-    </string>
+    <string name="monthly_features">Enjoy Unlimited number of Invoices</string>
     <string name="yearly_subscription">Yearly Subscription</string>
     <string name="per_year">/ Year</string>
     <string name="yearly_features">Save more than 25%</string>
