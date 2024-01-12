@@ -10,6 +10,7 @@ import com.android_a865.estimatescalculator.R
 import com.android_a865.estimatescalculator.feature_settings.domain.repository.SettingsRepository
 import com.android_a865.estimatescalculator.feature_settings.domain.use_cases.ImportExportUseCases
 import com.android_a865.estimatescalculator.utils.DATE_FORMATS
+import com.android_a865.estimatescalculator.utils.NO_AD
 import com.android_a865.estimatescalculator.utils.date
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -100,7 +101,7 @@ class SettingsViewModel @Inject constructor(
     fun onExportSelected() = viewModelScope.launch {
         // TODO limit Export feature
         /** uncomment */
-        if (isSubscribed) {
+        if (isSubscribed || NO_AD) {
             eventsChannel.send(
                 WindowEvents.Export(
                     importExportUseCases.export()
@@ -117,18 +118,23 @@ class SettingsViewModel @Inject constructor(
     fun onImportSelected() = viewModelScope.launch {
         // TODO limit Import feature
         /** uncomment */
-        if (isSubscribed) {
+        if (isSubscribed || NO_AD) {
             eventsChannel.send(WindowEvents.Import)
         } else acquireSubscription()
 
         /** comment */
-        /*eventsChannel.send(WindowEvents.Import)*/
+        //eventsChannel.send(WindowEvents.Import)
     }
 
     fun saveData(finalData: String) = viewModelScope.launch {
-        importExportUseCases.import(finalData)
+        eventsChannel.send(
+            WindowEvents.ImportState(
+                importExportUseCases.import(finalData)
+            )
+        )
     }
 
+    /** don't remove*/
     private fun acquireSubscription() = viewModelScope.launch {
         eventsChannel.send(WindowEvents.Navigate(
             SettingsFragmentDirections.actionSettingsFragmentToSubscribeFragment()
@@ -139,6 +145,7 @@ class SettingsViewModel @Inject constructor(
         data class Navigate(val direction: NavDirections): WindowEvents()
         data class Export(val data: String): WindowEvents()
         object Import : WindowEvents()
+        data class ImportState(val msg: String): WindowEvents()
     }
 
 }

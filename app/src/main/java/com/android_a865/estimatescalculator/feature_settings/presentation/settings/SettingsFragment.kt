@@ -71,6 +71,10 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                     SettingsViewModel.WindowEvents.Import -> {
                         import()
                     }
+                    is SettingsViewModel.WindowEvents.ImportState -> {
+                        showMessage(event.msg)
+                        val x = findNavController().popBackStack()
+                    }
                 }.exhaustive
             }
         }
@@ -97,7 +101,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
         try {
             context?.let {
-                val fileName = "${System.currentTimeMillis()}.json"
+                val fileName = "${System.currentTimeMillis()}.txt"
 
                 val file = File(it.filesDir, fileName)
 
@@ -160,7 +164,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                         reader.close()
 
                         viewModel.saveData(data)
-                        showMessage("Import Succeeded")
+                        Log.d("Import Error", data)
                     }
 
                 }

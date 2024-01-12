@@ -93,7 +93,7 @@ class ChooseInvoiceItemsAdapter(
                     itemUP.text = price.toString()
 
                     userInput.setQty(qty.toString())
-
+                    userInput.setSelection(userInput.length())
                     addFirst.isVisible = item.qty == 0.0
                     console.isVisible = item.qty != 0.0
 

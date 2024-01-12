@@ -78,7 +78,7 @@ class InvoiceItemsAdapter(
 
         fun bind(item: InvoiceItem) {
             binding.apply {
-                itemName.text = item.name
+                itemName.text = item.fullName
                 itemUnitPrice.text = item.price.toFormattedString()
                 etQty.setQty(item.qty.toFormattedString())
                 itemTotal.text = item.total.toFormattedString()

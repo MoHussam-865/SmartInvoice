@@ -29,9 +29,15 @@ data class Path(
 
     val folders get() = path.replaceFirst(ROOT, "Items").split(Separation)
 
+    fun fullName(name: String): String {
+        val list = folders.drop(1).toMutableList()
+        list.add(name)
+        return list.reversed().joinToString(" ")
+    }
+
     val parentName get() = _folders.run { get(lastIndex) }
 
-    val parentPath get() = _folders.dropLast(1).joinToString(separator = Separation)
+    private val parentPath get() = _folders.dropLast(1).joinToString(separator = Separation)
 
     private val _folders get() = path.split(Separation)
 
