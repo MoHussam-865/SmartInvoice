@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.android_a865.estimatescalculator.databinding.AdapterInvoiceItemsViewBinding
 import com.android_a865.estimatescalculator.feature_main.domain.model.InvoiceItem
+import com.android_a865.estimatescalculator.utils.toFormattedString
 
 class InvoiceItemsViewAdapter : ListAdapter<InvoiceItem, InvoiceItemsViewAdapter.ViewHolder>(ItemDiffCallback()) {
 
@@ -28,9 +29,9 @@ class InvoiceItemsViewAdapter : ListAdapter<InvoiceItem, InvoiceItemsViewAdapter
         fun bind(item: InvoiceItem) {
             binding.apply {
                 itemName.text = item.name
-                itemUnitPrice.text = item.price.toString()
-                itemTotal.text = item.total.toString()
-                itemQty.text = item.qty.toString()
+                itemUnitPrice.text = item.price.toFormattedString()
+                itemTotal.text = item.total.toFormattedString()
+                itemQty.text = item.qty.toFormattedString()
             }
         }
     }

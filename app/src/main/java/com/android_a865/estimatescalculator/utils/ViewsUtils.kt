@@ -35,10 +35,11 @@ fun Double.toFormattedString(): String {
 
 fun EditText.setQty(str: String): Boolean {
 
-    val value = str.toDouble()
     try {
+        val value = str.toDouble()
+
         if (text.toString().toDouble() != value) {
-            if (value == 0.0) {
+            if (value <= 0.0) {
                 setText("")
                 return false
             }

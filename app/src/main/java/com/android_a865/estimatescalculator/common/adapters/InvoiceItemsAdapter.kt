@@ -1,5 +1,6 @@
 package com.android_a865.estimatescalculator.common.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
@@ -62,9 +63,13 @@ class InvoiceItemsAdapter(
                         val item = getItem(position)
                         val text = it.toString()
                         if (text.isNotBlank()) {
-                            val qty = text.toDouble()
-                            if (qty != item.qty) {
-                                listener.onQtyChanged(item, qty.toString())
+                            try {
+                                val qty = text.toDouble()
+                                if (qty != item.qty) {
+                                    listener.onQtyChanged(item, qty.toString())
+                                }
+                            } catch (e: Exception) {
+                                Log.d("QtyInputError", e.message.toString())
                             }
                         } else {
                             listener.onQtyChanged(item, "0")

@@ -12,6 +12,7 @@ import com.android_a865.estimatescalculator.feature_main.domain.model.Invoice
 import com.android_a865.estimatescalculator.feature_settings.domain.models.AppSettings
 import com.android_a865.estimatescalculator.utils.DATE_FORMATS
 import com.android_a865.estimatescalculator.utils.date
+import com.android_a865.estimatescalculator.utils.toFormattedString
 
 class InvoicesAdapter(
     private val listener: OnItemEventListener,
@@ -55,7 +56,7 @@ class InvoicesAdapter(
                 tvInvoiceType.text = invoice.type.name
                 tvInvoiceDate.text = invoice.date.date(appSettings?.dateFormat ?: DATE_FORMATS[0])
                 tvClientName.text = invoice.client?.name
-                invoiceTotal.text = invoice.total.toString()
+                invoiceTotal.text = invoice.total.toFormattedString()
 
                 val itemsAdapter = InvoiceItemsViewAdapter().apply {
                     submitList(invoice.items)

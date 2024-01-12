@@ -1,5 +1,6 @@
 package com.android_a865.estimatescalculator.common.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -61,13 +62,17 @@ class ChooseInvoiceItemsAdapter(
                 userInput.addTextChangedListener {
                     val text = it.toString()
                     if (text.isNotBlank()) {
-                        val qty = text.toDouble()
-                        val position = adapterPosition
-                        if (position != RecyclerView.NO_POSITION) {
-                            val item = getItem(position)
-                            if (qty != item.qty) {
-                                listener.onQtySet(item, qty)
+                        try {
+                            val qty = text.toDouble()
+                            val position = adapterPosition
+                            if (position != RecyclerView.NO_POSITION) {
+                                val item = getItem(position)
+                                if (qty != item.qty) {
+                                    listener.onQtySet(item, qty)
+                                }
                             }
+                        } catch (e: Exception) {
+                            Log.d("QtyInputError", e.message.toString())
                         }
                     }
                 }

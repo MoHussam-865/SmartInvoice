@@ -21,6 +21,7 @@ import com.android_a865.estimatescalculator.feature_main.domain.model.InvoiceIte
 import com.android_a865.estimatescalculator.utils.exhaustive
 import com.android_a865.estimatescalculator.utils.scrollToEnd
 import com.android_a865.estimatescalculator.utils.setUpActionBarWithNavController
+import com.android_a865.estimatescalculator.utils.showMessage
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
@@ -98,6 +99,10 @@ class ItemsChooseFragment : Fragment(R.layout.fragment_items_choose),
                     }
                     is ItemsChooseViewModel.ItemsWindowEvents.NavigateTo -> {
                         findNavController().navigate(event.direction)
+                        true
+                    }
+                    is ItemsChooseViewModel.ItemsWindowEvents.InvalidInput -> {
+                        showMessage(event.msg)
                         true
                     }
                 }.exhaustive

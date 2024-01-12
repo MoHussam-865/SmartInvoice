@@ -34,8 +34,19 @@ class NewItemViewModel @Inject constructor(
     }
 
     fun onSaveClicked() {
+        try {
+            itemPrice.toDouble()
+        } catch (e: Exception) {
+            showInvalidInputMessage("Item Price Error")
+            return
+        }
         if (itemName.isBlank() || itemPrice.isBlank()) {
             showInvalidInputMessage("fill the required fields")
+            return
+        }
+
+        if (itemPrice.toDouble() <= 0.0) {
+            showInvalidInputMessage("item price must be greater than 0")
             return
         }
 

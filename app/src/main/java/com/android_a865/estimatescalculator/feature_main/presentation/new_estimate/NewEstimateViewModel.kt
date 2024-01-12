@@ -79,7 +79,22 @@ class NewEstimateViewModel @Inject constructor(
 
 
     fun onItemQtyChanged(item: InvoiceItem, qty: String) {
-        itemsFlow.value = itemsFlow.value.setQtyTo(item, qty.double())
+        try {
+
+            val myQty = qty.toDouble()
+
+            if (myQty < 0) {
+                itemsFlow.value = itemsFlow.value.setQtyTo(item, 0.0)
+                showInvalidMessage("Quantity can't be less than 0")
+            } else {
+                itemsFlow.value = itemsFlow.value.setQtyTo(item, myQty)
+            }
+
+        } catch (e: Exception) {
+            showInvalidMessage("Invalid Quantity")
+            return
+        }
+
     }
 
     fun onItemsSelected(chosenItems: List<InvoiceItem>?) = viewModelScope.launch {
@@ -92,7 +107,7 @@ class NewEstimateViewModel @Inject constructor(
 
     fun onOpenPdfClicked() {
 
-        if (itemsFlow.value.isEmpty()) {
+        if (itemsFlow.value.filtered.isEmpty()) {
             showInvalidMessage("Add Items first to your invoice")
         } else {
             viewModelScope.launch {
@@ -104,7 +119,7 @@ class NewEstimateViewModel @Inject constructor(
     }
 
     fun onSaveClicked() {
-        if (itemsFlow.value.isEmpty()) {
+        if (itemsFlow.value.filtered.isEmpty()) {
             showInvalidMessage("Add Items first")
         } else {
             viewModelScope.launch {

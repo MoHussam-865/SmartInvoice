@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android_a865.estimatescalculator.R
 import com.android_a865.estimatescalculator.databinding.AdapterItemsPageBinding
 import com.android_a865.estimatescalculator.feature_main.domain.model.Item
+import com.android_a865.estimatescalculator.utils.toFormattedString
 
 class ItemsAdapter(
     private val listener: OnItemEventListener,
@@ -71,7 +72,7 @@ class ItemsAdapter(
                 if (item.isFolder) folderImage.setImageResource(R.drawable.folder)
                 else folderImage.setImageResource(R.drawable.item)
                 folderName.text = item.name
-                details.text = if (item.isFolder) "" else item.price.toString()
+                details.text = if (item.isFolder) "" else item.price.toFormattedString()
                 //details.text = if (item.isFolder) "${item.value}\n${item.value2}" else item.value.toString()
             }
         }

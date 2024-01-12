@@ -63,8 +63,18 @@ class ItemsChooseViewModel @Inject constructor(
 
     fun onItemRemoveClicked(item: InvoiceItem) = selectedItems.update0 { it?.removeAllOf(item) }
 
-    fun onQtySet(item: InvoiceItem, myQty: Double) =
-        selectedItems.update0 { it?.setQtyTo(item, myQty) }
+    fun onQtySet(item: InvoiceItem, myQty: Double) {
+        if (myQty > 0) {
+            selectedItems.update0 {
+                it?.setQtyTo(item, myQty)
+            }
+        } else {
+            selectedItems.update0 { it?.removeAllOf(item) }
+            viewModelScope.launch {
+                showInvalidInputMessage("Quantity can't be less than 0")
+            }
+        }
+    }
 
     fun onFabClicked() = viewModelScope.launch {
         itemsWindowEventsChannel.send(
@@ -78,9 +88,15 @@ class ItemsChooseViewModel @Inject constructor(
 
     fun onInvoiceItemAdded(item: InvoiceItem) = selectedItems.update0 { it?.addOf(item) }
 
+    private suspend fun showInvalidInputMessage(str: String) {
+        itemsWindowEventsChannel.send(
+            ItemsWindowEvents.InvalidInput(str)
+        )
+    }
 
     sealed class ItemsWindowEvents {
         data class NavigateTo(val direction: NavDirections) : ItemsWindowEvents()
         object GoBack : ItemsWindowEvents()
+        data class InvalidInput(val msg: String): ItemsWindowEvents()
     }
 }
