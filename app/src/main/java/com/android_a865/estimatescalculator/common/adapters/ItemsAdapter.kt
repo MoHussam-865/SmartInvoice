@@ -1,5 +1,7 @@
 package com.android_a865.estimatescalculator.common.adapters
 
+import android.annotation.SuppressLint
+import android.view.GestureDetector
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.CheckBox
@@ -28,6 +30,7 @@ class ItemsAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) =
         holder.bind(getItem(position))
 
+    @SuppressLint("ClickableViewAccessibility")
     inner class ViewHolder(private val binding: AdapterItemsPageBinding) :
         RecyclerView.ViewHolder(binding.root) {
 

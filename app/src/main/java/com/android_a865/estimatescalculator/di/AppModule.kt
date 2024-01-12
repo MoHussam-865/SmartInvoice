@@ -14,10 +14,7 @@ import com.android_a865.estimatescalculator.feature_main.data.repository.Invoice
 import com.android_a865.estimatescalculator.feature_main.data.repository.ItemsRepositoryImpl
 import com.android_a865.estimatescalculator.feature_main.domain.repository.InvoiceRepository
 import com.android_a865.estimatescalculator.feature_main.domain.repository.ItemsRepository
-import com.android_a865.estimatescalculator.feature_main.domain.use_cases.invoice_use_cases.AddInvoiceUseCase
-import com.android_a865.estimatescalculator.feature_main.domain.use_cases.invoice_use_cases.GetInvoicesUseCase
-import com.android_a865.estimatescalculator.feature_main.domain.use_cases.invoice_use_cases.InvoiceUseCases
-import com.android_a865.estimatescalculator.feature_main.domain.use_cases.invoice_use_cases.UpdateInvoiceUseCase
+import com.android_a865.estimatescalculator.feature_main.domain.use_cases.invoice_use_cases.*
 import com.android_a865.estimatescalculator.feature_main.domain.use_cases.items_use_cases.*
 import com.android_a865.estimatescalculator.feature_reports.data.repository.ReportRepositoryImpl
 import com.android_a865.estimatescalculator.feature_reports.domain.repository.ReportRepository
@@ -98,18 +95,23 @@ object AppModule {
             getItemByID = GetItemByIDUseCase(repository),
             deleteItems = DeleteItemsUseCase(repository),
             addItem = AddItemUseCase(repository),
-            updateItem = UpdateItemUseCase(repository)
+            updateItem = UpdateItemUseCase(repository),
+            copyFolderUseCases = CopyFolderUseCase(repository),
 
         )
     }
 
     @Provides
     @Singleton
-    fun provideInvoicesUseCases(repository: InvoiceRepository): InvoiceUseCases {
+    fun provideInvoicesUseCases(
+        repository: InvoiceRepository,
+        repository2: ItemsRepository
+    ): InvoiceUseCases {
         return InvoiceUseCases(
             getInvoices = GetInvoicesUseCase(repository),
             addInvoice = AddInvoiceUseCase(repository),
-            updateInvoice = UpdateInvoiceUseCase(repository)
+            updateInvoice = UpdateInvoiceUseCase(repository),
+            applyDiscountUseCase = ApplyDiscountUseCase(repository2)
         )
     }
 

@@ -93,6 +93,7 @@
     <string name="open_report_as_excel">Open Report as Excel</string>
     <string name="estimate">Estimate</string>
     <string name="invoices">Invoices</string>
+    <string name="copy">Copy</string>
 
 
 </resources>

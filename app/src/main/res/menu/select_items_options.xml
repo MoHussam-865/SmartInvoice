@@ -14,6 +14,12 @@
         android:title="@string/delete"
         app:showAsAction="ifRoom" />
 
+    <item
+        android:id="@+id/copy"
+        android:icon="@drawable/copy"
+        android:title="@string/copy"
+        app:showAsAction="ifRoom" />
+
 
     <item
         android:id="@+id/selectAll"

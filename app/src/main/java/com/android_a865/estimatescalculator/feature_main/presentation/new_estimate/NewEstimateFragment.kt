@@ -168,6 +168,8 @@ class NewEstimateFragment : Fragment(R.layout.fragment_new_estimate),
 
     override fun onItemRemoveClicked(item: InvoiceItem) = viewModel.onItemRemoveClicked(item)
 
+    override fun onItemRemoveHold(item: InvoiceItem) = viewModel.onItemHold(requireContext(), item)
+
     override fun onPlusClicked(item: InvoiceItem) = viewModel.onOneItemAdded(item)
 
     override fun onMinusClicked(item: InvoiceItem) = viewModel.onOneItemRemoved(item)

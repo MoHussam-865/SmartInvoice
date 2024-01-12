@@ -41,6 +41,17 @@ class InvoiceItemsAdapter(
                     }
                 }
 
+                itemRemove.setOnLongClickListener {
+
+                    val position = adapterPosition
+                    if (position != RecyclerView.NO_POSITION) {
+                        val item = getItem(position)
+                        listener.onItemRemoveHold(item)
+                    }
+
+                    return@setOnLongClickListener true
+                }
+
                 plus.setOnClickListener {
                     val position = adapterPosition
                     if (position != RecyclerView.NO_POSITION) {
@@ -104,6 +115,7 @@ class InvoiceItemsAdapter(
 
     interface OnItemEventListener {
         fun onItemRemoveClicked(item: InvoiceItem)
+        fun onItemRemoveHold(item: InvoiceItem)
         fun onPlusClicked(item: InvoiceItem)
         fun onMinusClicked(item: InvoiceItem)
         fun onQtyChanged(item: InvoiceItem, text: String)

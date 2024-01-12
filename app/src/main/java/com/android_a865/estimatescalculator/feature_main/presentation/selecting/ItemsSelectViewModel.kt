@@ -117,6 +117,15 @@ class ItemsSelectViewModel @Inject constructor(
         itemsWindowEventsChannel.send(ItemsWindowEvents.NotifyAdapter(position))
     }
 
+    fun onCopyItemSelected() = viewModelScope.launch {
+        itemsData.value?.let {
+            itemsUseCases.copyFolderUseCases(
+                it.filterSelected()
+            )
+        }
+        itemsWindowEventsChannel.send(ItemsWindowEvents.NavigateBack)
+    }
+
     sealed class ItemsWindowEvents {
         data class NotifyAdapter(val position: Int) : ItemsWindowEvents()
         data class Navigate(val directions: NavDirections) : ItemsWindowEvents()

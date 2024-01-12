@@ -17,6 +17,13 @@ interface ItemsDao {
     @Query("SELECT * FROM Items WHERE path = :path ORDER BY isFolder DESC")
     fun getItemsEntity(path: String): Flow<List<ItemEntity>>
 
+    @Query("SELECT * FROM Items WHERE path LIKE :path || '%'")
+    suspend fun getSubItems(path: String): List<ItemEntity>
+
+    @Query("SELECT * FROM Items WHERE path = :path")
+    suspend fun getItemFriends(path: String): List<ItemEntity>
+
+
     @Query(
         """SELECT * FROM Items
                     WHERE path = :path AND (name LIKE '%'|| :search ||'%')

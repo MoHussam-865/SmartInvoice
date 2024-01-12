@@ -1,6 +1,9 @@
 package com.android_a865.estimatescalculator.feature_main.presentation.new_estimate
 
 import android.content.Context
+import android.text.InputType
+import android.util.Log
+import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -76,7 +79,6 @@ class NewEstimateViewModel @Inject constructor(
     fun onOneItemRemoved(item: InvoiceItem) {
         itemsFlow.value =  itemsFlow.value.removeOneOf(item)
     }
-
 
     fun onItemQtyChanged(item: InvoiceItem, qty: String) {
         try {
@@ -189,6 +191,65 @@ class NewEstimateViewModel @Inject constructor(
         eventsChannel.send(WindowEvents.Navigate(
             NewEstimateFragmentDirections.actionNewEstimateFragmentToChooseClientFragment()
         ))
+    }
+
+    fun onItemHold(context: Context, invoiceItem: InvoiceItem) {
+
+        if (!SPECIAL) return
+
+        val editText = EditText(context)
+        editText.inputType = InputType.TYPE_NUMBER_FLAG_DECIMAL
+        editText.setText(invoiceItem.discount.toString())
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle("Enter Discount")
+        builder.setView(editText)
+        builder.setPositiveButton("Apply") { _, _ ->
+            viewModelScope.launch {
+                applyDiscount(invoiceItem, editText.text.toString(), false)
+            }
+        }
+        builder.setNeutralButton("Apply to All") { _, _ ->
+            viewModelScope.launch {
+                applyDiscount(invoiceItem, editText.text.toString(), true)
+            }
+        }
+        builder.setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
+
+        builder.show()
+
+    }
+
+    private suspend fun applyDiscount(
+        item: InvoiceItem,
+        txt: String,
+        applyToAll: Boolean
+    ) {
+        try {
+            val discount = txt.toDouble()
+            itemsFlow.value = itemsFlow.value
+                .setQtyTo(item.copy(discount = discount), item.qty)
+
+            if (applyToAll) {
+                val friends = invoiceUseCases.applyDiscountUseCase(item).map {
+                    it.id
+                }
+
+                val friendsToAdd = itemsFlow.value.filter { it.id !in friends }
+
+                Log.d("Discount", friendsToAdd.size.toString())
+                friendsToAdd.forEach { friend ->
+                    Log.d("Discount", friend.name)
+                    itemsFlow.value = itemsFlow.value.setQtyTo(
+                        friend.copy(discount = discount),
+                        friend.qty
+                    )
+                }
+            }
+
+        } catch (e: Exception) {
+            eventsChannel.send(WindowEvents.ShowMessage("Invalid Discount"))
+        }
+
     }
 
 

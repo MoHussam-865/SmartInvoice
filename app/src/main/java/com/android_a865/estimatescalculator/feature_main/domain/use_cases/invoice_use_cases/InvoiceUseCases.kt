@@ -3,5 +3,6 @@ package com.android_a865.estimatescalculator.feature_main.domain.use_cases.invoi
 data class InvoiceUseCases(
     val addInvoice: AddInvoiceUseCase,
     val getInvoices: GetInvoicesUseCase,
-    val updateInvoice: UpdateInvoiceUseCase
+    val updateInvoice: UpdateInvoiceUseCase,
+    val applyDiscountUseCase: ApplyDiscountUseCase
 )

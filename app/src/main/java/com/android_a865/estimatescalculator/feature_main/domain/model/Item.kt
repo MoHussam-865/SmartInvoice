@@ -8,13 +8,15 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Item(
-        var id: Int = 0,
-        override var name: String,
-        override var path: Path,
-        var price: Double = 0.0,
+    var id: Int = 0,
+    override var name: String,
+    override var path: Path,
+    var price: Double = 0.0,
 
-        override var isFolder: Boolean = false,
-        override var isSelected: Boolean = false
+    override var isFolder: Boolean = false,
+    override var isSelected: Boolean = false
 ) : Parcelable, PathUtil, Selectable<Item> {
     override fun copy(b: Boolean) = copy(isSelected = b)
+
+    val nameAsFolder get() = path.open(name).path
 }

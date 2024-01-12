@@ -35,9 +35,7 @@ fun ItemEntity.toItem() = Item(
 )
 
 
-private fun ItemEntity.toInvoiceItem(): InvoiceItem {
-
-
+fun ItemEntity.toInvoiceItem(): InvoiceItem {
     return InvoiceItem(
         id = id,
         name = name,

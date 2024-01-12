@@ -85,6 +85,7 @@ ItemsAdapter.OnItemEventListener {
             appCompatActivity.supportActionBar?.title = it.toString()
             menu.findItem(R.id.edit).isVisible = it == 1
             menu.findItem(R.id.delete).isVisible = it != 0
+            menu.findItem(R.id.copy).isVisible = it == 1
             menu.findItem(R.id.selectAll).isVisible = it < viewModule.all
             menu.findItem(R.id.deselectAll).isVisible = it == viewModule.all
         }
@@ -110,6 +111,11 @@ ItemsAdapter.OnItemEventListener {
 
             R.id.deselectAll -> {
                 viewModule.onSelectAllChanged(false)
+                true
+            }
+
+            R.id.copy -> {
+                viewModule.onCopyItemSelected()
                 true
             }
 
