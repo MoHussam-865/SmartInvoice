@@ -7,6 +7,7 @@ import kotlinx.parcelize.Parcelize
 data class InvoiceItem(
     val id: Int,
     val name: String = "",
+    val fullName: String,
     val price: Double = 0.0,
     var qty: Double = 0.0,
     var discount: Double = 0.0,

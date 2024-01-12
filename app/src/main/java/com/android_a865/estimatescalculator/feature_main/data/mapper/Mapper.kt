@@ -35,12 +35,17 @@ fun ItemEntity.toItem() = Item(
 )
 
 
-private fun ItemEntity.toInvoiceItem() = InvoiceItem(
-    id = id,
-    name = name,
-    price = price,
-    isFolder = isFolder
-)
+private fun ItemEntity.toInvoiceItem(): InvoiceItem {
+
+
+    return InvoiceItem(
+        id = id,
+        name = name,
+        fullName = Path(path).fullName(name),
+        price = price,
+        isFolder = isFolder
+    )
+}
 
 
 fun List<ItemEntity>.toInvoiceItems() = map { it.toInvoiceItem() }
@@ -50,6 +55,7 @@ fun List<Item>.toEntities() = map { it.toEntity() }
 fun InvoiceItemEntity.toInvoiceItem() = InvoiceItem(
     id = itemId,
     name = name,
+    fullName = name,
     price = price,
     qty = qty,
 )
@@ -57,7 +63,7 @@ fun InvoiceItemEntity.toInvoiceItem() = InvoiceItem(
 fun InvoiceItem.toEntity(invoiceId: Int) = InvoiceItemEntity(
     invoiceId = invoiceId,
     itemId = id,
-    name = name,
+    name = fullName,
     qty = qty,
     price = price,
     total = total

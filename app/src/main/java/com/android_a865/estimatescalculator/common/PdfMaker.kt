@@ -128,7 +128,7 @@ class PdfMaker {
 
             table2.headerRows = 1
             invoice.items.forEach { item ->
-                c1 = PdfPCell(Paragraph(item.name, font2)).apply {
+                c1 = PdfPCell(Paragraph(item.fullName, font2)).apply {
                     border = Rectangle.NO_BORDER
                     runDirection = PdfWriter.RUN_DIRECTION_LTR
                     horizontalAlignment = Element.ALIGN_LEFT

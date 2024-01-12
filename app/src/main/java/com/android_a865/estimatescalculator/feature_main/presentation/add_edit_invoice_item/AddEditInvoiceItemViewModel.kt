@@ -19,7 +19,7 @@ class AddEditInvoiceItemViewModel @Inject constructor(
     private val itemsUseCases: ItemsUseCases
 ) : ViewModel() {
 
-    val path = state.get<Path>("path") ?: Path()
+    private val path = state.get<Path>("path") ?: Path()
     private val myItem = state.get<InvoiceItem>("item")
 
     val isNew = myItem == null
@@ -65,11 +65,14 @@ class AddEditInvoiceItemViewModel @Inject constructor(
 
 
 
+
+
             eventsChannel.send(
                 AddEditItemEvent.NavigateBackWithResult(
                     InvoiceItem(
                         id = itemId,
                         name = itemName,
+                        fullName = path.fullName(itemName),
                         price = price,
                         qty = qty
                     )
