@@ -10,11 +10,11 @@ class ApplyDiscountUseCase(
 ) {
 
     // returns invoiceItem friends to apply discount
-    suspend operator fun invoke(item: InvoiceItem): List<InvoiceItem> {
+    suspend operator fun invoke(item: InvoiceItem): List<Int> {
         val myItem = repository.getItemById(item.id)
 
          return repository.getItemFriends(myItem.path)
-             .map { it.toInvoiceItem() }
-             .filter { it.id == item.id }
+             .filter { it.id != item.id && !it.isFolder}
+             .map { it.id }
     }
 }

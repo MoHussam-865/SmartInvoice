@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
             }
-        }
+        } else binding.adView.isVisible = false
     }
 
     private fun loadAdsOnConnected(binding: ActivityMainBinding) {

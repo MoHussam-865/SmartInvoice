@@ -11,6 +11,7 @@ import com.android_a865.estimatescalculator.databinding.AdapterNewEstimateBindin
 import com.android_a865.estimatescalculator.feature_main.domain.model.InvoiceItem
 import com.android_a865.estimatescalculator.utils.setQty
 import com.android_a865.estimatescalculator.utils.toFormattedString
+import kotlin.math.abs
 
 class InvoiceItemsAdapter(
     private val listener: OnItemEventListener,
@@ -94,11 +95,16 @@ class InvoiceItemsAdapter(
 
         fun bind(item: InvoiceItem) {
             binding.apply {
-                itemName.text = item.fullName
-                itemUnitPrice.text = item.price.toFormattedString()
-                etQty.setQty(item.qty.toFormattedString())
-                itemTotal.text = item.total.toFormattedString()
-                etQty.setSelection(etQty.length())
+                item.apply {
+                    itemName.text = details
+
+                    itemUnitPrice.text = finalPrice.toFormattedString()
+                    etQty.setQty(qty.toFormattedString())
+                    itemTotal.text = total.toFormattedString()
+                    etQty.setSelection(etQty.length())
+
+                }
+
             }
         }
     }

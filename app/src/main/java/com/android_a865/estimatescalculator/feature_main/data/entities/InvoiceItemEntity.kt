@@ -22,5 +22,6 @@ data class InvoiceItemEntity(
     val name: String,
     val qty: Double,
     val price: Double,
+    val discount: Double,
     val total: Double
 )

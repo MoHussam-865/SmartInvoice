@@ -67,7 +67,6 @@ class NewEstimateViewModel @Inject constructor(
     }
 
 
-
     fun onItemRemoveClicked(item: InvoiceItem) {
         itemsFlow.value = itemsFlow.value.removeAllOf(item)
     }
@@ -77,7 +76,7 @@ class NewEstimateViewModel @Inject constructor(
     }
 
     fun onOneItemRemoved(item: InvoiceItem) {
-        itemsFlow.value =  itemsFlow.value.removeOneOf(item)
+        itemsFlow.value = itemsFlow.value.removeOneOf(item)
     }
 
     fun onItemQtyChanged(item: InvoiceItem, qty: String) {
@@ -180,17 +179,21 @@ class NewEstimateViewModel @Inject constructor(
     }
 
     fun onViewClientClicked() = viewModelScope.launch {
-        eventsChannel.send(WindowEvents.Navigate(
-            NewEstimateFragmentDirections.actionNewEstimateFragmentToClientViewFragment(
-                client.value!!
+        eventsChannel.send(
+            WindowEvents.Navigate(
+                NewEstimateFragmentDirections.actionNewEstimateFragmentToClientViewFragment(
+                    client.value!!
+                )
             )
-        ))
+        )
     }
 
     fun onChooseClientSelected() = viewModelScope.launch {
-        eventsChannel.send(WindowEvents.Navigate(
-            NewEstimateFragmentDirections.actionNewEstimateFragmentToChooseClientFragment()
-        ))
+        eventsChannel.send(
+            WindowEvents.Navigate(
+                NewEstimateFragmentDirections.actionNewEstimateFragmentToChooseClientFragment()
+            )
+        )
     }
 
     fun onItemHold(context: Context, invoiceItem: InvoiceItem) {
@@ -230,20 +233,16 @@ class NewEstimateViewModel @Inject constructor(
                 .setQtyTo(item.copy(discount = discount), item.qty)
 
             if (applyToAll) {
-                val friends = invoiceUseCases.applyDiscountUseCase(item).map {
-                    it.id
-                }
+                val friends = invoiceUseCases.applyDiscountUseCase(item)
 
-                val friendsToAdd = itemsFlow.value.filter { it.id !in friends }
-
-                Log.d("Discount", friendsToAdd.size.toString())
-                friendsToAdd.forEach { friend ->
-                    Log.d("Discount", friend.name)
-                    itemsFlow.value = itemsFlow.value.setQtyTo(
-                        friend.copy(discount = discount),
-                        friend.qty
-                    )
-                }
+                itemsFlow.value
+                    .filter { it.id in friends }
+                    .forEach { friend ->
+                        itemsFlow.value = itemsFlow.value.setQtyTo(
+                            friend.copy(discount = discount),
+                            friend.qty
+                        )
+                    }
             }
 
         } catch (e: Exception) {
@@ -256,8 +255,8 @@ class NewEstimateViewModel @Inject constructor(
     sealed class WindowEvents {
         data class OpenPdf(val invoice: Invoice) : WindowEvents()
         data class ShowMessage(val message: String) : WindowEvents()
-        object ShowAd: WindowEvents()
+        object ShowAd : WindowEvents()
         data class NavigateBack(val message: String) : WindowEvents()
-        data class Navigate(val direction: NavDirections): WindowEvents()
+        data class Navigate(val direction: NavDirections) : WindowEvents()
     }
 }

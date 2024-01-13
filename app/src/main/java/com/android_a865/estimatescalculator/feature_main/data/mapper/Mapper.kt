@@ -55,6 +55,7 @@ fun InvoiceItemEntity.toInvoiceItem() = InvoiceItem(
     name = name,
     fullName = name,
     price = price,
+    discount = discount,
     qty = qty,
 )
 
@@ -64,6 +65,7 @@ fun InvoiceItem.toEntity(invoiceId: Int) = InvoiceItemEntity(
     name = fullName,
     qty = qty,
     price = price,
+    discount = discount,
     total = total
 )
 
