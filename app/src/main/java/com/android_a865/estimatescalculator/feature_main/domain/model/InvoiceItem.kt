@@ -17,10 +17,16 @@ data class InvoiceItem(
 ) : Parcelable {
     val total get() = finalPrice * qty
     val finalPrice get() = price * (1 - discount/100)
+    val discountDetail get(): String {
+        val sign = if (discount > 0.0) "-" else "+"
+        return if (discount != 0.0) {
+            "(${price.toFormattedString()}  $sign ${abs(discount).toFormattedString()}%)"
+        } else ""
+    }
     val details get(): String {
         if (discount != 0.0) {
             val sign = if (discount > 0.0) "-" else "+"
-            return "$fullName\n${price.toFormattedString()}  $sign ${abs(discount).toFormattedString()}%"
+            return "$fullName \n$discountDetail"
         }
         return fullName
     }

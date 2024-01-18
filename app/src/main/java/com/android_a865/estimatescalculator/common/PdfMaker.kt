@@ -7,6 +7,7 @@ import com.android_a865.estimatescalculator.feature_main.domain.model.Invoice
 import com.android_a865.estimatescalculator.feature_settings.domain.models.AppSettings
 import com.android_a865.estimatescalculator.feature_settings.domain.models.Company
 import com.android_a865.estimatescalculator.utils.date
+import com.android_a865.estimatescalculator.utils.toFormattedString
 import com.itextpdf.text.*
 import com.itextpdf.text.pdf.BaseFont
 import com.itextpdf.text.pdf.PdfPCell
@@ -128,24 +129,26 @@ class PdfMaker {
 
             table2.headerRows = 1
             invoice.items.forEach { item ->
-                c1 = PdfPCell(Paragraph(item.fullName, font2)).apply {
+                c1 = PdfPCell(Paragraph(item.details, font2)).apply {
                     border = Rectangle.NO_BORDER
                     runDirection = PdfWriter.RUN_DIRECTION_LTR
                     horizontalAlignment = Element.ALIGN_LEFT
+                    paddingTop = 10f
                 }
                 table2.addCell(c1)
 
-                c1 = PdfPCell(Paragraph(item.price.toString(), font2))
+                c1 = PdfPCell(Paragraph(item.finalPrice.toFormattedString(), font2))
+                c1.border = Rectangle.NO_BORDER
+                c1.horizontalAlignment = Element.ALIGN_CENTER
+                c1.isNoWrap = false
+                table2.addCell(c1)
+
+                c1 = PdfPCell(Paragraph(item.qty.toFormattedString(), font2))
                 c1.border = Rectangle.NO_BORDER
                 c1.horizontalAlignment = Element.ALIGN_CENTER
                 table2.addCell(c1)
 
-                c1 = PdfPCell(Paragraph(item.qty.toString(), font2))
-                c1.border = Rectangle.NO_BORDER
-                c1.horizontalAlignment = Element.ALIGN_CENTER
-                table2.addCell(c1)
-
-                c1 = PdfPCell(Paragraph(item.total.toString(), font2))
+                c1 = PdfPCell(Paragraph(item.total.toFormattedString(), font2))
                 c1.border = Rectangle.NO_BORDER
                 c1.horizontalAlignment = Element.ALIGN_RIGHT
                 table2.addCell(c1)
@@ -159,7 +162,7 @@ class PdfMaker {
             c1.border = Rectangle.NO_BORDER
             c1.horizontalAlignment = Element.ALIGN_LEFT
             table2.addCell(c1)
-            c1 = PdfPCell(Paragraph(invoice.total.toString(), font3_))
+            c1 = PdfPCell(Paragraph(invoice.total.toFormattedString(), font3_))
             c1.border = Rectangle.NO_BORDER
             c1.horizontalAlignment = Element.ALIGN_RIGHT
             table2.addCell(c1)
