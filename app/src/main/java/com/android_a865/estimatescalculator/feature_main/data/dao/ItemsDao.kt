@@ -53,7 +53,7 @@ interface ItemsDao {
 
     suspend fun moveItem(item: ItemEntity, path: String) {
 
-        updateItemEntity(item.copy(path = path))
+        insertItemEntity(item.copy(path = path))
         // if it's a folder move all sub-items
         if (item.isFolder) {
             // get all the sub-items
@@ -61,7 +61,7 @@ interface ItemsDao {
             items.forEach { subItem ->
                 val itemNewPath = subItem.path.replace(item.path, path)
                 val newItem = subItem.copy(path = itemNewPath)
-                updateItemEntity(newItem)
+                insertItemEntity(newItem)
             }
         }
 
@@ -82,7 +82,7 @@ interface ItemsDao {
         // if it's a folder get it's old data before editing
         if (newItem.isFolder) {
             val oldItem = getItemByID(newItem.id)
-            updateItemEntity(newItem)
+            insertItemEntity(newItem)
 
             // if the path has changed or the name has changed
             if (newItem.path != oldItem.path || newItem.name != oldItem.name) {
@@ -94,18 +94,15 @@ interface ItemsDao {
                 val items = getFolderContent(oldPath)
                 items.forEach { item ->
                     val itemNewPath = item.path.replace(oldPath, newPath)
-                    updateItemEntity(item.copy(path = itemNewPath))
+                    insertItemEntity(item.copy(path = itemNewPath))
                 }
             }
 
         }
 
         // if it's not a folder update it
-        else updateItemEntity(newItem)
+        else insertItemEntity(newItem)
     }
-
-    @Update
-    suspend fun updateItemEntity(itemEntity: ItemEntity)
 
     @Query("SELECT * FROM Items WHERE path LIKE :oldPath || '%'")
     suspend fun getFolderContent(oldPath: String): List<ItemEntity>
