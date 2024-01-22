@@ -76,6 +76,7 @@ interface ItemsDao {
 
     // update Item
     suspend fun updateItems(items: List<ItemEntity>) = items.forEach { updateItem(it) }
+
     suspend fun updateItem(newItem: ItemEntity) {
 
         // if it's a folder get it's old data before editing

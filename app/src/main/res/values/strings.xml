@@ -94,6 +94,7 @@
     <string name="estimate">Estimate</string>
     <string name="invoices">Invoices</string>
     <string name="copy">Copy</string>
+    <string name="import_here">Import Here</string>
 
 
 </resources>

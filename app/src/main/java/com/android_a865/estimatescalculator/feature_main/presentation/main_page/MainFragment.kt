@@ -1,12 +1,19 @@
 package com.android_a865.estimatescalculator.feature_main.presentation.main_page
 
+import android.app.Activity
+import android.app.AlertDialog
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.addCallback
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -19,13 +26,14 @@ import com.android_a865.estimatescalculator.common.adapters.ItemsAdapter
 import com.android_a865.estimatescalculator.common.adapters.PathIndicatorAdapter
 import com.android_a865.estimatescalculator.databinding.FragmentMainBinding
 import com.android_a865.estimatescalculator.feature_main.domain.model.Item
-import com.android_a865.estimatescalculator.utils.exhaustive
-import com.android_a865.estimatescalculator.utils.scrollToEnd
-import com.android_a865.estimatescalculator.utils.setUpActionBarWithNavController
+import com.android_a865.estimatescalculator.feature_settings.presentation.settings.REQUEST_CODE
+import com.android_a865.estimatescalculator.utils.*
 import com.google.android.material.badge.ExperimentalBadgeUtils
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
+import java.io.*
 
 @AndroidEntryPoint
 class MainFragment : Fragment(R.layout.fragment_main), ItemsAdapter.OnItemEventListener {
@@ -122,6 +130,14 @@ class MainFragment : Fragment(R.layout.fragment_main), ItemsAdapter.OnItemEventL
                         findNavController().navigate(event.direction)
                         true
                     }
+                    MainFragmentViewModel.WindowEvents.ImportData -> {
+                        import()
+                        true
+                    }
+                    is MainFragmentViewModel.WindowEvents.ShowMsg -> {
+                        Snackbar.make(requireView(), event.msg, Snackbar.LENGTH_LONG).show()
+                        true
+                    }
                 }.exhaustive
 
             }
@@ -154,6 +170,11 @@ class MainFragment : Fragment(R.layout.fragment_main), ItemsAdapter.OnItemEventL
                 true
             }
 
+            R.id.import_here -> {
+                viewModule.onImportItemsSelected()
+                true
+            }
+
 
             else -> super.onOptionsItemSelected(item)
         }
@@ -173,4 +194,61 @@ class MainFragment : Fragment(R.layout.fragment_main), ItemsAdapter.OnItemEventL
     }
 
     override fun onSelectionChange(item: Item, position: Int, b: Boolean) {}
+
+
+
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                if (data != null) {
+                    // the file that has the data
+                    data.data?.let { saveData(requireContext(), it) }
+                } else showMessage("Empty")
+            } else {
+                showMessage("Canceled")
+            }
+        }
+    }
+
+    private fun import() {
+        // Opens the storage
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+        intent.type = "text/plain" // text file
+
+        startActivityForResult(
+            Intent.createChooser(intent, "Choose data file"),
+            REQUEST_CODE
+        )
+
+    }
+
+    private fun saveData(context: Context, uri: Uri) {
+
+
+        try {
+
+            val inputStream = context.contentResolver?.openInputStream(uri)
+
+            inputStream?.let {
+                val isr = InputStreamReader(it)
+                val reader = BufferedReader(isr)
+                val data = reader.readText()
+                reader.close()
+
+                viewModule.saveData(data)
+                Log.d("Import Error", data)
+            }
+
+        } catch (e: FileNotFoundException) {
+            Snackbar.make(requireView(), "File Not Found", Snackbar.LENGTH_LONG).show()
+        } catch (e: Exception) {
+            Log.d("ImportingError", e.message.toString())
+        }
+
+    }
+
 }

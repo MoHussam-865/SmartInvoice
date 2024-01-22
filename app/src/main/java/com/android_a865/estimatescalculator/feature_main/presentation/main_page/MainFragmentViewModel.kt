@@ -1,16 +1,21 @@
 package com.android_a865.estimatescalculator.feature_main.presentation.main_page
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
 import com.android_a865.estimatescalculator.feature_in_app.domain.use_cases.SubscriptionUseCase
+import com.android_a865.estimatescalculator.feature_main.data.mapper.toItem
 import com.android_a865.estimatescalculator.feature_main.domain.model.Item
 import com.android_a865.estimatescalculator.feature_main.domain.use_cases.items_use_cases.ItemsUseCases
+import com.android_a865.estimatescalculator.feature_settings.domain.models.DatabaseHolder
+import com.android_a865.estimatescalculator.feature_settings.domain.models.ItemsHolder
 import com.android_a865.estimatescalculator.utils.NO_AD
 import com.android_a865.estimatescalculator.utils.Path
 import com.android_a865.estimatescalculator.utils.update0
+import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
@@ -18,6 +23,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
@@ -128,9 +134,33 @@ class MainFragmentViewModel @Inject constructor(
 
     }
 
+    fun onImportItemsSelected() = viewModelScope.launch {
+        eventsChannel.send(WindowEvents.ImportData)
+    }
+
+    fun saveData(data: String) = viewModelScope.launch {
+        var status = try {
+
+            val holder = Gson().fromJson(data, ItemsHolder::class.java)
+
+            // items
+            holder.items.forEach {
+                itemsUseCases.addItem(it.toItem())
+            }
+            "Done"
+        } catch (e: Exception) {
+            Log.d("Importing Error", e.message.toString())
+            "Error"
+        }
+
+        eventsChannel.send(WindowEvents.ShowMsg(status))
+    }
+
     sealed class WindowEvents {
         object CloseTheApp: WindowEvents()
+        object ImportData: WindowEvents()
         data class Navigate(val direction: NavDirections): WindowEvents()
+        data class ShowMsg(val msg: String): WindowEvents()
     }
 
 
