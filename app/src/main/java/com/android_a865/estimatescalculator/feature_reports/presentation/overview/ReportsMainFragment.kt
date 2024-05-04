@@ -18,6 +18,7 @@ import com.android_a865.estimatescalculator.feature_reports.domain.model.FullRep
 import com.android_a865.estimatescalculator.utils.AUTHORITY
 import com.android_a865.estimatescalculator.utils.exhaustive
 import com.android_a865.estimatescalculator.utils.setUpActionBarWithNavController
+import com.android_a865.estimatescalculator.utils.toFormattedString
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
@@ -42,10 +43,10 @@ class ReportsMainFragment : Fragment(R.layout.fragment_reports_main) {
         binding.apply {
 
             viewModel.report.observe(viewLifecycleOwner) {
-                tvInvoicesNumber.text = it?.numberOfInvoices.toString()
-                tvEstimatesNumber.text = it?.numberOfEstimates.toString()
-                tvEstimatesTotal.text = it?.estimatesTotal.toString()
-                tvInvoicesTotal.text = it?.invoicesTotal.toString()
+                tvInvoicesNumber.text = it?.numberOfInvoices?.toFormattedString()
+                tvEstimatesNumber.text = it?.numberOfEstimates?.toFormattedString()
+                tvEstimatesTotal.text = it?.estimatesTotal?.toFormattedString()
+                tvInvoicesTotal.text = it?.invoicesTotal?.toFormattedString()
             }
 
             btnMakeReport.setOnClickListener {

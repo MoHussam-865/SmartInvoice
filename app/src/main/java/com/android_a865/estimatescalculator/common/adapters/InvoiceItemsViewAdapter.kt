@@ -28,10 +28,11 @@ class InvoiceItemsViewAdapter : ListAdapter<InvoiceItem, InvoiceItemsViewAdapter
 
         fun bind(item: InvoiceItem) {
             binding.apply {
-                itemName.text = item.details
+                itemName.text = item.fullName
                 itemUnitPrice.text = item.finalPrice.toFormattedString()
                 itemTotal.text = item.total.toFormattedString()
                 itemQty.text = item.qty.toFormattedString()
+                itemDiscount.text = item.discountDetail
             }
         }
     }

@@ -26,7 +26,7 @@ data class InvoiceItem(
     val details get(): String {
         if (discount != 0.0) {
             val sign = if (discount > 0.0) "-" else "+"
-            return "$fullName \n$discountDetail"
+            return "$fullName  $discountDetail"
         }
         return fullName
     }

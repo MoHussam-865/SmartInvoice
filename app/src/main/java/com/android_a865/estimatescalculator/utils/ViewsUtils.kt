@@ -1,5 +1,6 @@
 package com.android_a865.estimatescalculator.utils
 
+import android.icu.number.IntegerWidth
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -32,6 +33,9 @@ fun Double.toFormattedString(): String {
     return format.format(this)
 }
 
+fun Int.toFormattedString(): String {
+    return this.toDouble().toFormattedString()
+}
 
 fun EditText.setQty(str: String): Boolean {
 
