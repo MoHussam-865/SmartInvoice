@@ -109,6 +109,7 @@ class ItemsChooseFragment : Fragment(R.layout.fragment_items_choose),
             }
         }
 
+        // get the result of AddEditInvoiceItemFragment
         setFragmentResultListener("invoice_item") { _, bundle ->
             val item = bundle.getParcelable<InvoiceItem>("item")
 

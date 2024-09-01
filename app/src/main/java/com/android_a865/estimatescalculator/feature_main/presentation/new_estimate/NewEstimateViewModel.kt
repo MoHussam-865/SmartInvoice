@@ -147,7 +147,7 @@ class NewEstimateViewModel @Inject constructor(
             type = invoiceType.value,
             date = Calendar.getInstance().timeInMillis,
             client = client.value,
-            items = itemsFlow.value
+            items = itemsFlow.value.filtered
         ) ?: Invoice(
             type = invoiceType.value,
             client = client.value,

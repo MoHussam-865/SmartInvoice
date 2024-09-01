@@ -99,9 +99,8 @@ class ViewPdfFragment : Fragment(R.layout.fragment_view_pdf) {
                 .swipeHorizontal(false)
                 .enableDoubletap(true) // double tap to zoom
                 .onTap { true }
-                .onRender { _, _, _ -> pdfView.fitToWidth() }
+                .onRender { _ -> pdfView.fitToWidth(0) }
                 .enableAnnotationRendering(true)
-                .invalidPageColor(Color.GRAY)
                 .load()
 
         } catch (e: FileNotFoundException) {
