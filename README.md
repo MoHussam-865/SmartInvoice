@@ -2,5 +2,5 @@ this used as a cashier app you can add categories, subcategories and items, you 
 
  the app contains ads and in app purchases
 
-it uses MVVM pattern
+it uses MVVM pattern and dependancy injection
 
