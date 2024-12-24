@@ -16,6 +16,9 @@ import com.android_a865.estimatescalculator.feature_main.domain.repository.Invoi
 import com.android_a865.estimatescalculator.feature_main.domain.repository.ItemsRepository
 import com.android_a865.estimatescalculator.feature_main.domain.use_cases.invoice_use_cases.*
 import com.android_a865.estimatescalculator.feature_main.domain.use_cases.items_use_cases.*
+import com.android_a865.estimatescalculator.feature_network.data.api.MyApi
+import com.android_a865.estimatescalculator.feature_network.data.dao.DevicesDao
+import com.android_a865.estimatescalculator.feature_network.temp.Role
 import com.android_a865.estimatescalculator.feature_reports.data.repository.ReportRepositoryImpl
 import com.android_a865.estimatescalculator.feature_reports.domain.repository.ReportRepository
 import com.android_a865.estimatescalculator.feature_settings.data.data_source.PreferencesManager
@@ -26,10 +29,13 @@ import com.android_a865.estimatescalculator.feature_settings.domain.repository.S
 import com.android_a865.estimatescalculator.feature_settings.domain.use_cases.ExportUseCase
 import com.android_a865.estimatescalculator.feature_settings.domain.use_cases.ImportExportUseCases
 import com.android_a865.estimatescalculator.feature_settings.domain.use_cases.ImportUseCase
+import com.android_a865.estimatescalculator.utils.PORT_NUMBER
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
@@ -71,7 +77,6 @@ object AppModule {
     fun provideReportRepository(db: MyRoomDatabase): ReportRepository {
         return ReportRepositoryImpl(db.getReportingDao())
     }
-
 
 
     @Provides
@@ -149,5 +154,19 @@ object AppModule {
         )
     }
 
+    @Provides
+    @Singleton
+    fun provideDevicesDao(db: MyRoomDatabase): DevicesDao = db.getDevicesDao()
 
+    @Provides
+    @Singleton
+    suspend fun provideRetrofitInstance(devicesDao: DevicesDao): MyApi? {
+
+        val serverIp = devicesDao.getServer(Role.Server.ordinal)?.ipAddress ?: return null
+        return Retrofit.Builder()
+            .baseUrl("http://$serverIp:$PORT_NUMBER")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(MyApi::class.java)
+    }
 }

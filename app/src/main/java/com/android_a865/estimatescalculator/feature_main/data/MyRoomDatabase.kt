@@ -12,6 +12,8 @@ import com.android_a865.estimatescalculator.feature_main.data.dao.ItemsDao
 import com.android_a865.estimatescalculator.feature_main.data.entities.InvoiceEntity
 import com.android_a865.estimatescalculator.feature_main.data.entities.InvoiceItemEntity
 import com.android_a865.estimatescalculator.feature_main.data.entities.ItemEntity
+import com.android_a865.estimatescalculator.feature_network.data.dao.DevicesDao
+import com.android_a865.estimatescalculator.feature_network.data.entities.Device
 import com.android_a865.estimatescalculator.feature_reports.data.dao.ReportingDao
 
 @Database(
@@ -20,8 +22,8 @@ import com.android_a865.estimatescalculator.feature_reports.data.dao.ReportingDa
         InvoiceEntity::class,
         InvoiceItemEntity::class,
         ClientEntity::class,
+        Device::class,
                ],
-
     version = DATABASE_VERSION,
     exportSchema = false
 )
@@ -33,6 +35,8 @@ abstract class MyRoomDatabase: RoomDatabase() {
     abstract fun getInvoicesDao(): InvoicesDao
 
     abstract fun getClientsDao(): ClientsDao
+
+    abstract fun getDevicesDao(): DevicesDao
 
     abstract fun getReportingDao(): ReportingDao
 

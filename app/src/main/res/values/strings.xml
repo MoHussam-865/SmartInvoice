@@ -30,7 +30,7 @@
     <string name="e_mail">E-mail</string>
     <string name="address">Address</string>
     <string name="view">VIEW</string>
-    <string name="client">Client :</string>
+    <string name="client">Client</string>
     <string name="save">Save</string>
     <string name="delete_items">"Delete Items"</string>
     <string name="delete_client">Delete Client</string>
@@ -97,6 +97,10 @@
     <string name="import_here">Import Here</string>
     <string name="folder_discount">Discount (optional)</string>
     <string name="folder_discount_message">This discount will be applied to all the sub items</string>
+    <string name="your_name">Your Name</string>
+    <string name="your_role">Your Role</string>
+    <string name="none">None</string>
+    <string name="server">Server</string>
 
 
 </resources>

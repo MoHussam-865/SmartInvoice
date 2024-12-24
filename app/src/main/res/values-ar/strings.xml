@@ -85,4 +85,8 @@
     <string name="invoices">فاتورة</string>
     <string name="folder_discount">Discount (optional)</string>
     <string name="folder_discount_message">This discount will be applied to all the sub items</string>
+    <string name="your_name">Your Name</string>
+    <string name="your_role">Your Role</string>
+    <string name="none">None</string>
+    <string name="server">Server</string>
 </resources>

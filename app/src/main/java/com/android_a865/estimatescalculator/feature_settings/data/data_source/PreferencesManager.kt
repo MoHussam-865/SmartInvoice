@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.*
 import androidx.datastore.preferences.preferencesDataStore
+import com.android_a865.estimatescalculator.feature_network.temp.Role
 import com.android_a865.estimatescalculator.feature_settings.domain.models.AppSettings
 import com.android_a865.estimatescalculator.feature_settings.domain.models.Company
 import com.android_a865.estimatescalculator.utils.DATE_FORMATS
@@ -40,7 +41,8 @@ class PreferencesManager @Inject constructor(
                 dateFormat = preferences[PreferencesKeys.DATE_FORMAT] ?: DATE_FORMATS[0],
                 currency = preferences[PreferencesKeys.CURRENCY] ?: "",
                 isFirst = preferences[PreferencesKeys.IS_FIRST] ?: true,
-                isSubscribed = preferences[PreferencesKeys.IS_SUBSCRIBED] ?: false
+                isSubscribed = preferences[PreferencesKeys.IS_SUBSCRIBED] ?: false,
+                myRole = Role.entries[preferences[PreferencesKeys.HOW_AM_I] ?: 0],
             )
         }
 
@@ -75,6 +77,12 @@ class PreferencesManager @Inject constructor(
         }
     }
 
+    suspend fun setMyRole(role: Role) {
+        context.dataStore.edit { preferences ->
+            preferences[PreferencesKeys.HOW_AM_I] = role.ordinal
+        }
+    }
+
 
     private object PreferencesKeys {
         val COMPANY_INFO = stringPreferencesKey("company_info")
@@ -82,5 +90,6 @@ class PreferencesManager @Inject constructor(
         val CURRENCY = stringPreferencesKey("currency")
         val IS_FIRST = booleanPreferencesKey("is_first")
         val IS_SUBSCRIBED = booleanPreferencesKey("is_subscribed")
+        val HOW_AM_I = intPreferencesKey("how_am_i")
     }
 }
