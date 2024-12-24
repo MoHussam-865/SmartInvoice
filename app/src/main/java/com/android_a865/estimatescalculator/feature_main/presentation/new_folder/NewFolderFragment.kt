@@ -32,6 +32,14 @@ class NewFolderFragment : Fragment(R.layout.fragment_new_folder) {
                 viewModel.folderName = it.toString()
             }
 
+            if (viewModel.folderDiscount != "0.0") {
+                folderDiscountEt.editText?.setText(viewModel.folderDiscount)
+            }
+
+            folderDiscountEt.editText?.addTextChangedListener {
+                viewModel.folderDiscount = it.toString()
+            }
+
             fab.setOnClickListener {
                 viewModel.onSaveClicked()
             }

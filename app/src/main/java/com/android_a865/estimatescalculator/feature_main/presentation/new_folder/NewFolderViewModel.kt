@@ -23,6 +23,7 @@ class NewFolderViewModel @Inject constructor(
     val path = state.get<Path>("path") ?: Path(".")
 
     var folderName: String = folder?.name ?: ""
+    var folderDiscount: String = (folder?.price ?: 0.0).toString()
 
 
 
@@ -39,10 +40,25 @@ class NewFolderViewModel @Inject constructor(
             return
         }
 
+        var discount = 0.0
+        try {
+            if (folderDiscount.isBlank()) {
+                discount = folderDiscount.toDouble()
+            }
+            if (discount > 100 || discount < -100) {
+                throw Exception("Discount Error")
+            }
+        } catch (e: Exception) {
+            showInvalidInputMessage("discount value error")
+            return
+        }
+
+
         if (folder != null) {
             val updatedItem = folder.copy(
                 name = folderName,
                 path = path,
+                price = discount,
                 isFolder = true
             )
             updateFolder(updatedItem)
@@ -52,6 +68,7 @@ class NewFolderViewModel @Inject constructor(
             val newItem = Item(
                 name = folderName,
                 path = path,
+                price = discount,
                 isFolder = true
             )
             createFolder(newItem)

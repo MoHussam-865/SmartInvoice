@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="folder_discount">Discount (optional)</string>
+    <string name="folder_discount_message">This discount will be applied to all the sub items</string>
+</resources>

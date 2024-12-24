@@ -83,4 +83,6 @@
     <string name="open_report_as_excel">فتح ملف إكسيل</string>
     <string name="estimate">تسعيرة</string>
     <string name="invoices">فاتورة</string>
+    <string name="folder_discount">Discount (optional)</string>
+    <string name="folder_discount_message">This discount will be applied to all the sub items</string>
 </resources>

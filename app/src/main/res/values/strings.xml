@@ -95,6 +95,8 @@
     <string name="invoices">Invoices</string>
     <string name="copy">Copy</string>
     <string name="import_here">Import Here</string>
+    <string name="folder_discount">Discount (optional)</string>
+    <string name="folder_discount_message">This discount will be applied to all the sub items</string>
 
 
 </resources>
