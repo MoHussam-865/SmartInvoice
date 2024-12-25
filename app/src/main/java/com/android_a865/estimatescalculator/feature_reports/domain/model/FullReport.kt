@@ -1,6 +1,6 @@
 package com.android_a865.estimatescalculator.feature_reports.domain.model
 
-import com.android_a865.estimatescalculator.feature_main.domain.model.InvoiceItem
+import com.android_a865.estimatescalculator.feature_items_home.domain.model.InvoiceItem
 
 data class FullReport(
     val numberOfInvoices: Int,

@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/navigation_items">
+
+
+    <fragment
+        android:id="@+id/navigation_items"
+        android:name="com.android_a865.estimatescalculator.feature_bottom_nav.ui.main_page.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_mainFragment2_to_newItemFragment"
+            app:destination="@id/newItemFragment" />
+        <action
+            android:id="@+id/action_mainFragment2_to_newFolderFragment"
+            app:destination="@id/newFolderFragment" />
+        <action
+            android:id="@+id/action_mainFragment2_to_selectingFragment"
+            app:destination="@id/selectingFragment" />
+        <argument
+            android:name="path"
+            app:argType="com.android_a865.estimatescalculator.utils.Path"
+            app:nullable="true"
+            android:defaultValue="@null" />
+
+        <action
+            android:id="@+id/action_mainFragment2_to_reportsMainFragment"
+            app:destination="@id/reportsMainFragment" />
+        <action
+            android:id="@+id/action_mainFragment2_to_subscribeFragment"
+            app:destination="@id/subscribeFragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/navigation_client"
+        android:name="com.android_a865.estimatescalculator.feature_bottom_nav.ui.clients_view.ClientsFragment"
+        android:label="fragment_clients"
+        tools:layout="@layout/fragment_clients">
+        <action
+            android:id="@+id/action_clientsFragment_to_addEditClientFragment"
+            app:destination="@id/addEditClientFragment" />
+        <action
+            android:id="@+id/action_clientsFragment_to_clientViewFragment"
+            app:destination="@id/clientViewFragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/navigation_invoices"
+        android:name="com.android_a865.estimatescalculator.feature_bottom_nav.ui.invoices_view.InvoicesViewFragment"
+        android:label="fragment_invoices_view"
+        tools:layout="@layout/fragment_invoices_view" >
+        <action
+            android:id="@+id/action_invoicesViewFragment_to_newEstimateFragment"
+            app:destination="@id/newEstimateFragment" />
+        <action
+            android:id="@+id/action_invoicesViewFragment_to_subscribeFragment"
+            app:destination="@id/subscribeFragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="com.android_a865.estimatescalculator.feature_bottom_nav.ui.settings.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings">
+        <action
+            android:id="@+id/action_settingsFragment_to_companyInfoFragment"
+            app:destination="@id/companyInfoFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_subscribeFragment"
+            app:destination="@id/subscribeFragment" />
+    </fragment>
+
+
+    <!--new item-->
+    <fragment
+        android:id="@+id/newItemFragment"
+        android:name="com.android_a865.estimatescalculator.feature_items_home.presentation.new_item.NewItemFragment"
+        android:label="@string/item"
+        tools:layout="@layout/fragment_new_item">
+        <argument
+            android:name="item"
+            android:defaultValue="@null"
+            app:argType="com.android_a865.estimatescalculator.feature_items_home.domain.model.Item"
+            app:nullable="true" />
+        <argument
+            android:name="path"
+            app:argType="com.android_a865.estimatescalculator.utils.Path" />
+        <action
+            android:id="@+id/action_newItemFragment_to_mainFragment2"
+            app:destination="@id/mainFragment2"
+            app:popUpTo="@id/mainFragment2"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <!--new folder-->
+    <fragment
+        android:id="@+id/newFolderFragment"
+        android:name="com.android_a865.estimatescalculator.feature_items_home.presentation.new_folder.NewFolderFragment"
+        android:label="@string/folder"
+        tools:layout="@layout/fragment_new_folder">
+        <argument
+            android:name="folder"
+            android:defaultValue="@null"
+            app:argType="com.android_a865.estimatescalculator.feature_items_home.domain.model.Item"
+            app:nullable="true" />
+        <argument
+            android:name="path"
+            app:argType="com.android_a865.estimatescalculator.utils.Path" />
+        <action
+            android:id="@+id/action_newFolderFragment_to_mainFragment2"
+            app:destination="@id/mainFragment2"
+            app:popUpTo="@id/mainFragment2"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <!--Selecting-->
+    <fragment
+        android:id="@+id/selectingFragment"
+        android:name="com.android_a865.estimatescalculator.feature_items_home.presentation.selecting.SelectingFragment"
+        android:label=""
+        tools:layout="@layout/fragment_selecting" >
+        <argument
+            android:name="path"
+            app:argType="com.android_a865.estimatescalculator.utils.Path" />
+        <argument
+            android:name="id"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_selectingFragment_to_newItemFragment"
+            app:destination="@id/newItemFragment" />
+        <action
+            android:id="@+id/action_selectingFragment_to_newFolderFragment"
+            app:destination="@id/newFolderFragment" />
+    </fragment>
+
+    <!--new Estimate-->
+    <fragment
+        android:id="@+id/newEstimateFragment"
+        android:name="com.android_a865.estimatescalculator.feature_items_home.presentation.new_estimate.NewEstimateFragment"
+        android:label="@string/new_estimate"
+        tools:layout="@layout/fragment_new_estimate">
+        <action
+            android:id="@+id/action_newEstimateFragment_to_itemsChooseFragment"
+            app:destination="@id/itemsChooseFragment" />
+        <argument
+            android:name="invoice"
+            android:defaultValue="@null"
+            app:argType="com.android_a865.estimatescalculator.feature_items_home.domain.model.Invoice"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_newEstimateFragment_to_viewPdfFragment"
+            app:destination="@id/viewPdfFragment" />
+        <action
+            android:id="@+id/action_newEstimateFragment_to_chooseClientFragment"
+            app:destination="@id/chooseClientFragment" />
+        <action
+            android:id="@+id/action_newEstimateFragment_to_clientViewFragment"
+            app:destination="@id/clientViewFragment" />
+        <action
+            android:id="@+id/action_newEstimateFragment_to_addEditInvoiceItemFragment"
+            app:destination="@id/addEditInvoiceItemFragment" />
+    </fragment>
+
+    <!--items choose-->
+    <fragment
+        android:id="@+id/itemsChooseFragment"
+        android:name="com.android_a865.estimatescalculator.feature_items_home.presentation.items_choose.ItemsChooseFragment"
+        android:label="@string/choose_items"
+        tools:layout="@layout/fragment_items_choose">
+        <argument
+            android:name="items"
+            app:argType="com.android_a865.estimatescalculator.feature_items_home.domain.model.InvoiceItem[]" />
+        <action
+            android:id="@+id/action_itemsChooseFragment_to_addEditInvoiceItemFragment"
+            app:destination="@id/addEditInvoiceItemFragment" />
+    </fragment>
+
+    <!--View Pdf-->
+    <fragment
+        android:id="@+id/viewPdfFragment"
+        android:name="com.android_a865.estimatescalculator.feature_items_home.presentation.pdf_preview.ViewPdfFragment"
+        android:label="@string/pdf_preview"
+        tools:layout="@layout/fragment_view_pdf">
+        <argument
+            android:name="invoice"
+            app:argType="com.android_a865.estimatescalculator.feature_items_home.domain.model.Invoice" />
+    </fragment>
+
+    <!--AddEditClient-->
+    <fragment
+        android:id="@+id/addEditClientFragment"
+        android:name="com.android_a865.estimatescalculator.feature_client.presentation.add_edit_client.AddEditClientFragment"
+        tools:layout="@layout/fragment_add_edit_client">
+        <argument
+            android:name="client"
+            android:defaultValue="@null"
+            app:argType="com.android_a865.estimatescalculator.feature_client.domain.model.Client"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_addEditClientFragment_to_clientViewFragment"
+            app:destination="@id/clientViewFragment"
+            app:popUpTo="@id/clientViewFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <!--Client View-->
+    <fragment
+        android:id="@+id/clientViewFragment"
+        android:name="com.android_a865.estimatescalculator.feature_client.presentation.client_view.ClientViewFragment"
+        android:label="@string/client_view"
+        tools:layout="@layout/fragment_client_view">
+        <action
+            android:id="@+id/action_clientViewFragment_to_addEditClientFragment"
+            app:destination="@id/addEditClientFragment" />
+        <argument
+            android:name="client"
+            app:argType="com.android_a865.estimatescalculator.feature_client.domain.model.Client" />
+    </fragment>
+
+    <!--Choose Client-->
+    <fragment
+        android:id="@+id/chooseClientFragment"
+        android:name="com.android_a865.estimatescalculator.feature_client.presentation.choose_client.ChooseClientFragment"
+        android:label="@string/choose_client"
+        tools:layout="@layout/fragment_choose_client">
+        <action
+            android:id="@+id/action_chooseClientFragment_to_addEditClientFragment"
+            app:destination="@id/addEditClientFragment" />
+    </fragment>
+
+    <!--Co. Info-->
+    <fragment
+        android:id="@+id/companyInfoFragment"
+        android:name="com.android_a865.estimatescalculator.feature_settings.presentation.company_info.CompanyInfoFragment"
+        android:label="@string/company_info"
+        tools:layout="@layout/fragment_company_info" />
+
+    <!--add invoice item-->
+    <fragment
+        android:id="@+id/addEditInvoiceItemFragment"
+        android:name="com.android_a865.estimatescalculator.feature_items_home.presentation.add_edit_invoice_item.AddEditInvoiceItemFragment"
+        android:label="@string/item"
+        tools:layout="@layout/fragment_add_edit_invoice_item" >
+        <argument
+            android:name="path"
+            app:argType="com.android_a865.estimatescalculator.utils.Path" />
+        <argument
+            android:name="item"
+            app:argType="com.android_a865.estimatescalculator.feature_items_home.domain.model.InvoiceItem"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
+
+    <!--reports-->
+    <fragment
+        android:id="@+id/reportsMainFragment"
+        android:name="com.android_a865.estimatescalculator.feature_reports.presentation.overview.ReportsMainFragment"
+        android:label="@string/reports"
+        tools:layout="@layout/fragment_reports_main"/>
+
+    <!--subscribe-->
+    <fragment
+        android:id="@+id/subscribeFragment"
+        android:name="com.android_a865.estimatescalculator.feature_in_app.presentation.main.SubscribeFragment"
+        android:label="@string/subscribe"
+        tools:layout="@layout/fragment_subscribe" />
+
+</navigation>

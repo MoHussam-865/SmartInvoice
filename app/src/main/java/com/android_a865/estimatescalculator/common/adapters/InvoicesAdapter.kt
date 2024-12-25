@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.android_a865.estimatescalculator.databinding.AdapterInvoiceViewBinding
-import com.android_a865.estimatescalculator.feature_main.domain.model.Invoice
+import com.android_a865.estimatescalculator.feature_items_home.domain.model.Invoice
 import com.android_a865.estimatescalculator.feature_settings.domain.models.AppSettings
 import com.android_a865.estimatescalculator.utils.DATE_FORMATS
 import com.android_a865.estimatescalculator.utils.date

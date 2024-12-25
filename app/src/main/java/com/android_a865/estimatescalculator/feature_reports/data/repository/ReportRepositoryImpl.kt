@@ -1,8 +1,8 @@
 package com.android_a865.estimatescalculator.feature_reports.data.repository
 
 import com.android_a865.estimatescalculator.feature_client.data.entities.ClientEntity
-import com.android_a865.estimatescalculator.feature_main.data.entities.InvoiceItemEntity
-import com.android_a865.estimatescalculator.feature_main.data.relations.FullInvoice
+import com.android_a865.estimatescalculator.feature_items_home.data.entities.InvoiceItemEntity
+import com.android_a865.estimatescalculator.feature_items_home.data.relations.FullInvoice
 import com.android_a865.estimatescalculator.feature_reports.data.dao.ReportingDao
 import com.android_a865.estimatescalculator.feature_reports.domain.repository.ReportRepository
 

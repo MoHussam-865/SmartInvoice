@@ -39,11 +39,11 @@ android {
         jvmTarget = '18'
         freeCompilerArgs += "-Xopt-in=kotlin.coroutines.ExperimentalCoroutinesApi"
     }
-
     compileOptions {
-        sourceCompatibility JavaVersion.current()
-        targetCompatibility JavaVersion.current()
+        sourceCompatibility "1.8"
+        targetCompatibility "1.8"
     }
+
 
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'

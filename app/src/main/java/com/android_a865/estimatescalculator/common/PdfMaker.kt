@@ -3,7 +3,7 @@ package com.android_a865.estimatescalculator.common
 import android.content.Context
 import android.util.Log
 import com.android_a865.estimatescalculator.feature_client.domain.model.Client
-import com.android_a865.estimatescalculator.feature_main.domain.model.Invoice
+import com.android_a865.estimatescalculator.feature_items_home.domain.model.Invoice
 import com.android_a865.estimatescalculator.feature_settings.domain.models.AppSettings
 import com.android_a865.estimatescalculator.feature_settings.domain.models.Company
 import com.android_a865.estimatescalculator.utils.date

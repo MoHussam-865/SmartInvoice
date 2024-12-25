@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".feature_main.presentation.items_choose.ItemsChooseFragment">
+    tools:context=".feature_items_home.presentation.items_choose.ItemsChooseFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

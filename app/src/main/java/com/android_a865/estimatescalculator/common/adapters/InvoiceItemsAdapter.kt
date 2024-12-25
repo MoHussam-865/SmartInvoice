@@ -8,10 +8,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.android_a865.estimatescalculator.databinding.AdapterNewEstimateBinding
-import com.android_a865.estimatescalculator.feature_main.domain.model.InvoiceItem
+import com.android_a865.estimatescalculator.feature_items_home.domain.model.InvoiceItem
 import com.android_a865.estimatescalculator.utils.setQty
 import com.android_a865.estimatescalculator.utils.toFormattedString
-import kotlin.math.abs
 
 class InvoiceItemsAdapter(
     private val listener: OnItemEventListener,

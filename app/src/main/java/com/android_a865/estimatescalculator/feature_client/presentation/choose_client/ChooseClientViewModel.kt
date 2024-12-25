@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
 import com.android_a865.estimatescalculator.feature_client.domain.model.Client
 import com.android_a865.estimatescalculator.feature_client.domain.use_cases.ClientsUseCases
-import com.android_a865.estimatescalculator.feature_client.presentation.clients_view.ClientsViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow

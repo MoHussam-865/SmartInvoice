@@ -2,8 +2,7 @@ package com.android_a865.estimatescalculator.feature_client.data.dao
 
 import androidx.room.*
 import com.android_a865.estimatescalculator.feature_client.data.entities.ClientEntity
-import com.android_a865.estimatescalculator.feature_client.domain.model.Client
-import com.android_a865.estimatescalculator.feature_main.data.entities.InvoiceEntity
+import com.android_a865.estimatescalculator.feature_items_home.data.entities.InvoiceEntity
 import kotlinx.coroutines.flow.Flow
 
 

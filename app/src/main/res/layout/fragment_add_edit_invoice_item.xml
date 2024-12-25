@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".feature_main.presentation.add_edit_invoice_item.AddEditInvoiceItemFragment">
+    tools:context=".feature_items_home.presentation.add_edit_invoice_item.AddEditInvoiceItemFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

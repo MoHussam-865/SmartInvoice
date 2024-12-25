@@ -4,8 +4,8 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import com.android_a865.estimatescalculator.feature_client.data.entities.ClientEntity
-import com.android_a865.estimatescalculator.feature_main.data.entities.InvoiceItemEntity
-import com.android_a865.estimatescalculator.feature_main.data.relations.FullInvoice
+import com.android_a865.estimatescalculator.feature_items_home.data.entities.InvoiceItemEntity
+import com.android_a865.estimatescalculator.feature_items_home.data.relations.FullInvoice
 
 
 @Dao

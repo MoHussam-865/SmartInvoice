@@ -1,7 +1,6 @@
 package com.android_a865.estimatescalculator.common.adapters
 
 import android.annotation.SuppressLint
-import android.view.GestureDetector
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.CheckBox
@@ -11,7 +10,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.android_a865.estimatescalculator.R
 import com.android_a865.estimatescalculator.databinding.AdapterItemsPageBinding
-import com.android_a865.estimatescalculator.feature_main.domain.model.Item
+import com.android_a865.estimatescalculator.feature_items_home.domain.model.Item
 import com.android_a865.estimatescalculator.utils.toFormattedString
 
 class ItemsAdapter(

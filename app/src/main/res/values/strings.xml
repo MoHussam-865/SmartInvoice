@@ -93,14 +93,18 @@
     <string name="open_report_as_excel">Open Report as Excel</string>
     <string name="estimate">Estimate</string>
     <string name="invoices">Invoices</string>
-    <string name="copy">Copy</string>
-    <string name="import_here">Import Here</string>
+    <string name="copy" translatable="false">Copy</string>
+    <string name="import_here" translatable="false">Import Here</string>
     <string name="folder_discount">Discount (optional)</string>
     <string name="folder_discount_message">This discount will be applied to all the sub items</string>
     <string name="your_name">Your Name</string>
     <string name="your_role">Your Role</string>
     <string name="none">None</string>
     <string name="server">Server</string>
+    <string name="title_activity_new_start" translatable="false">NewStartActivity</string>
+    <string name="title_home" translatable="false">Home</string>
+    <string name="title_dashboard" translatable="false">Dashboard</string>
+    <string name="title_notifications" translatable="false">Notifications</string>
 
 
 </resources>

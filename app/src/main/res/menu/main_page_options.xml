@@ -13,10 +13,6 @@
         android:title="@string/new_folder"
         app:showAsAction="never" />
 
-    <item
-        android:id="@+id/newEstimate"
-        android:title="@string/new_estimate"
-        app:showAsAction="never" />
 
     <item
         android:id="@+id/import_here"

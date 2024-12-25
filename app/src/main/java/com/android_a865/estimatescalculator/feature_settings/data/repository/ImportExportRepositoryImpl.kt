@@ -3,8 +3,8 @@ package com.android_a865.estimatescalculator.feature_settings.data.repository
 import com.android_a865.estimatescalculator.feature_client.data.entities.ClientEntity
 import com.android_a865.estimatescalculator.feature_settings.data.dao.ImportExportDao
 import com.android_a865.estimatescalculator.feature_settings.domain.repository.ImportExportRepository
-import com.android_a865.estimatescalculator.feature_main.data.entities.ItemEntity
-import com.android_a865.estimatescalculator.feature_main.data.relations.FullInvoice
+import com.android_a865.estimatescalculator.feature_items_home.data.entities.ItemEntity
+import com.android_a865.estimatescalculator.feature_items_home.data.relations.FullInvoice
 
 class ImportExportRepositoryImpl(
     private val dao: ImportExportDao
