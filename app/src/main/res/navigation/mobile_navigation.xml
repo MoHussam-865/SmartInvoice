@@ -93,8 +93,8 @@
             app:argType="com.android_a865.estimatescalculator.utils.Path" />
         <action
             android:id="@+id/action_newItemFragment_to_mainFragment2"
-            app:destination="@id/mainFragment2"
-            app:popUpTo="@id/mainFragment2"
+            app:destination="@id/navigation_items"
+            app:popUpTo="@id/navigation_items"
             app:popUpToInclusive="true" />
     </fragment>
 
@@ -114,8 +114,8 @@
             app:argType="com.android_a865.estimatescalculator.utils.Path" />
         <action
             android:id="@+id/action_newFolderFragment_to_mainFragment2"
-            app:destination="@id/mainFragment2"
-            app:popUpTo="@id/mainFragment2"
+            app:destination="@id/navigation_items"
+            app:popUpTo="@id/navigation_items"
             app:popUpToInclusive="true" />
     </fragment>
 

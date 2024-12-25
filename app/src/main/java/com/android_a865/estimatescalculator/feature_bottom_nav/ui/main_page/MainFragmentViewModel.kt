@@ -87,38 +87,6 @@ class MainFragmentViewModel @Inject constructor(
         )
     }
 
-    fun onNewEstimateSelected() = viewModelScope.launch {
-            eventsChannel.send(
-                WindowEvents.Navigate(
-                    MainFragmentDirections.actionMainFragment2ToNewEstimateFragment()
-                )
-            )
-    }
-
-    fun onMyEstimateSelected() = viewModelScope.launch {
-        eventsChannel.send(
-            WindowEvents.Navigate(
-                MainFragmentDirections.actionMainFragment2ToInvoicesViewFragment()
-            )
-        )
-    }
-
-    fun onMyClientsSelected() = viewModelScope.launch {
-        eventsChannel.send(
-            WindowEvents.Navigate(
-                MainFragmentDirections.actionMainFragment2ToClientsFragment()
-            )
-        )
-    }
-
-    fun onSettingsSelected() = viewModelScope.launch {
-        eventsChannel.send(
-            WindowEvents.Navigate(
-                MainFragmentDirections.actionMainFragment2ToSettingsFragment()
-            )
-        )
-    }
-
     /** TODO don't remove this method */
     fun onSubscribeSelected() = viewModelScope.launch {
         eventsChannel.send(
