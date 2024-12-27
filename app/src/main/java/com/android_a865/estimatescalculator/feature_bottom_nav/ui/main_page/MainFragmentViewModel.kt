@@ -87,36 +87,6 @@ class MainFragmentViewModel @Inject constructor(
         )
     }
 
-    /** TODO don't remove this method */
-    fun onSubscribeSelected() = viewModelScope.launch {
-        eventsChannel.send(
-            WindowEvents.Navigate(
-                MainFragmentDirections.actionMainFragment2ToSubscribeFragment()
-            )
-        )
-    }
-
-    fun onReportsSelected()  = viewModelScope.launch {
-        // TODO block Reporting feature
-        if (hasAccess || NO_AD) {
-            eventsChannel.send(
-                WindowEvents.Navigate(
-                    MainFragmentDirections.actionMainFragment2ToReportsMainFragment()
-                )
-            )
-        } else {
-            eventsChannel.send(
-                WindowEvents.Navigate(
-                    MainFragmentDirections.actionMainFragment2ToSubscribeFragment()
-                )
-            )
-        }
-
-        /*eventsChannel.send(WindowEvents.Navigate(
-            MainFragmentDirections.actionMainFragment2ToReportsMainFragment()
-        ))*/
-
-    }
 
     fun onImportItemsSelected() = viewModelScope.launch {
         eventsChannel.send(WindowEvents.ImportData)

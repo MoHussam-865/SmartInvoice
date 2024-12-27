@@ -23,12 +23,17 @@ import com.android_a865.estimatescalculator.R
 import com.android_a865.estimatescalculator.common.adapters.ItemsAdapter
 import com.android_a865.estimatescalculator.common.adapters.PathIndicatorAdapter
 import com.android_a865.estimatescalculator.databinding.FragmentMainBinding
-import com.android_a865.estimatescalculator.feature_items_home.domain.model.Item
 import com.android_a865.estimatescalculator.feature_bottom_nav.ui.settings.REQUEST_CODE
-import com.android_a865.estimatescalculator.utils.*
+import com.android_a865.estimatescalculator.feature_items_home.domain.model.Item
+import com.android_a865.estimatescalculator.utils.exhaustive
+import com.android_a865.estimatescalculator.utils.scrollToEnd
+import com.android_a865.estimatescalculator.utils.setUpActionBarWithNavController
+import com.android_a865.estimatescalculator.utils.showMessage
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import java.io.*
+import java.io.BufferedReader
+import java.io.FileNotFoundException
+import java.io.InputStreamReader
 
 @AndroidEntryPoint
 class MainFragment : Fragment(R.layout.fragment_main), ItemsAdapter.OnItemEventListener {
@@ -37,7 +42,6 @@ class MainFragment : Fragment(R.layout.fragment_main), ItemsAdapter.OnItemEventL
 
     private val itemsAdapter = ItemsAdapter(this)
     private val pathIndicator = PathIndicatorAdapter()
-    private lateinit var toggle: ActionBarDrawerToggle
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -47,33 +51,6 @@ class MainFragment : Fragment(R.layout.fragment_main), ItemsAdapter.OnItemEventL
         val binding = FragmentMainBinding.bind(view)
 
         binding.apply {
-
-            toggle = ActionBarDrawerToggle(
-                requireActivity(),
-                drawerLayout,
-                mainToolBar,
-                R.string.open,
-                R.string.close
-            )
-            drawerLayout.addDrawerListener(toggle)
-            toggle.syncState()
-
-            navView.setNavigationItemSelectedListener {
-                drawerLayout.close()
-                when (it.itemId) {
-
-                    /** uncomment for in app ads*/
-                    R.id.subscribe -> {
-                        viewModule.onSubscribeSelected()
-                    }
-
-                    R.id.reports -> {
-                        viewModule.onReportsSelected()
-                    }
-                }
-                true
-            }
-
 
             itemsList.apply {
                 adapter = itemsAdapter
@@ -135,9 +112,6 @@ class MainFragment : Fragment(R.layout.fragment_main), ItemsAdapter.OnItemEventL
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (toggle.onOptionsItemSelected(item)) {
-            return true
-        }
         return when (item.itemId) {
             R.id.newItem -> {
                 viewModule.onNewItemSelected()

@@ -134,10 +134,18 @@ class SettingsViewModel @Inject constructor(
     }
 
     /** don't remove*/
-    private fun acquireSubscription() = viewModelScope.launch {
+    fun acquireSubscription() = viewModelScope.launch {
         eventsChannel.send(
             WindowEvents.Navigate(
                 SettingsFragmentDirections.actionSettingsFragmentToSubscribeFragment()
+            )
+        )
+    }
+
+    fun onReportsClicked() = viewModelScope.launch {
+        eventsChannel.send(
+            WindowEvents.Navigate(
+                SettingsFragmentDirections.actionNavigationSettingsToReportsMainFragment()
             )
         )
     }

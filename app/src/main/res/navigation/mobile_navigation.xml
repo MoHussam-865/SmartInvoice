@@ -26,12 +26,6 @@
             app:nullable="true"
             android:defaultValue="@null" />
 
-        <action
-            android:id="@+id/action_mainFragment2_to_reportsMainFragment"
-            app:destination="@id/reportsMainFragment" />
-        <action
-            android:id="@+id/action_mainFragment2_to_subscribeFragment"
-            app:destination="@id/subscribeFragment" />
     </fragment>
 
 
@@ -74,6 +68,9 @@
         <action
             android:id="@+id/action_settingsFragment_to_subscribeFragment"
             app:destination="@id/subscribeFragment" />
+        <action
+            android:id="@+id/action_navigation_settings_to_reportsMainFragment"
+            app:destination="@id/reportsMainFragment" />
     </fragment>
 
 

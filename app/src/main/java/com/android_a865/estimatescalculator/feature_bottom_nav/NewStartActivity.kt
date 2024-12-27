@@ -10,6 +10,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
@@ -41,7 +42,9 @@ class NewStartActivity : AppCompatActivity() {
 
         val navView: BottomNavigationView = binding.navView
 
-        val navController = findNavController(R.id.nav_host_fragment_activity_new_start)
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment_activity_new_start) as NavHostFragment
+        val navController = navHostFragment.navController
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
@@ -52,7 +55,9 @@ class NewStartActivity : AppCompatActivity() {
                 R.id.navigation_settings
             )
         )
-        setupActionBarWithNavController(navController, appBarConfiguration)
+        //setupActionBarWithNavController(navController, appBarConfiguration)
+        // Hide the ActionBar
+        //supportActionBar?.hide()
         navView.setupWithNavController(navController)
 
         sharedViewModel.onAppStarted()

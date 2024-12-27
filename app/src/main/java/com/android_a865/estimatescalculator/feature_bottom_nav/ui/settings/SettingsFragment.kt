@@ -56,6 +56,14 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 viewModel.onImportSelected()
 
             }
+
+            tvReports.setOnClickListener {
+                viewModel.onReportsClicked()
+            }
+
+            tvSubscribe.setOnClickListener {
+                viewModel.acquireSubscription()
+            }
         }
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
