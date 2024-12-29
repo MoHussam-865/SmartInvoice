@@ -1,5 +1,6 @@
 package com.android_a865.estimatescalculator.feature_settings.data.repository
 
+import com.android_a865.estimatescalculator.feature_network.temp.Role
 import com.android_a865.estimatescalculator.feature_settings.data.data_source.PreferencesManager
 import com.android_a865.estimatescalculator.feature_settings.domain.models.AppSettings
 import com.android_a865.estimatescalculator.feature_settings.domain.models.Company
@@ -34,5 +35,9 @@ class SettingsRepositoryImpl(
 
     override suspend fun updateIsSubscribed(isSubscribed: Boolean) {
         preferences.updateIsSubscribed(isSubscribed)
+    }
+
+    override suspend fun updateRole(deviceName: String, role: Role) {
+        preferences.setMyRole(deviceName, role)
     }
 }

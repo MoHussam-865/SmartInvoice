@@ -43,6 +43,8 @@ class PreferencesManager @Inject constructor(
                 isFirst = preferences[PreferencesKeys.IS_FIRST] ?: true,
                 isSubscribed = preferences[PreferencesKeys.IS_SUBSCRIBED] ?: false,
                 myRole = Role.entries[preferences[PreferencesKeys.HOW_AM_I] ?: 0],
+                deviceName = preferences[PreferencesKeys.DEVICE_NAME] ?: "",
+                deviceId = preferences[PreferencesKeys.DEVICE_ID] ?: 0
             )
         }
 
@@ -77,9 +79,13 @@ class PreferencesManager @Inject constructor(
         }
     }
 
-    suspend fun setMyRole(role: Role) {
+    suspend fun setMyRole(deviceName: String, role: Role) {
         context.dataStore.edit { preferences ->
             preferences[PreferencesKeys.HOW_AM_I] = role.ordinal
+            preferences[PreferencesKeys.DEVICE_NAME] = deviceName
+            if (preferences[PreferencesKeys.DEVICE_ID]==null) {
+                preferences[PreferencesKeys.DEVICE_ID] = System.currentTimeMillis()
+            }
         }
     }
 
@@ -91,5 +97,7 @@ class PreferencesManager @Inject constructor(
         val IS_FIRST = booleanPreferencesKey("is_first")
         val IS_SUBSCRIBED = booleanPreferencesKey("is_subscribed")
         val HOW_AM_I = intPreferencesKey("how_am_i")
+        val DEVICE_NAME = stringPreferencesKey("device_name")
+        val DEVICE_ID = longPreferencesKey("device_id")
     }
 }

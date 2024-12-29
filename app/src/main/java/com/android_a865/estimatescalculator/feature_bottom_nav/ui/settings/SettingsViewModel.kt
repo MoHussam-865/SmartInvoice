@@ -150,10 +150,18 @@ class SettingsViewModel @Inject constructor(
         )
     }
 
+    fun onServerSettingsClicked() = viewModelScope.launch {
+        eventsChannel.send(
+            WindowEvents.Navigate(
+                SettingsFragmentDirections.actionNavigationSettingsToDefineMeFragment()
+            )
+        )
+    }
+
     sealed class WindowEvents {
         data class Navigate(val direction: NavDirections): WindowEvents()
         data class Export(val data: String): WindowEvents()
-        object Import : WindowEvents()
+        data object Import : WindowEvents()
         data class ImportState(val msg: String): WindowEvents()
     }
 

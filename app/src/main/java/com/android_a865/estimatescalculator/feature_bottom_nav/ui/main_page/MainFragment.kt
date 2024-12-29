@@ -26,6 +26,7 @@ import com.android_a865.estimatescalculator.databinding.FragmentMainBinding
 import com.android_a865.estimatescalculator.feature_bottom_nav.ui.settings.REQUEST_CODE
 import com.android_a865.estimatescalculator.feature_items_home.domain.model.Item
 import com.android_a865.estimatescalculator.utils.exhaustive
+import com.android_a865.estimatescalculator.utils.hideBottomNav
 import com.android_a865.estimatescalculator.utils.scrollToEnd
 import com.android_a865.estimatescalculator.utils.setUpActionBarWithNavController
 import com.android_a865.estimatescalculator.utils.showMessage
@@ -46,7 +47,7 @@ class MainFragment : Fragment(R.layout.fragment_main), ItemsAdapter.OnItemEventL
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpActionBarWithNavController()
-
+        hideBottomNav(false)
 
         val binding = FragmentMainBinding.bind(view)
 
@@ -88,6 +89,7 @@ class MainFragment : Fragment(R.layout.fragment_main), ItemsAdapter.OnItemEventL
                         true
                     }
                     is MainFragmentViewModel.WindowEvents.Navigate -> {
+                        hideBottomNav()
                         findNavController().navigate(event.direction)
                         true
                     }

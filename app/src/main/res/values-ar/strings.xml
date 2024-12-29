@@ -89,4 +89,5 @@
     <string name="your_role">Your Role</string>
     <string name="none">None</string>
     <string name="server">Server</string>
+    <string name="network_settings">Network Settings</string>
 </resources>

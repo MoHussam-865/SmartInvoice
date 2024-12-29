@@ -5,11 +5,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.android_a865.estimatescalculator.R
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.text.DecimalFormat
 
 fun Fragment.setUpActionBarWithNavController() {
@@ -18,6 +20,14 @@ fun Fragment.setUpActionBarWithNavController() {
         it.setupWithNavController(findNavController())
     }
 }
+
+fun Fragment.hideBottomNav(hide: Boolean = true) {
+    requireActivity()
+        .findViewById<BottomNavigationView>(R.id.nav_view)
+        .isVisible = !hide
+}
+
+
 
 fun RecyclerView.scrollToEnd() = smoothScrollToPosition(adapter?.itemCount ?: 0)
 

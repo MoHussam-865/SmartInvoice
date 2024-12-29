@@ -15,6 +15,7 @@ import com.android_a865.estimatescalculator.common.adapters.ClientsAdapter
 import com.android_a865.estimatescalculator.databinding.FragmentClientsBinding
 import com.android_a865.estimatescalculator.feature_client.domain.model.Client
 import com.android_a865.estimatescalculator.utils.exhaustive
+import com.android_a865.estimatescalculator.utils.hideBottomNav
 import com.android_a865.estimatescalculator.utils.onTextChanged
 import com.android_a865.estimatescalculator.utils.setUpActionBarWithNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,6 +31,8 @@ class ClientsFragment : Fragment(R.layout.fragment_clients),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpActionBarWithNavController()
+        hideBottomNav(false)
+
         val binding = FragmentClientsBinding.bind(view)
 
         binding.apply {
@@ -56,6 +59,7 @@ class ClientsFragment : Fragment(R.layout.fragment_clients),
             viewModel.windowEvents.collect { event ->
                 when (event) {
                     is ClientsViewModel.WindowEvents.Navigate -> {
+                        hideBottomNav()
                         findNavController().navigate(event.direction)
                     }
                 }.exhaustive

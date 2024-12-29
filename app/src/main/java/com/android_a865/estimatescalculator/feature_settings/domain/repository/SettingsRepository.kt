@@ -1,5 +1,6 @@
 package com.android_a865.estimatescalculator.feature_settings.domain.repository
 
+import com.android_a865.estimatescalculator.feature_network.temp.Role
 import com.android_a865.estimatescalculator.feature_settings.domain.models.AppSettings
 import com.android_a865.estimatescalculator.feature_settings.domain.models.Company
 import kotlinx.coroutines.flow.Flow
@@ -17,4 +18,6 @@ interface SettingsRepository {
     suspend fun updateIsFirst(isFirst: Boolean)
 
     suspend fun updateIsSubscribed(isSubscribed: Boolean)
+
+    suspend fun updateRole(deviceName: String, role: Role)
 }

@@ -17,6 +17,7 @@ import com.android_a865.estimatescalculator.common.adapters.InvoicesAdapter
 import com.android_a865.estimatescalculator.databinding.FragmentInvoicesViewBinding
 import com.android_a865.estimatescalculator.feature_items_home.domain.model.Invoice
 import com.android_a865.estimatescalculator.utils.exhaustive
+import com.android_a865.estimatescalculator.utils.hideBottomNav
 import com.android_a865.estimatescalculator.utils.setUpActionBarWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,6 +31,8 @@ class InvoicesViewFragment : Fragment(R.layout.fragment_invoices_view),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpActionBarWithNavController()
+        hideBottomNav(false)
+
         val binding = FragmentInvoicesViewBinding.bind(view)
 
         binding.apply {
@@ -54,6 +57,7 @@ class InvoicesViewFragment : Fragment(R.layout.fragment_invoices_view),
             viewModel.windowEvents.collect { event ->
                 when (event) {
                     is InvoicesViewViewModel.WindowEvents.NavigateTo -> {
+                        hideBottomNav()
                         findNavController().navigate(event.direction)
                     }
                     is InvoicesViewViewModel.WindowEvents.SetAppSettings -> {

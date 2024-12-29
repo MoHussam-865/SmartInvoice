@@ -8,5 +8,7 @@ data class AppSettings(
     val currency: String,
     val isFirst: Boolean,
     val isSubscribed: Boolean,
-    val myRole: Role
+    val myRole: Role,
+    val deviceName: String,
+    val deviceId: Long
 )

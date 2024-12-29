@@ -17,6 +17,7 @@ import com.android_a865.estimatescalculator.R
 import com.android_a865.estimatescalculator.databinding.FragmentSettingsBinding
 import com.android_a865.estimatescalculator.utils.AUTHORITY
 import com.android_a865.estimatescalculator.utils.exhaustive
+import com.android_a865.estimatescalculator.utils.hideBottomNav
 import com.android_a865.estimatescalculator.utils.setUpActionBarWithNavController
 import com.android_a865.estimatescalculator.utils.showMessage
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,6 +34,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpActionBarWithNavController()
+        hideBottomNav(false)
         val binding = FragmentSettingsBinding.bind(view)
 
         binding.apply {
@@ -64,12 +66,17 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             tvSubscribe.setOnClickListener {
                 viewModel.acquireSubscription()
             }
+
+            tvServerSettings.setOnClickListener {
+                viewModel.onServerSettingsClicked()
+            }
         }
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.windowEvents.collect { event ->
                 when (event) {
                     is SettingsViewModel.WindowEvents.Navigate -> {
+                        hideBottomNav()
                         findNavController().navigate(event.direction)
                     }
                     is SettingsViewModel.WindowEvents.Export -> {
