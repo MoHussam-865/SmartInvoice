@@ -2,13 +2,23 @@ package com.android_a865.estimatescalculator.feature_items_home.presentation.sel
 
 import android.app.AlertDialog
 import android.content.Context
-import androidx.lifecycle.*
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asFlow
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
 import com.android_a865.estimatescalculator.R
-import com.android_a865.estimatescalculator.feature_items_home.domain.model.Item
-import com.android_a865.estimatescalculator.feature_items_home.domain.use_cases.items_use_cases.ItemsUseCases
-import com.android_a865.estimatescalculator.utils.*
+import com.android_a865.estimatescalculator.core.domain.use_cases.items.ItemsUseCases
+import com.android_a865.estimatescalculator.core.utils.Path
+import com.android_a865.estimatescalculator.core.utils.filterSelected
+import com.android_a865.estimatescalculator.core.utils.numSelected
+import com.android_a865.estimatescalculator.core.utils.selectAll
+import com.android_a865.estimatescalculator.core.utils.selectOnlyWhere
+import com.android_a865.estimatescalculator.core.utils.update0
+import com.android_a865.estimatescalculator.core.data.local.entity.Item
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
@@ -30,6 +40,7 @@ class ItemsSelectViewModel @Inject constructor(
 
     val all get() = itemsData.value.orEmpty().size
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     var numSelected = itemsData.asFlow().flatMapLatest {
         flowOf(it.numSelected)
     }
@@ -54,7 +65,11 @@ class ItemsSelectViewModel @Inject constructor(
         val items = itemsData.value.filterSelected()
         AlertDialog.Builder(context)
             .setTitle(context.resources.getString(R.string.delete_items))
-            .setMessage(String.format(context.resources.getString(R.string.delete_items_dialog),items.size))
+            .setMessage(
+                String.format(
+                    context.resources.getString(R.string.delete_items_dialog)
+                    ,items.size.toString())
+            )
             .setPositiveButton(context.resources.getString(R.string.delete)) { dialog, _ ->
                 deleteSelected(items)
                 dialog.dismiss()
@@ -128,7 +143,7 @@ class ItemsSelectViewModel @Inject constructor(
     sealed class ItemsWindowEvents {
         data class NotifyAdapter(val position: Int) : ItemsWindowEvents()
         data class Navigate(val directions: NavDirections) : ItemsWindowEvents()
-        object NavigateBack: ItemsWindowEvents()
+        data object NavigateBack: ItemsWindowEvents()
     }
 
 }

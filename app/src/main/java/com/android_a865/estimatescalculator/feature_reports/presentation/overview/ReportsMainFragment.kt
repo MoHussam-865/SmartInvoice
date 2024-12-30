@@ -1,9 +1,6 @@
 package com.android_a865.estimatescalculator.feature_reports.presentation.overview
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -13,14 +10,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.android_a865.estimatescalculator.R
+import com.android_a865.estimatescalculator.core.utils.AUTHORITY
+import com.android_a865.estimatescalculator.core.utils.exhaustive
+import com.android_a865.estimatescalculator.core.utils.setUpActionBarWithNavController
+import com.android_a865.estimatescalculator.core.utils.toFormattedString
 import com.android_a865.estimatescalculator.databinding.FragmentReportsMainBinding
 import com.android_a865.estimatescalculator.feature_reports.domain.model.FullReport
-import com.android_a865.estimatescalculator.utils.AUTHORITY
-import com.android_a865.estimatescalculator.utils.exhaustive
-import com.android_a865.estimatescalculator.utils.setUpActionBarWithNavController
-import com.android_a865.estimatescalculator.utils.toFormattedString
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
 import org.apache.poi.ss.usermodel.Row
 import org.apache.poi.ss.usermodel.Workbook

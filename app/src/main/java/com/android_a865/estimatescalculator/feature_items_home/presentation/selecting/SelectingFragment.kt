@@ -12,13 +12,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android_a865.estimatescalculator.R
-import com.android_a865.estimatescalculator.common.adapters.ItemsAdapter
-import com.android_a865.estimatescalculator.common.adapters.PathIndicatorAdapter
+import com.android_a865.estimatescalculator.core.ui.adapters.ItemsAdapter
+import com.android_a865.estimatescalculator.core.ui.adapters.PathIndicatorAdapter
+import com.android_a865.estimatescalculator.core.utils.appCompatActivity
+import com.android_a865.estimatescalculator.core.utils.exhaustive
+import com.android_a865.estimatescalculator.core.utils.setUpActionBarWithNavController
 import com.android_a865.estimatescalculator.databinding.FragmentSelectingBinding
-import com.android_a865.estimatescalculator.feature_items_home.domain.model.Item
-import com.android_a865.estimatescalculator.utils.appCompatActivity
-import com.android_a865.estimatescalculator.utils.exhaustive
-import com.android_a865.estimatescalculator.utils.setUpActionBarWithNavController
+import com.android_a865.estimatescalculator.core.data.local.entity.Item
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

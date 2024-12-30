@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".feature_client.presentation.client_view.ClientViewFragment">
+    tools:context=".feature_client.client_view.ClientViewFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/mainToolBar"

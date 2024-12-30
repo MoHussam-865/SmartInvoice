@@ -6,25 +6,23 @@ import android.net.Network
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.android_a865.estimatescalculator.R
+import com.android_a865.estimatescalculator.core.utils.NO_AD
 import com.android_a865.estimatescalculator.databinding.ActivityNewStartBinding
-import com.android_a865.estimatescalculator.feature_in_app.presentation.main.SharedViewModel
+import com.android_a865.estimatescalculator.feature_in_app.presentation.SharedViewModel
 import com.android_a865.estimatescalculator.feature_in_app.presentation.main.TAG
-import com.android_a865.estimatescalculator.utils.NO_AD
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
 

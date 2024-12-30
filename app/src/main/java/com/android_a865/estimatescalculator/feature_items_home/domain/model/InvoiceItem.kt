@@ -1,7 +1,7 @@
 package com.android_a865.estimatescalculator.feature_items_home.domain.model
 
 import android.os.Parcelable
-import com.android_a865.estimatescalculator.utils.toFormattedString
+import com.android_a865.estimatescalculator.core.utils.toFormattedString
 import kotlinx.parcelize.Parcelize
 import kotlin.math.abs
 
@@ -26,7 +26,6 @@ data class InvoiceItem(
     }
     val details get(): String {
         if (discount != 0.0) {
-            val sign = if (discount > 0.0) "-" else "+"
             return "$fullName  $discountDetail"
         }
         return fullName

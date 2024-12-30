@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".feature_client.presentation.choose_client.ChooseClientFragment">
+    tools:context=".feature_client.choose_client.ChooseClientFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

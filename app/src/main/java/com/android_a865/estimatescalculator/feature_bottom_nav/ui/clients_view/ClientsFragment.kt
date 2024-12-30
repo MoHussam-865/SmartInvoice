@@ -3,21 +3,20 @@ package com.android_a865.estimatescalculator.feature_bottom_nav.ui.clients_view
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
-import androidx.fragment.app.Fragment
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android_a865.estimatescalculator.R
-import com.android_a865.estimatescalculator.common.adapters.ClientsAdapter
+import com.android_a865.estimatescalculator.core.ui.adapters.ClientsAdapter
+import com.android_a865.estimatescalculator.core.utils.exhaustive
+import com.android_a865.estimatescalculator.core.utils.hideBottomNav
+import com.android_a865.estimatescalculator.core.utils.onTextChanged
+import com.android_a865.estimatescalculator.core.utils.setUpActionBarWithNavController
 import com.android_a865.estimatescalculator.databinding.FragmentClientsBinding
-import com.android_a865.estimatescalculator.feature_client.domain.model.Client
-import com.android_a865.estimatescalculator.utils.exhaustive
-import com.android_a865.estimatescalculator.utils.hideBottomNav
-import com.android_a865.estimatescalculator.utils.onTextChanged
-import com.android_a865.estimatescalculator.utils.setUpActionBarWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 
 

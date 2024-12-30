@@ -1,14 +1,29 @@
 package com.android_a865.estimatescalculator.feature_items_home.presentation.items_choose
 
-import androidx.lifecycle.*
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asFlow
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
+import com.android_a865.estimatescalculator.core.domain.use_cases.items.ItemsUseCases
+import com.android_a865.estimatescalculator.core.utils.Path
+import com.android_a865.estimatescalculator.core.utils.addOf
+import com.android_a865.estimatescalculator.core.utils.addOneOf
+import com.android_a865.estimatescalculator.core.utils.include
+import com.android_a865.estimatescalculator.core.utils.removeAllOf
+import com.android_a865.estimatescalculator.core.utils.removeOneOf
+import com.android_a865.estimatescalculator.core.utils.setQtyTo
+import com.android_a865.estimatescalculator.core.utils.update0
 import com.android_a865.estimatescalculator.feature_items_home.domain.model.InvoiceItem
-import com.android_a865.estimatescalculator.feature_items_home.domain.model.Item
-import com.android_a865.estimatescalculator.feature_items_home.domain.use_cases.items_use_cases.ItemsUseCases
-import com.android_a865.estimatescalculator.utils.*
+import com.android_a865.estimatescalculator.core.data.local.entity.Item
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    tools:context=".feature_in_app.presentation.main.SubscribeFragment">
+    tools:context=".feature_in_app.presentation.SubscribeFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/mainToolBar"

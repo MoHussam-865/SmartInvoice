@@ -1,6 +1,6 @@
 package com.android_a865.estimatescalculator.feature_settings.domain.repository
 
-import com.android_a865.estimatescalculator.feature_network.temp.Role
+import com.android_a865.estimatescalculator.core.enu.Role
 import com.android_a865.estimatescalculator.feature_settings.domain.models.AppSettings
 import com.android_a865.estimatescalculator.feature_settings.domain.models.Company
 import kotlinx.coroutines.flow.Flow

@@ -1,6 +1,6 @@
 package com.android_a865.estimatescalculator.feature_settings.domain.models
 
-import com.android_a865.estimatescalculator.feature_network.temp.Role
+import com.android_a865.estimatescalculator.core.enu.Role
 
 data class AppSettings(
     val company: Company,

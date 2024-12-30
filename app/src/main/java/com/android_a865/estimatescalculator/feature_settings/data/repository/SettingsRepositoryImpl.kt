@@ -1,13 +1,11 @@
 package com.android_a865.estimatescalculator.feature_settings.data.repository
 
-import com.android_a865.estimatescalculator.feature_network.temp.Role
+import com.android_a865.estimatescalculator.core.enu.Role
 import com.android_a865.estimatescalculator.feature_settings.data.data_source.PreferencesManager
 import com.android_a865.estimatescalculator.feature_settings.domain.models.AppSettings
 import com.android_a865.estimatescalculator.feature_settings.domain.models.Company
 import com.android_a865.estimatescalculator.feature_settings.domain.repository.SettingsRepository
 import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
-import javax.inject.Singleton
 
 class SettingsRepositoryImpl(
     private val preferences: PreferencesManager

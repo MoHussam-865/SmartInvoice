@@ -1,17 +1,17 @@
 package com.android_a865.estimatescalculator.feature_settings.presentation.company_info
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.android_a865.estimatescalculator.R
+import com.android_a865.estimatescalculator.core.utils.exhaustive
+import com.android_a865.estimatescalculator.core.utils.setUpActionBarWithNavController
 import com.android_a865.estimatescalculator.databinding.FragmentCompanyInfoBinding
-import com.android_a865.estimatescalculator.utils.exhaustive
-import com.android_a865.estimatescalculator.utils.setUpActionBarWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

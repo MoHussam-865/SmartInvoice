@@ -1,9 +1,10 @@
 package com.android_a865.estimatescalculator.feature_items_home.domain.model
 
 import android.os.Parcelable
-import com.android_a865.estimatescalculator.feature_client.domain.model.Client
+import com.android_a865.estimatescalculator.core.data.local.entity.Client
+import com.android_a865.estimatescalculator.core.enu.InvoiceTypes
 import kotlinx.parcelize.Parcelize
-import java.util.*
+import java.util.Calendar
 
 @Parcelize
 data class Invoice(

@@ -17,14 +17,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android_a865.estimatescalculator.R
-import com.android_a865.estimatescalculator.common.adapters.InvoiceItemsAdapter
+import com.android_a865.estimatescalculator.core.ui.adapters.InvoiceItemsAdapter
+import com.android_a865.estimatescalculator.core.utils.exhaustive
+import com.android_a865.estimatescalculator.core.utils.filtered
+import com.android_a865.estimatescalculator.core.utils.setUpActionBarWithNavController
+import com.android_a865.estimatescalculator.core.utils.toFormattedString
 import com.android_a865.estimatescalculator.databinding.FragmentNewEstimateBinding
-import com.android_a865.estimatescalculator.feature_in_app.presentation.main.SharedViewModel
+import com.android_a865.estimatescalculator.feature_in_app.presentation.SharedViewModel
 import com.android_a865.estimatescalculator.feature_items_home.domain.model.InvoiceItem
-import com.android_a865.estimatescalculator.utils.exhaustive
-import com.android_a865.estimatescalculator.utils.filtered
-import com.android_a865.estimatescalculator.utils.setUpActionBarWithNavController
-import com.android_a865.estimatescalculator.utils.toFormattedString
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 

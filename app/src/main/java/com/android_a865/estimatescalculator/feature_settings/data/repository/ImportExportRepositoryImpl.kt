@@ -1,10 +1,10 @@
 package com.android_a865.estimatescalculator.feature_settings.data.repository
 
-import com.android_a865.estimatescalculator.feature_client.data.entities.ClientEntity
-import com.android_a865.estimatescalculator.feature_settings.data.dao.ImportExportDao
+import com.android_a865.estimatescalculator.core.data.local.dao.ImportExportDao
+import com.android_a865.estimatescalculator.core.data.local.entity.Client
+import com.android_a865.estimatescalculator.core.data.local.entity.ItemEntity
+import com.android_a865.estimatescalculator.core.data.local.relations.FullInvoice
 import com.android_a865.estimatescalculator.feature_settings.domain.repository.ImportExportRepository
-import com.android_a865.estimatescalculator.feature_items_home.data.entities.ItemEntity
-import com.android_a865.estimatescalculator.feature_items_home.data.relations.FullInvoice
 
 class ImportExportRepositoryImpl(
     private val dao: ImportExportDao
@@ -14,7 +14,7 @@ class ImportExportRepositoryImpl(
         return dao.getAllInvoices()
     }
 
-    override suspend fun getAllClients(): List<ClientEntity> {
+    override suspend fun getAllClients(): List<Client> {
         return dao.getAllClients()
     }
 
@@ -30,7 +30,7 @@ class ImportExportRepositoryImpl(
         dao.insertItemEntity(itemEntity)
     }
 
-    override suspend fun insertClient(clientEntity: ClientEntity) {
-        dao.insertClient(clientEntity)
+    override suspend fun insertClient(client: Client) {
+        dao.insertClient(client)
     }
 }

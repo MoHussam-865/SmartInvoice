@@ -14,14 +14,19 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.android_a865.estimatescalculator.R
+import com.android_a865.estimatescalculator.core.utils.AUTHORITY
+import com.android_a865.estimatescalculator.core.utils.exhaustive
+import com.android_a865.estimatescalculator.core.utils.hideBottomNav
+import com.android_a865.estimatescalculator.core.utils.setUpActionBarWithNavController
+import com.android_a865.estimatescalculator.core.utils.showMessage
 import com.android_a865.estimatescalculator.databinding.FragmentSettingsBinding
-import com.android_a865.estimatescalculator.utils.AUTHORITY
-import com.android_a865.estimatescalculator.utils.exhaustive
-import com.android_a865.estimatescalculator.utils.hideBottomNav
-import com.android_a865.estimatescalculator.utils.setUpActionBarWithNavController
-import com.android_a865.estimatescalculator.utils.showMessage
 import dagger.hilt.android.AndroidEntryPoint
-import java.io.*
+import java.io.BufferedReader
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+import java.io.InputStreamReader
+import java.io.OutputStreamWriter
 
 
 const val REQUEST_CODE = 100

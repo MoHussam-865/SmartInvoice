@@ -1,0 +1,58 @@
+package com.android_a865.estimatescalculator.core.ui.adapters
+
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
+import com.android_a865.estimatescalculator.databinding.AdapterChosenItemsBinding
+import com.android_a865.estimatescalculator.feature_items_home.domain.model.InvoiceItem
+
+class ChosenItemsAdapter(
+    private val listener: OnItemEventListener
+) : ListAdapter<InvoiceItem, ChosenItemsAdapter.ViewHolder>(InvoiceItemDiffCallback()) {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
+        ViewHolder(
+            AdapterChosenItemsBinding.inflate(
+                LayoutInflater.from(parent.context), parent, false
+            )
+        )
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) =
+        holder.bind(getItem(position))
+
+
+    inner class ViewHolder(private val binding: AdapterChosenItemsBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.close.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    listener.onRemoveItemClicked(getItem(position))
+                }
+            }
+        }
+
+
+        fun bind(item: InvoiceItem) {
+            binding.apply {
+                itemName.text = item.name
+                itemQty.text = item.qty.toString()
+            }
+        }
+    }
+
+    class InvoiceItemDiffCallback : DiffUtil.ItemCallback<InvoiceItem>() {
+        override fun areItemsTheSame(oldItem: InvoiceItem, newItem: InvoiceItem) =
+            oldItem.id == newItem.id
+
+        override fun areContentsTheSame(oldItem: InvoiceItem, newItem: InvoiceItem) =
+            oldItem == newItem
+    }
+
+    interface OnItemEventListener {
+        fun onRemoveItemClicked(item: InvoiceItem)
+    }
+}

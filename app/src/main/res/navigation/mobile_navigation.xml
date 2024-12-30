@@ -22,7 +22,7 @@
             app:destination="@id/selectingFragment" />
         <argument
             android:name="path"
-            app:argType="com.android_a865.estimatescalculator.utils.Path"
+            app:argType="com.android_a865.estimatescalculator.core.utils.Path"
             app:nullable="true"
             android:defaultValue="@null" />
 
@@ -86,11 +86,11 @@
         <argument
             android:name="item"
             android:defaultValue="@null"
-            app:argType="com.android_a865.estimatescalculator.feature_items_home.domain.model.Item"
+            app:argType="com.android_a865.estimatescalculator.core.data.local.entity.Item"
             app:nullable="true" />
         <argument
             android:name="path"
-            app:argType="com.android_a865.estimatescalculator.utils.Path" />
+            app:argType="com.android_a865.estimatescalculator.core.utils.Path" />
         <action
             android:id="@+id/action_newItemFragment_to_mainFragment2"
             app:destination="@id/navigation_items"
@@ -107,11 +107,11 @@
         <argument
             android:name="folder"
             android:defaultValue="@null"
-            app:argType="com.android_a865.estimatescalculator.feature_items_home.domain.model.Item"
+            app:argType="com.android_a865.estimatescalculator.core.data.local.entity.Item"
             app:nullable="true" />
         <argument
             android:name="path"
-            app:argType="com.android_a865.estimatescalculator.utils.Path" />
+            app:argType="com.android_a865.estimatescalculator.core.utils.Path" />
         <action
             android:id="@+id/action_newFolderFragment_to_mainFragment2"
             app:destination="@id/navigation_items"
@@ -127,7 +127,7 @@
         tools:layout="@layout/fragment_selecting" >
         <argument
             android:name="path"
-            app:argType="com.android_a865.estimatescalculator.utils.Path" />
+            app:argType="com.android_a865.estimatescalculator.core.utils.Path" />
         <argument
             android:name="id"
             app:argType="integer" />
@@ -195,12 +195,12 @@
     <!--AddEditClient-->
     <fragment
         android:id="@+id/addEditClientFragment"
-        android:name="com.android_a865.estimatescalculator.feature_client.presentation.add_edit_client.AddEditClientFragment"
+        android:name="com.android_a865.estimatescalculator.feature_client.add_edit_client.AddEditClientFragment"
         tools:layout="@layout/fragment_add_edit_client">
         <argument
             android:name="client"
             android:defaultValue="@null"
-            app:argType="com.android_a865.estimatescalculator.feature_client.domain.model.Client"
+            app:argType="com.android_a865.estimatescalculator.core.data.local.entity.Client"
             app:nullable="true" />
         <action
             android:id="@+id/action_addEditClientFragment_to_clientViewFragment"
@@ -212,7 +212,7 @@
     <!--Client View-->
     <fragment
         android:id="@+id/clientViewFragment"
-        android:name="com.android_a865.estimatescalculator.feature_client.presentation.client_view.ClientViewFragment"
+        android:name="com.android_a865.estimatescalculator.feature_client.client_view.ClientViewFragment"
         android:label="@string/client_view"
         tools:layout="@layout/fragment_client_view">
         <action
@@ -220,13 +220,13 @@
             app:destination="@id/addEditClientFragment" />
         <argument
             android:name="client"
-            app:argType="com.android_a865.estimatescalculator.feature_client.domain.model.Client" />
+            app:argType="com.android_a865.estimatescalculator.core.data.local.entity.Client" />
     </fragment>
 
     <!--Choose Client-->
     <fragment
         android:id="@+id/chooseClientFragment"
-        android:name="com.android_a865.estimatescalculator.feature_client.presentation.choose_client.ChooseClientFragment"
+        android:name="com.android_a865.estimatescalculator.feature_client.choose_client.ChooseClientFragment"
         android:label="@string/choose_client"
         tools:layout="@layout/fragment_choose_client">
         <action
@@ -249,7 +249,7 @@
         tools:layout="@layout/fragment_add_edit_invoice_item" >
         <argument
             android:name="path"
-            app:argType="com.android_a865.estimatescalculator.utils.Path" />
+            app:argType="com.android_a865.estimatescalculator.core.utils.Path" />
         <argument
             android:name="item"
             app:argType="com.android_a865.estimatescalculator.feature_items_home.domain.model.InvoiceItem"
@@ -267,12 +267,12 @@
     <!--subscribe-->
     <fragment
         android:id="@+id/subscribeFragment"
-        android:name="com.android_a865.estimatescalculator.feature_in_app.presentation.main.SubscribeFragment"
+        android:name="com.android_a865.estimatescalculator.feature_in_app.presentation.SubscribeFragment"
         android:label="@string/subscribe"
         tools:layout="@layout/fragment_subscribe" />
     <fragment
         android:id="@+id/defineMeFragment"
-        android:name="com.android_a865.estimatescalculator.feature_network.start.DefineMeFragment"
+        android:name="com.android_a865.estimatescalculator.feature_settings.presentation.network_start.DefineMeFragment"
         android:label="fragment_define_me"
         tools:layout="@layout/fragment_define_me" />
 

@@ -1,8 +1,8 @@
 package com.android_a865.estimatescalculator.feature_settings.domain.use_cases
 
+import com.android_a865.estimatescalculator.core.utils.toJson
 import com.android_a865.estimatescalculator.feature_settings.domain.models.DatabaseHolder
 import com.android_a865.estimatescalculator.feature_settings.domain.repository.ImportExportRepository
-import com.android_a865.estimatescalculator.utils.toJson
 
 class ExportUseCase(
     private val repository: ImportExportRepository

@@ -1,7 +1,7 @@
 package com.android_a865.estimatescalculator.feature_in_app.domain.use_cases
 
 import android.util.Log
-import com.android_a865.estimatescalculator.feature_in_app.domain.repository.SubscriptionRepository
+import com.android_a865.estimatescalculator.core.domain.repository.SubscriptionRepository
 import kotlinx.coroutines.flow.first
 
 class SubscriptionUseCase(

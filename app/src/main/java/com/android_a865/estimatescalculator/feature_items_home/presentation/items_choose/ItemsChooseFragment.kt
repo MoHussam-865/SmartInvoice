@@ -13,15 +13,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android_a865.estimatescalculator.R
-import com.android_a865.estimatescalculator.common.adapters.ChooseInvoiceItemsAdapter
-import com.android_a865.estimatescalculator.common.adapters.ChosenItemsAdapter
-import com.android_a865.estimatescalculator.common.adapters.PathIndicatorAdapter
+import com.android_a865.estimatescalculator.core.ui.adapters.ChooseInvoiceItemsAdapter
+import com.android_a865.estimatescalculator.core.ui.adapters.ChosenItemsAdapter
+import com.android_a865.estimatescalculator.core.ui.adapters.PathIndicatorAdapter
+import com.android_a865.estimatescalculator.core.utils.exhaustive
+import com.android_a865.estimatescalculator.core.utils.scrollToEnd
+import com.android_a865.estimatescalculator.core.utils.setUpActionBarWithNavController
+import com.android_a865.estimatescalculator.core.utils.showMessage
 import com.android_a865.estimatescalculator.databinding.FragmentItemsChooseBinding
 import com.android_a865.estimatescalculator.feature_items_home.domain.model.InvoiceItem
-import com.android_a865.estimatescalculator.utils.exhaustive
-import com.android_a865.estimatescalculator.utils.scrollToEnd
-import com.android_a865.estimatescalculator.utils.setUpActionBarWithNavController
-import com.android_a865.estimatescalculator.utils.showMessage
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

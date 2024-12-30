@@ -6,13 +6,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
+import com.android_a865.estimatescalculator.core.data.local.mapper.toItem
+import com.android_a865.estimatescalculator.core.domain.use_cases.items.ItemsUseCases
+import com.android_a865.estimatescalculator.core.utils.Path
 import com.android_a865.estimatescalculator.feature_in_app.domain.use_cases.SubscriptionUseCase
-import com.android_a865.estimatescalculator.feature_items_home.data.mapper.toItem
-import com.android_a865.estimatescalculator.feature_items_home.domain.model.Item
-import com.android_a865.estimatescalculator.feature_items_home.domain.use_cases.items_use_cases.ItemsUseCases
+import com.android_a865.estimatescalculator.core.data.local.entity.Item
 import com.android_a865.estimatescalculator.feature_settings.domain.models.ItemsHolder
-import com.android_a865.estimatescalculator.utils.NO_AD
-import com.android_a865.estimatescalculator.utils.Path
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -21,7 +20,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
