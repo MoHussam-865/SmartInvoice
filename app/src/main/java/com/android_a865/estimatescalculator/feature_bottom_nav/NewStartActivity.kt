@@ -13,9 +13,9 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.android_a865.estimatescalculator.R
 import com.android_a865.estimatescalculator.core.utils.NO_AD
+import com.android_a865.estimatescalculator.core.utils.TAG
 import com.android_a865.estimatescalculator.databinding.ActivityNewStartBinding
 import com.android_a865.estimatescalculator.feature_in_app.presentation.SharedViewModel
-import com.android_a865.estimatescalculator.feature_in_app.presentation.main.TAG
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError

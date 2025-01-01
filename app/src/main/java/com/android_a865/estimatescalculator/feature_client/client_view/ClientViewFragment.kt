@@ -98,6 +98,7 @@ class ClientViewFragment : Fragment(R.layout.fragment_client_view) {
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.edit, R.id.add -> {

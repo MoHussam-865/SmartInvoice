@@ -1,12 +1,10 @@
-package com.android_a865.estimatescalculator.core.data.network.repositories
+package com.android_a865.estimatescalculator.core.domain.repository
 
+import com.android_a865.estimatescalculator.core.data.local.entity.Client
 import com.android_a865.estimatescalculator.feature_items_home.domain.model.Invoice
 import com.android_a865.estimatescalculator.core.data.local.entity.Item
 
 interface ServerRepository {
-
-    // used by the clients
-    fun getServerIp(): String
 
     fun getItems(): List<Item>
 
@@ -14,8 +12,7 @@ interface ServerRepository {
 
     fun getClients(): List<Client>
 
-    fun saveInvoice()
 
-    fun addClient()
+    fun sendInvoice()
 
 }

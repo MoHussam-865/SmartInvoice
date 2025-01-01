@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.android_a865.estimatescalculator.core.data.local.entity.Client
 import com.android_a865.estimatescalculator.databinding.AdapterClientsViewBinding
 
 class ClientsAdapter(

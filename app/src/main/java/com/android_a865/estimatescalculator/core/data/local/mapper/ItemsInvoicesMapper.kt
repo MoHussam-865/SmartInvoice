@@ -85,7 +85,7 @@ fun Invoice.toEntity() = FullInvoice(
         total = items.sumOf { it.total }
     ),
 
-    client = client?.toEntity(),
+    client = client,
 
     items = items.map { it.toEntity(id) }
 )

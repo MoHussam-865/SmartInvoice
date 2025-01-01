@@ -3,6 +3,7 @@ package com.android_a865.estimatescalculator.feature_bottom_nav.ui.clients_view
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
+import com.android_a865.estimatescalculator.core.data.local.entity.Client
 import com.android_a865.estimatescalculator.core.domain.use_cases.client.ClientsUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel

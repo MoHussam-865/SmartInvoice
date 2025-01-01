@@ -5,8 +5,6 @@ import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingResult
 
-const val TAG = "SharedViewModel"
-
 
 inline fun BillingClient.doOnReady(crossinline onReady: () -> Unit) {
     if (isReady) {

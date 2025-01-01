@@ -130,7 +130,6 @@ interface ItemsDao {
     @Query("DELETE FROM Items WHERE path LIKE :path || '%' ")
     suspend fun deleteFolderContent(path: String)
 
-
     // insert Item
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertItemEntity(itemEntity: ItemEntity): Long

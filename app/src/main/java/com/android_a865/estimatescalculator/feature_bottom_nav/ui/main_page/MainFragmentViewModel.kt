@@ -14,6 +14,7 @@ import com.android_a865.estimatescalculator.core.data.local.entity.Item
 import com.android_a865.estimatescalculator.feature_settings.domain.models.ItemsHolder
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -32,6 +33,7 @@ class MainFragmentViewModel @Inject constructor(
     val path = state.get<Path>("path")
     val currentPath = MutableStateFlow(path ?: Path())
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     private val itemsFlow: Flow<List<Item>> = currentPath.flatMapLatest { path ->
         itemsUseCases.getItems(path.path)
     }
@@ -91,7 +93,7 @@ class MainFragmentViewModel @Inject constructor(
     }
 
     fun saveData(data: String) = viewModelScope.launch {
-        var status = try {
+        val status = try {
 
             val holder = Gson().fromJson(data, ItemsHolder::class.java)
 

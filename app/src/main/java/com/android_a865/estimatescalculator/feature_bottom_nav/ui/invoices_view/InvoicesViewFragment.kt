@@ -82,6 +82,7 @@ class InvoicesViewFragment : Fragment(R.layout.fragment_invoices_view),
                 FilterOptions.Draft -> menu.findItem(R.id.draft).isChecked = true
                 FilterOptions.Estimate -> menu.findItem(R.id.estimate).isChecked = true
                 FilterOptions.Invoice -> menu.findItem(R.id.invoice).isChecked = true
+                null -> {}
             }.exhaustive
         }
     }

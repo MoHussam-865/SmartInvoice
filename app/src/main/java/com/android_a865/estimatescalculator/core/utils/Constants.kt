@@ -19,3 +19,15 @@ const val MONTHLY_SUBSCRIPTION = "monthly0"
 const val YEARLY_SUBSCRIPTION = "yearly0"
 
 const val PORT_NUMBER = "8080"
+
+const val TAG = "shared_view_model"
+
+
+
+const val SAVE_URL = "/save/"
+const val GET_ITEMS_URL = "/items/"
+const val GET_CLIENTS_URL = "/clients/"
+const val GET_INVOICES_URL = "/invoices/"
+
+
+

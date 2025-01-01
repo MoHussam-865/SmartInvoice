@@ -2,6 +2,7 @@ package com.android_a865.estimatescalculator.core.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.android_a865.estimatescalculator.core.domain.repository.ToSend
 
 @Entity(tableName = "Items")
 data class ItemEntity(
@@ -11,4 +12,4 @@ data class ItemEntity(
     val path: String = ".",
     val price: Double = 0.0,
     val isFolder: Boolean = false
-)
+): ToSend

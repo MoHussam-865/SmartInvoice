@@ -1,5 +1,6 @@
 package com.android_a865.estimatescalculator.feature_reports.domain.use_cases
 
+import com.android_a865.estimatescalculator.core.data.local.entity.Client
 import com.android_a865.estimatescalculator.core.data.local.mapper.toInvoice
 import com.android_a865.estimatescalculator.core.enu.InvoiceTypes
 import com.android_a865.estimatescalculator.core.utils.addOf
@@ -11,7 +12,6 @@ import com.android_a865.estimatescalculator.feature_reports.domain.model.ClientR
 import com.android_a865.estimatescalculator.feature_reports.domain.model.FullReport
 import com.android_a865.estimatescalculator.feature_reports.domain.model.SmartList
 import com.android_a865.estimatescalculator.feature_reports.domain.repository.ReportRepository
-import com.android_a865.estimatescalculator.utils.*
 import javax.inject.Inject
 import javax.inject.Singleton
 

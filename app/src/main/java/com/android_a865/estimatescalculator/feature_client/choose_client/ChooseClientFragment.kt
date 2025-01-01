@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android_a865.estimatescalculator.R
+import com.android_a865.estimatescalculator.core.data.local.entity.Client
 import com.android_a865.estimatescalculator.core.ui.adapters.ClientsAdapter
 import com.android_a865.estimatescalculator.core.utils.exhaustive
 import com.android_a865.estimatescalculator.core.utils.setUpActionBarWithNavController

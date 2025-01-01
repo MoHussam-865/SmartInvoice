@@ -7,6 +7,5 @@ data class ItemsUseCases(
     val deleteItems: DeleteItemsUseCase,
     val addItem: AddItemUseCase,
     val updateItem: UpdateItemUseCase,
-    val copyFolderUseCases: CopyFolderUseCase,
-
-    )
+    val copyFolderUseCases: CopyFolderUseCase
+)

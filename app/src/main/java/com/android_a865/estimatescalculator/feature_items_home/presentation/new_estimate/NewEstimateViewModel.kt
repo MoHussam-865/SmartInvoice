@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
+import com.android_a865.estimatescalculator.core.data.local.entity.Client
 import com.android_a865.estimatescalculator.core.domain.use_cases.client.ClientsUseCases
 import com.android_a865.estimatescalculator.core.domain.use_cases.invoice.InvoiceUseCases
 import com.android_a865.estimatescalculator.core.enu.InvoiceTypes
@@ -21,8 +22,8 @@ import com.android_a865.estimatescalculator.core.utils.removeOneOf
 import com.android_a865.estimatescalculator.core.utils.setQtyTo
 import com.android_a865.estimatescalculator.feature_items_home.domain.model.Invoice
 import com.android_a865.estimatescalculator.feature_items_home.domain.model.InvoiceItem
-import com.android_a865.estimatescalculator.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
@@ -42,6 +43,7 @@ class NewEstimateViewModel @Inject constructor(
     val invoiceType = MutableStateFlow(invoice?.type ?: InvoiceTypes.Estimate)
     private val clientId = MutableStateFlow(invoice?.client?.id ?: 0)
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     private val invoiceClient = clientId.flatMapLatest {
         if (it != 0) {
             clientsUseCases.getClient(it).map { thisClient ->
@@ -166,7 +168,7 @@ class NewEstimateViewModel @Inject constructor(
 
     fun onInvoiceTypeSelected(context: Context) {
 
-        val types = InvoiceTypes.values().map { it.name }.toTypedArray()
+        val types = InvoiceTypes.entries.map { it.name }.toTypedArray()
 
         AlertDialog.Builder(context)
             .setTitle("Choose Type")

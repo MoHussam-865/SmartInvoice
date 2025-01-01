@@ -55,10 +55,8 @@ interface InvoicesDao {
 
             //
             insertInvoiceItem(newItem)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                oldItems.removeIf {
-                    it.itemId == newItem.itemId
-                }
+            oldItems.removeIf {
+                it.itemId == newItem.itemId
             }
 
         }

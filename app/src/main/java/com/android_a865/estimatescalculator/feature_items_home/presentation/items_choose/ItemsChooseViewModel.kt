@@ -18,6 +18,7 @@ import com.android_a865.estimatescalculator.core.utils.update0
 import com.android_a865.estimatescalculator.feature_items_home.domain.model.InvoiceItem
 import com.android_a865.estimatescalculator.core.data.local.entity.Item
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
@@ -35,6 +36,7 @@ class ItemsChooseViewModel @Inject constructor(
 
     val currentPath = MutableStateFlow(state.get<Path>("path") ?: Path())
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     private val itemsFlow = currentPath.flatMapLatest { path ->
         itemsUseCases.getInvoiceItems(path.path)
     }
@@ -42,6 +44,7 @@ class ItemsChooseViewModel @Inject constructor(
     val selectedItems = MutableLiveData(
         state.get<Array<InvoiceItem>>("items")?.toList() ?: listOf()
     )
+    @OptIn(ExperimentalCoroutinesApi::class)
     val itemsData = combine(itemsFlow, selectedItems.asFlow()) { items, selected ->
         Pair(items, selected)
     }.flatMapLatest { (items, selected) ->

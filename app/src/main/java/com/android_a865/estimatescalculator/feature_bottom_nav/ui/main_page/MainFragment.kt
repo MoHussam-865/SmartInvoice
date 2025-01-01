@@ -108,10 +108,12 @@ class MainFragment : Fragment(R.layout.fragment_main), ItemsAdapter.OnItemEventL
         setHasOptionsMenu(true)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.main_page_options, menu)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.newItem -> {
@@ -128,7 +130,6 @@ class MainFragment : Fragment(R.layout.fragment_main), ItemsAdapter.OnItemEventL
                 viewModule.onImportItemsSelected()
                 true
             }
-
 
             else -> super.onOptionsItemSelected(item)
         }
