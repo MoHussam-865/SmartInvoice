@@ -3,7 +3,6 @@ package com.android_a865.estimatescalculator.core.data.local.entity
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.android_a865.estimatescalculator.core.domain.repository.ToSend
 import kotlinx.parcelize.Parcelize
 
 
@@ -19,4 +18,4 @@ data class Client(
     val phone2: String? = null,
     val email: String? = null,
     val address: String? = null
-): Parcelable, ToSend
+): Parcelable

@@ -72,9 +72,6 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 viewModel.acquireSubscription()
             }
 
-            tvServerSettings.setOnClickListener {
-                viewModel.onServerSettingsClicked()
-            }
         }
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {

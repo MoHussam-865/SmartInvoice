@@ -21,10 +21,8 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    //viewBinding { enabled = true }
 
     buildFeatures {
-        //dataBinding true
         viewBinding true
     }
 
@@ -122,25 +120,6 @@ dependencies {
     //   SERVER FEATURE
     // Json
     implementation 'com.google.code.gson:gson:2.10.1'
-
-    // retrofit
-    implementation "com.squareup.retrofit2:retrofit:2.9.0"
-    implementation "com.squareup.retrofit2:converter-gson:2.9.0"
-
-    // ktor & WebSockets
-    // Client
-    implementation "io.ktor:ktor-client-core:2.3.3"
-    implementation "io.ktor:ktor-client-cio:2.3.3"
-    implementation "io.ktor:ktor-client-serialization:2.3.4"
-    implementation "io.ktor:ktor-client-websockets:2.3.3"
-    
-    // Server
-    implementation "io.ktor:ktor-server-core:2.3.3"
-    implementation "io.ktor:ktor-server-cio:2.3.3"
-    implementation "io.ktor:ktor-server-netty:2.3.3"
-    implementation "io.ktor:ktor-server-websockets:2.3.3"
-    implementation "io.ktor:ktor-serialization-gson:2.3.4"
-    implementation("io.ktor:ktor-server-content-negotiation:2.3.4")
 
 }
 

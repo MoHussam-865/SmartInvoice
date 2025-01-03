@@ -4,14 +4,12 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.android_a865.estimatescalculator.core.data.local.MyRoomDatabase.Companion.DATABASE_VERSION
 import com.android_a865.estimatescalculator.core.data.local.dao.ClientsDao
-import com.android_a865.estimatescalculator.core.data.local.dao.DevicesDao
 import com.android_a865.estimatescalculator.core.data.local.dao.ImportExportDao
 import com.android_a865.estimatescalculator.core.data.local.dao.InvoicesDao
 import com.android_a865.estimatescalculator.core.data.local.dao.ItemsDao
 import com.android_a865.estimatescalculator.core.data.local.dao.ReportingDao
 import com.android_a865.estimatescalculator.core.data.local.dao.SubscriptionDao
 import com.android_a865.estimatescalculator.core.data.local.entity.Client
-import com.android_a865.estimatescalculator.core.data.local.entity.Device
 import com.android_a865.estimatescalculator.core.data.local.entity.InvoiceEntity
 import com.android_a865.estimatescalculator.core.data.local.entity.InvoiceItemEntity
 import com.android_a865.estimatescalculator.core.data.local.entity.ItemEntity
@@ -21,8 +19,7 @@ import com.android_a865.estimatescalculator.core.data.local.entity.ItemEntity
         ItemEntity::class,
         InvoiceEntity::class,
         InvoiceItemEntity::class,
-        Client::class,
-        Device::class,
+        Client::class
                ],
     version = DATABASE_VERSION,
     exportSchema = false
@@ -35,8 +32,6 @@ abstract class MyRoomDatabase: RoomDatabase() {
     abstract fun getInvoicesDao(): InvoicesDao
 
     abstract fun getClientsDao(): ClientsDao
-
-    abstract fun getDevicesDao(): DevicesDao
 
     abstract fun getReportingDao(): ReportingDao
 

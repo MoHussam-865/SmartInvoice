@@ -5,7 +5,6 @@ import androidx.room.Relation
 import com.android_a865.estimatescalculator.core.data.local.entity.Client
 import com.android_a865.estimatescalculator.core.data.local.entity.InvoiceEntity
 import com.android_a865.estimatescalculator.core.data.local.entity.InvoiceItemEntity
-import com.android_a865.estimatescalculator.core.domain.repository.ToSend
 
 // get all data for the invoice
 data class FullInvoice(
@@ -24,4 +23,4 @@ data class FullInvoice(
     )
     val items: List<InvoiceItemEntity>
 
-): ToSend
+)
